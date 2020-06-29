@@ -30,6 +30,8 @@ public class RegisterAccount extends AppCompatActivity {
     DatabaseReference reff;
     Account account;
 
+    private static final String TAG = "EmailPassword";
+
     long maxid = 0;
 
     @Override
@@ -66,14 +68,37 @@ public class RegisterAccount extends AppCompatActivity {
                 account.setPassword(passwordInput.getText().toString().trim());
                 account.setUsername(usernameInput.getText().toString().trim());
 
-                reff.child(account.getUsername()).setValue(account);//accounts are now incremented and will push the data in account instance to database
+                //firebase.auth().createUserWithEmailandPassword(account.getEmail(), account.getPassword());
+
+                //Toast.makeText(RegisterAccount.this, "yeet.", Toast.LENGTH_SHORT).show();
+                createAccount();
+                //reff.child(account.getUsername()).setValue(account);//accounts are now incremented and will push the data in account instance to database
                 //reff.push().setValue(account);//push the data in account instance to database
-                Toast.makeText(RegisterAccount.this, "Account has been registered", Toast.LENGTH_LONG).show();
-                openMainActivity();
+                //Toast.makeText(RegisterAccount.this, "Account has been registered", Toast.LENGTH_LONG).show();
+
             }
         });
 
 
+
+    }
+
+    public void createAccount(){
+        MainActivity.mAuth.createUserWithEmailAndPassword(account.getEmail(), account.getPassword()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    Log.d(TAG, "Create user with email: Success");
+                    MainActivity.currentUser = MainActivity.mAuth.getCurrentUser();
+                    openMainActivity();
+                } else {
+                    //sign-in fails somehow
+                    Log.w(TAG, "Create user with email: Failure");
+                    Toast.makeText(RegisterAccount.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
     }
 
     public void openMainActivity(){//send user back to main screen

@@ -19,6 +19,7 @@ public class HomeScreen extends AppCompatActivity {
         logoutButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                MainActivity.mAuth.getInstance().signOut();
                 openMainActivity();
             }
         });

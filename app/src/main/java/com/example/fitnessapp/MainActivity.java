@@ -14,6 +14,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.ActionCodeSettings;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,8 +31,11 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     private Button registerButton, loginButton;
-    private EditText usernameInput, passwordInput;
+    private EditText emailInput, passwordInput;
     DatabaseReference reff;
+    public static FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    public static FirebaseUser currentUser = mAuth.getCurrentUser();
+    private static final String TAG = "EmailPassword";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +43,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         registerButton =(Button) findViewById(R.id.registerButton);
         loginButton = (Button) findViewById(R.id.loginButton);
-        usernameInput = (EditText)findViewById(R.id.usernameText);
+        emailInput = (EditText)findViewById(R.id.emailText);
         passwordInput = (EditText)findViewById(R.id.passwordText);
-
-
-        Toast.makeText(MainActivity.this, "Firebase connection success", Toast.LENGTH_LONG).show();
 
         registerButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -46,11 +52,12 @@ public class MainActivity extends AppCompatActivity {
                 openRegisterActivity();
             }
         });
-
-
         loginButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                signInWithEmailAndPassword();
+
+                /*
                 String currentUsername = usernameInput.getText().toString().trim();
 
                 reff = FirebaseDatabase.getInstance().getReference().child("Account").child(currentUsername);
@@ -74,9 +81,23 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
+                */
             }
         });
 
+        //check to see if current user is already signed in
+        //mAuth = FirebaseAuth.getInstance();
+        //currentUser = mAuth.getCurrentUser();
+
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(currentUser != null){
+            String name = currentUser.getDisplayName();
+            String email = currentUser.getEmail();
+            Toast.makeText(MainActivity.this, "User is logged in.", Toast.LENGTH_LONG).show();
+            openHomeScreen();
+        }else{
+            Toast.makeText(MainActivity.this, "Signed Out.", Toast.LENGTH_LONG).show();
+        }
 
     }
 
@@ -90,6 +111,34 @@ public class MainActivity extends AppCompatActivity {
     public void openRegisterActivity(){
         Intent intent = new Intent(this, RegisterAccount.class);
         startActivity(intent);
+    }
+
+    public void signInWithEmailAndPassword(){
+        Log.d(TAG,"username: "+emailInput.getText().toString());
+        Log.d(TAG,"password: "+ passwordInput.getText().toString().trim());
+        mAuth.signInWithEmailAndPassword(emailInput.getText().toString().trim(),passwordInput.getText().toString().trim()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    Log.d(TAG, "Sign in with Email: Success");
+                    currentUser = mAuth.getCurrentUser();
+
+                }else{
+                    Log.w(TAG,"Sign in with Email: Failure");
+                    Toast.makeText(MainActivity.this, "Authentication Failed.",Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        });
+        openHomeScreen();
+    }
+
+    public FirebaseUser getUser(){
+        return currentUser;
+    }
+
+    public FirebaseAuth getAuth(){
+        return mAuth;
     }
 
 }
