@@ -122,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
                 if(task.isSuccessful()){
                     Log.d(TAG, "Sign in with Email: Success");
                     currentUser = mAuth.getCurrentUser();
+                    openHomeScreen();
 
                 }else{
                     Log.w(TAG,"Sign in with Email: Failure");
@@ -130,15 +131,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-        openHomeScreen();
+
     }
 
-    public FirebaseUser getUser(){
-        return currentUser;
-    }
-
-    public FirebaseAuth getAuth(){
-        return mAuth;
-    }
 
 }
