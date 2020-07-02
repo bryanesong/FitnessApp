@@ -1,6 +1,8 @@
 package com.example.fitnessapp;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.renderscript.Sampler;
@@ -13,6 +15,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -26,6 +30,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 
@@ -45,6 +50,16 @@ public class MainActivity extends AppCompatActivity {
         loginButton = (Button) findViewById(R.id.loginButton);
         emailInput = (EditText)findViewById(R.id.emailText);
         passwordInput = (EditText)findViewById(R.id.passwordText);
+
+//        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACTIVITY_RECOGNITION) != PackageManager.PERMISSION_GRANTED) {
+//            // Permission is not granted
+//            Log.d(TAG,"Permission NOT GRANTED");
+//            String s = Manifest.permission.ACTIVITY_RECOGNITION;
+//            String[] Sray = s.split("");
+//            ActivityCompat.requestPermissions(MainActivity.this, Sray,1);
+//        }else{
+//            Log.d(TAG, "Permission GRANTED");
+//        }
 
         registerButton.setOnClickListener(new View.OnClickListener(){
             @Override
