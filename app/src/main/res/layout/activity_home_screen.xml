@@ -22,7 +22,23 @@
         android:layout_height="wrap_content"
         android:text="Log out"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/tempText"
+        android:layout_below="@+id/workoutLog"
         />
+
+    <Button
+        android:id="@+id/calorieTracker"
+        android:text="Calorie Tracker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/tempText"/>
+
+    <Button
+        android:id="@+id/workoutLog"
+        android:text="Workout Log"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/calorieTracker"/>
 
 </RelativeLayout>
