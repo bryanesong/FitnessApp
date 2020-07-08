@@ -34,8 +34,6 @@ public class CalorieTracker extends AppCompatActivity {
         entries.add(new TrackerData(1000, "poo", 24, "gallons"));
 
         //create back bar
-        ActionBar actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
 
         /*DatabaseReference reff;
         reff = FirebaseDatabase.getInstance().getReference();
