@@ -14,6 +14,10 @@ public class TrackerData {
         this.measurement = measurement;
     }
 
+    public TrackerData() {
+
+    }
+
     public void setCalories(int calories) {
         this.calories = calories;
     }

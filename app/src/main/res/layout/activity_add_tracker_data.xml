@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddTrackerData">
+
+    <EditText
+        android:id="@+id/foodInput"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_toStartOf="@+id/calorieInput"
+        android:layout_toLeftOf="@+id/calorieInput"
+        android:ems="10"
+        android:hint="Cheeseballs"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/quantityInput"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/foodInput"
+        android:layout_alignStart="@+id/foodInput"
+        android:layout_alignLeft="@+id/foodInput"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_toStartOf="@+id/measurementInput"
+        android:layout_toLeftOf="@+id/measurementInput"
+        android:ems="10"
+        android:hint="26"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/measurementInput"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/foodInput"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_toStartOf="@+id/addDataButton"
+        android:layout_toLeftOf="@+id/addDataButton"
+        android:ems="10"
+        android:hint="Cups"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/calorieInput"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_toStartOf="@+id/textView"
+        android:layout_toLeftOf="@+id/textView"
+        android:ems="10"
+        android:hint="140"
+        android:inputType="textPersonName" />
+
+    <Button
+        android:id="@+id/addDataButton"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/calorieInput"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:text="Submit" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="65dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="87dp"
+        android:gravity="center_vertical"
+        android:text="Calories"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+</RelativeLayout>

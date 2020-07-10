@@ -4,8 +4,7 @@ import java.util.ArrayList;
 
 public class TrackerDataContainer {
 
-    String yert = "HI";
-    private ArrayList<TrackerData> entries = new ArrayList<TrackerData>();
+    public ArrayList<TrackerData> entries = new ArrayList<TrackerData>();
 
     public ArrayList<TrackerData> getEntries() {
         return entries;
@@ -15,16 +14,12 @@ public class TrackerDataContainer {
         this.entries = entries;
     }
 
-    public void setYert(String yert) {
-        this.yert = yert;
-    }
-
-    public String getYert() {
-        return yert;
-    }
-
     public TrackerDataContainer() {
-        //entries.add(new TrackerData(4,"cheese",6,"oz"));
+
+    }
+
+    public TrackerDataContainer(ArrayList<TrackerData> data) {
+        entries = data;
     }
 
 
