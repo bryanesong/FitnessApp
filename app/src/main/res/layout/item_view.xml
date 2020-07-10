@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/calorieText"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        android:gravity="center"
+        android:text="1500"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"></TextView>
+
+    <TextView
+        android:id="@+id/foodTypeText"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toEndOf="@+id/calorieText"
+        android:layout_toRightOf="@+id/calorieText"
+        android:text="1500"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/otherText"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@+id/foodTypeText"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toEndOf="@+id/calorieText"
+        android:layout_toRightOf="@+id/calorieText"
+        android:text="TextView"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+
+</RelativeLayout>
