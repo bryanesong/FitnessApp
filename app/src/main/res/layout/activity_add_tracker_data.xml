@@ -39,7 +39,7 @@
         android:layout_toLeftOf="@+id/measurementInput"
         android:ems="10"
         android:hint="26"
-        android:inputType="textPersonName" />
+        android:inputType="number" />
 
     <EditText
         android:id="@+id/measurementInput"
@@ -67,7 +67,7 @@
         android:layout_toLeftOf="@+id/textView"
         android:ems="10"
         android:hint="140"
-        android:inputType="textPersonName" />
+        android:inputType="number" />
 
     <Button
         android:id="@+id/addDataButton"

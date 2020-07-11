@@ -7,15 +7,28 @@ public class TrackerData {
     private int quantity;
     private String measurement;
 
-    public TrackerData(int calories, String foodType, int quantity, String measurement) {
+    private String date;
+
+    private String time;
+    public TrackerData(int calories, String foodType, int quantity, String measurement, String date, String time) {
         this.calories = calories;
         this.foodType = foodType;
         this.quantity = quantity;
         this.measurement = measurement;
+        this.date = date;
+        this.time = time;
     }
 
     public TrackerData() {
 
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public void setCalories(int calories) {
@@ -48,5 +61,13 @@ public class TrackerData {
 
     public String getMeasurement() {
         return measurement;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }

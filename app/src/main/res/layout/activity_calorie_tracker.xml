@@ -19,9 +19,64 @@
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginRight="@dimen/fab_margin"
         android:layout_marginBottom="@dimen/fab_margin"
+        android:focusable="auto"
+        android:tint="@android:color/white"
         app:backgroundTint="@color/colorAccent"
-        app:srcCompat="@android:drawable/ic_input_add"
-        android:tint="@android:color/white"/>
+        app:srcCompat="@android:drawable/ic_input_add" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/removeEntry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/cancelSelected"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="@dimen/fab_margin"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_marginTop="@dimen/fab_margin"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginBottom="@dimen/fab_margin"
+        android:clickable="true"
+        android:focusable="true"
+        app:backgroundTint="#DA5959"
+        app:srcCompat="@android:drawable/ic_menu_delete" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/editEntry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/removeEntry"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="@dimen/fab_margin"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_marginTop="@dimen/fab_margin"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginBottom="@dimen/fab_margin"
+        android:clickable="true"
+        android:focusable="true"
+        app:srcCompat="@drawable/ic_baseline_edit_24"
+        tools:ignore="VectorDrawableCompat" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/cancelSelected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="@dimen/fab_margin"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_marginTop="@dimen/fab_margin"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginBottom="@dimen/fab_margin"
+        android:focusable="auto"
+        app:backgroundTint="#BA1818"
+        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
+
     <ListView
         android:id="@+id/itemList"
         android:layout_width="match_parent"

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 public class HomeScreen extends AppCompatActivity {
     private Button logoutButton;
+    private Button trackerButton;
     AnimationDrawable spriteAnimation;
 
     @Override
@@ -24,6 +25,14 @@ public class HomeScreen extends AppCompatActivity {
             public void onClick(View v){
                 MainActivity.mAuth.getInstance().signOut();
                 openMainActivity();
+            }
+        });
+
+        trackerButton = (Button)findViewById(R.id.calorieTracker);
+        trackerButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                openCalorieTracker();
             }
         });
 
@@ -42,6 +51,11 @@ public class HomeScreen extends AppCompatActivity {
 
     public void openMainActivity(){
         Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void openCalorieTracker(){
+        Intent intent = new Intent(this,CalorieTracker.class);
         startActivity(intent);
     }
 
