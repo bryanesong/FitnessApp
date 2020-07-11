@@ -27,11 +27,11 @@
         android:layout_height="wrap_content"
         android:text="Log out"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/workoutLog"
+        android:layout_below="@+id/workoutLogButton"
         />
 
     <Button
-        android:id="@+id/calorieTrackerButton"
+        android:id="@+id/trackerButton"
         android:text="Calorie Tracker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -44,6 +44,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/calorieTracker"/>
+        android:layout_below="@id/trackerButton"/>
 
 </RelativeLayout>

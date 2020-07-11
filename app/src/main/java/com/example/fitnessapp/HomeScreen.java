@@ -21,7 +21,7 @@ public class HomeScreen extends AppCompatActivity {
 
         logoutButton = (Button)findViewById(R.id.logoutButton);
         workoutLogButton = (Button)findViewById(R.id.workoutLogButton);
-        calorieTrackerButton = (Button)findViewById(R.id.calorieTrackerButton);
+        calorieTrackerButton = (Button)findViewById(R.id.trackerButton);
 
         logoutButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -30,9 +30,7 @@ public class HomeScreen extends AppCompatActivity {
                 openMainActivity();
             }
         });
-        
-        trackerButton = (Button)findViewById(R.id.calorieTracker);
-        trackerButton.setOnClickListener(new View.OnClickListener(){
+
         workoutLogButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -64,11 +62,6 @@ public class HomeScreen extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void openCalorieTracker(){
-        Intent intent = new Intent(this,CalorieTracker.class);
-        startActivity(intent);
-    }
-
     public void openMainActivity(){
         Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
@@ -80,3 +73,4 @@ public class HomeScreen extends AppCompatActivity {
     }
 
 }
+

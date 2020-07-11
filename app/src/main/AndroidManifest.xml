@@ -11,11 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-<<<<<<< HEAD
+
         <activity android:name=".ChangeEntryData"></activity>
-=======
         <activity android:name=".WorkoutLog"></activity>
->>>>>>> 9c3c6ada5017811d11a675aa651b5b2e9b9e2af8
+
         <activity android:name=".AddTrackerData" />
         <activity android:name=".CalorieTracker" />
         <activity android:name=".HomeScreen" />
