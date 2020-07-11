@@ -10,8 +10,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 public class HomeScreen extends AppCompatActivity {
-    private Button logoutButton;
-    private Button trackerButton;
+
+    private Button logoutButton,workoutLogButton,calorieTrackerButton;
     AnimationDrawable spriteAnimation;
 
     @Override
@@ -20,6 +20,9 @@ public class HomeScreen extends AppCompatActivity {
         setContentView(R.layout.activity_home_screen);
 
         logoutButton = (Button)findViewById(R.id.logoutButton);
+        workoutLogButton = (Button)findViewById(R.id.workoutLogButton);
+        calorieTrackerButton = (Button)findViewById(R.id.calorieTrackerButton);
+
         logoutButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -27,9 +30,17 @@ public class HomeScreen extends AppCompatActivity {
                 openMainActivity();
             }
         });
-
+        
         trackerButton = (Button)findViewById(R.id.calorieTracker);
         trackerButton.setOnClickListener(new View.OnClickListener(){
+        workoutLogButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                openWorkoutLog();
+            }
+        });
+
+        calorieTrackerButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 openCalorieTracker();
@@ -48,6 +59,15 @@ public class HomeScreen extends AppCompatActivity {
         spriteAnimation.start();
     }
 
+    public void openWorkoutLog(){
+        Intent intent = new Intent(this,WorkoutLog.class);
+        startActivity(intent);
+    }
+
+    public void openCalorieTracker(){
+        Intent intent = new Intent(this,CalorieTracker.class);
+        startActivity(intent);
+    }
 
     public void openMainActivity(){
         Intent intent = new Intent(this,MainActivity.class);
