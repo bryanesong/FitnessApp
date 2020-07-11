@@ -30,7 +30,7 @@ public class HomeScreen extends AppCompatActivity {
                 openMainActivity();
             }
         });
-        
+
         trackerButton = (Button)findViewById(R.id.calorieTracker);
         trackerButton.setOnClickListener(new View.OnClickListener(){
         workoutLogButton.setOnClickListener(new View.OnClickListener(){
