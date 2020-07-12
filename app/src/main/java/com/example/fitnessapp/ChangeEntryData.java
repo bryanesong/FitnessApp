@@ -1,10 +1,12 @@
 package com.example.fitnessapp;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +25,10 @@ public class ChangeEntryData extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_entry_data);
 
+        //create back arrow
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         position = Integer.parseInt(getIntent().getStringExtra("position"));
         //create buttons
         setupButtons();
@@ -30,11 +36,18 @@ public class ChangeEntryData extends AppCompatActivity {
         //create and display current data in text boxes
         setupTextBoxes();
 
-        //create button listeners
+        //create button listeners and manage data when button is clicked
         createButtonListeners();
 
 
 
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        //return to previous activity
+        Intent myIntent = new Intent(getApplicationContext(), CalorieTracker.class);
+        startActivityForResult(myIntent, 123);
+        return true;
     }
 
     private void setupButtons() {

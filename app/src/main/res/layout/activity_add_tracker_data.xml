@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".AddTrackerData">
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/foodInput"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -41,19 +41,6 @@
         android:hint="26"
         android:inputType="number" />
 
-    <EditText
-        android:id="@+id/measurementInput"
-        android:layout_width="80dp"
-        android:layout_height="50dp"
-        android:layout_below="@+id/foodInput"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_toStartOf="@+id/addDataButton"
-        android:layout_toLeftOf="@+id/addDataButton"
-        android:ems="10"
-        android:hint="Cups"
-        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/calorieInput"
@@ -94,5 +81,19 @@
         android:gravity="center_vertical"
         android:text="Calories"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+    <AutoCompleteTextView
+        android:id="@+id/measurementInput"
+        android:layout_width="140dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/foodInput"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_toStartOf="@+id/addDataButton"
+        android:layout_toLeftOf="@+id/addDataButton"
+        android:ems="10"
+        android:hint="Cups"
+        android:inputType="textPersonName" />
 
 </RelativeLayout>
