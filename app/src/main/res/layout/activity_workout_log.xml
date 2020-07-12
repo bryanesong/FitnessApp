@@ -18,10 +18,10 @@
         android:id="@+id/searchBarText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="test"
-        android:layout_centerHorizontal="true" />
+        android:hint="Search Food"
+        android:inputType="textPersonName" />
 
     <TextView
         android:id="@+id/textViewTest"

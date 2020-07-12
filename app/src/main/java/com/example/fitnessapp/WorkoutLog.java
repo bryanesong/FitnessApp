@@ -24,7 +24,7 @@ import org.json.JSONObject;
 public class WorkoutLog extends AppCompatActivity {
     private Button testButton;
     private EditText searchBar;
-    private TextView tempText;
+    private TextView JSONText;
     final static String apiKey = "OtpdWCaIaKlnq3DXBs5VcVorVDopFLNaVrGLWT6i";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +32,7 @@ public class WorkoutLog extends AppCompatActivity {
         setContentView(R.layout.activity_workout_log);
 
         testButton = findViewById(R.id.testButton);
-        tempText = (TextView) findViewById(R.id.textViewTest);
+        JSONText = (TextView) findViewById(R.id.textViewTest);
         searchBar = (EditText) findViewById(R.id.searchBarText);
 
 
@@ -65,7 +65,7 @@ public class WorkoutLog extends AppCompatActivity {
 
                     @Override
                     protected void onPostExecute(Object o){
-                        tempText.setText(o.toString());
+                        JSONText.setText(o.toString());
                     }
                 }.execute();
 
