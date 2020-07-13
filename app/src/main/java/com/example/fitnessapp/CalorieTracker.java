@@ -48,6 +48,9 @@ public class CalorieTracker extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        //create textView for no entries
+        createNoEntryText();
+
         //reset entires if new user is logged in
         checkForNewUser();
 
@@ -61,8 +64,6 @@ public class CalorieTracker extends AppCompatActivity {
         registerClickCallback();
 
 
-        //create textView for no entries
-        createNoEntryText();
     }
 
     public void populateListView() {
