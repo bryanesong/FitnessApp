@@ -107,13 +107,14 @@ public class CalorieTracker extends AppCompatActivity {
                 removeEntry.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Toast.makeText(CalorieTracker.this, "\"" + entries.get(position).getFoodType() + "\"  has been removed.",
+                                Toast.LENGTH_SHORT).show();
                         entries.remove(position);
                         hideFABS();
                         pushEntriesToDatabase();
                         populateListView();
 
-                        Toast.makeText(CalorieTracker.this, "\"" + entries.get(0).getFoodType() + "\"  has been removed.",
-                                Toast.LENGTH_SHORT).show();
+
                     }
                 });
 
@@ -213,12 +214,7 @@ public class CalorieTracker extends AppCompatActivity {
         editEntry = findViewById(R.id.editEntry);
         //hide editEntry until needed
         editEntry.setVisibility(View.GONE);
-        editEntry.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-            }
-        });
 
         cancelSelected = findViewById(R.id.cancelSelected);
         //hide cancelSelected until needed
