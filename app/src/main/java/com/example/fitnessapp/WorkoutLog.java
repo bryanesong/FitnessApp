@@ -47,7 +47,7 @@ public class WorkoutLog extends AppCompatActivity {
                     @Override
                     protected Object doInBackground(Object[] objects) {
                         OkHttpClient client = new OkHttpClient();
-                        Log.d("test","https://api.nal.usda.gov/fdc/v1/foods/list    ?api_key="+apiKey+"&query="+searchBar.getText().toString().replace(" ","%20"));
+                        Log.d("test","https://api.nal.usda.gov/fdc/v1/foods/search?api_key="+apiKey+"&query="+searchBar.getText().toString().replace(" ","%20"));
                         Request request = new Request.Builder()
                                 .url("https://api.nal.usda.gov/fdc/v1/foods/search?api_key="+apiKey+"&query="+searchBar.getText().toString().replace(" ","%20"))
                                 .build();
@@ -66,6 +66,15 @@ public class WorkoutLog extends AppCompatActivity {
                     @Override
                     protected void onPostExecute(Object o){
                         JSONText.setText(o.toString());
+                        //testing parsing JSON file.
+                        try {
+                            JSONObject obj = new JSONObject(o.toString());
+
+                            JSONText.setText(obj.get("query").toString());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
                     }
                 }.execute();
 
