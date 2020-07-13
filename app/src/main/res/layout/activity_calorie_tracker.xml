@@ -77,6 +77,14 @@
         app:backgroundTint="#BA1818"
         app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
 
+    <TextView
+        android:id="@+id/noEntryTextView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center_horizontal"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
     <ListView
         android:id="@+id/itemList"
         android:layout_width="match_parent"

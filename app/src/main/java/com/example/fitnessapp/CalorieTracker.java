@@ -36,6 +36,7 @@ public class CalorieTracker extends AppCompatActivity {
     protected static ArrayList<TrackerData> entries = new ArrayList<TrackerData>();
     final DatabaseReference reff = FirebaseDatabase.getInstance().getReference();
     FloatingActionButton addTrackerData, removeEntry, editEntry, cancelSelected;
+    TextView noEntryMessage;
     ListView trackerListView;
 
     @Override
@@ -53,15 +54,19 @@ public class CalorieTracker extends AppCompatActivity {
         //pulls entries if needed and draws listView
         pullEntriesIfNeeded();
 
-
         //create floating button to add entries
         createTrackerDataButtons();
 
         //create item click listener
         registerClickCallback();
+
+
+        //create textView for no entries
+        createNoEntryText();
     }
 
     public void populateListView() {
+        updateNoEntryText();
         ArrayAdapter<TrackerData> adapter = new MyListAdapter();
         ListView list = (ListView) findViewById(R.id.itemList);
         list.setAdapter(adapter);
@@ -246,4 +251,16 @@ public class CalorieTracker extends AppCompatActivity {
         addTrackerData.setVisibility(View.GONE);
     }
 
+
+    private void createNoEntryText() {
+        noEntryMessage = findViewById(R.id.noEntryTextView);
+    }
+
+    private void updateNoEntryText() {
+        if(entries.isEmpty()) {
+            noEntryMessage.setText("No entries found :(");
+        } else {
+            noEntryMessage.setText("");
+        }
+    }
 }
