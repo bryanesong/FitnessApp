@@ -42,14 +42,13 @@ public class WorkoutLog extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 Log.d("log_tag", "starting string request.");
-
                 AsyncTask asyncTask = new AsyncTask(){
                     @Override
                     protected Object doInBackground(Object[] objects) {
                         OkHttpClient client = new OkHttpClient();
-                        Log.d("test","https://api.nal.usda.gov/fdc/v1/foods/search?api_key="+apiKey+"&query="+searchBar.getText().toString().replace(" ","%20"));
+                        Log.d("test","https://api.nal.usda.gov/fdc/v1/foods/list?api_key="+apiKey+"&query="+searchBar.getText().toString().replace(" ","%20"));
                         Request request = new Request.Builder()
-                                .url("https://api.nal.usda.gov/fdc/v1/foods/search?api_key="+apiKey+"&query="+searchBar.getText().toString().replace(" ","%20"))
+                                .url("https://api.nal.usda.gov/fdc/v1/foods/list?api_key="+apiKey+"&query="+searchBar.getText().toString().replace(" ","%20"))
                                 .build();
 
                         Response response = null;
@@ -69,14 +68,15 @@ public class WorkoutLog extends AppCompatActivity {
                         //testing parsing JSON file.
                         try {
                             JSONObject obj = new JSONObject(o.toString());
-
                             JSONText.setText(obj.get("query").toString());
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
 
                     }
                 }.execute();
+
 
             }
         });
@@ -89,7 +89,7 @@ public class WorkoutLog extends AppCompatActivity {
 
     }
 
-    public void getRequestApi(){
+    public static class GetApiRequest{
 
     }
 }
