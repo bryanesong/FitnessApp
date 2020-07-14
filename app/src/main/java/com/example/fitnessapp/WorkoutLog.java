@@ -67,9 +67,8 @@ public class WorkoutLog extends AppCompatActivity {
                         JSONText.setText(o.toString());
                         //testing parsing JSON file.
                         try {
-                            JSONObject obj = new JSONObject(o.toString());
-                            JSONText.setText(obj.get("query").toString());
-
+                            JSONArray obj = new JSONArray(o.toString());
+                            JSONText.setText(obj.getJSONObject(0).get("fdcId").toString());
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
