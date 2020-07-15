@@ -5,10 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -51,8 +49,8 @@ public class ChangeEntryData extends AppCompatActivity {
     }
 
     private void setupButtons() {
-        confirmButton = findViewById((R.id.changeEntryConfirmButton));
-        cancelButton = findViewById((R.id.changeEntryCancelButton));
+        confirmButton = findViewById((R.id.addDataConfirmButton));
+        cancelButton = findViewById((R.id.addDataCancelButton));
 
 
     }

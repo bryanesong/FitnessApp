@@ -193,10 +193,10 @@
         android:text="Name" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/changeEntryConfirmButton"
+        android:id="@+id/addDataConfirmButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/changeEntryCancelButton"
+        android:layout_above="@+id/addDataCancelButton"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_marginStart="@dimen/fab_margin"
@@ -212,7 +212,7 @@
         android:focusable="true" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/changeEntryCancelButton"
+        android:id="@+id/addDataCancelButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

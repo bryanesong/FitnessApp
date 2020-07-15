@@ -28,7 +28,7 @@ import java.util.Date;
 public class AddTrackerData extends AppCompatActivity {
     ArrayList<String> measurementSuggestions = new ArrayList<String>(Arrays.asList("Cups","Gallons","Ounces","Pounds","Grams"));
     ArrayList<String> foodTypeSuggestions = new ArrayList<String>(Arrays.asList("Cheeseballs"));
-    EditText foodTypeInput, calorieInput, quantityInput, measurementInput;
+    EditText foodTypeInput, calorieInput, quantityInput, measurementInput, dateInput, timeInput;
     Button submitDataButton;
     DatabaseReference reff;
     Account account;
@@ -66,6 +66,8 @@ public class AddTrackerData extends AppCompatActivity {
         calorieInput = (EditText)findViewById(R.id.calorieInput);
         quantityInput = (EditText)findViewById(R.id.quantityInput);
         measurementInput = (EditText)findViewById(R.id.measurementInput);
+        dateInput = (EditText)findViewById(R.id.dateInput);
+        timeInput=(EditText)findViewById(R.id.timeInput);
     }
 
 
@@ -74,6 +76,11 @@ public class AddTrackerData extends AppCompatActivity {
         calorieInput.setText("");
         quantityInput.setText("");
         measurementInput.setText("");
+        DateFormat timeFormat = new SimpleDateFormat("hh:mm a");
+        DateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
+        Date date = new Date();
+        dateInput.setText(dateFormat.format(date));;
+        timeInput.setText(timeFormat.format(date));;
     }
 
     public boolean onOptionsItemSelected(MenuItem item){
@@ -90,13 +97,18 @@ public class AddTrackerData extends AppCompatActivity {
             public void onClick(View v){
 
                 //if no text areas are blank, add current entry to Entries
-                if(!foodTypeInput.getText().toString().equals("") && !calorieInput.getText().toString().equals("") && !quantityInput.getText().toString().equals("") && !measurementInput.getText().toString().equals("")) {
+                if(!foodTypeInput.getText().toString().equals("") && !calorieInput.getText().toString().equals("") && !quantityInput.getText().toString().equals("") && !measurementInput.getText().toString().equals("") && !dateInput.getText().toString().equals("") && !timeInput.getText().toString().equals("")) {
 
                     //add entry
-                    DateFormat timeFormat = new SimpleDateFormat("hh:mm a");
-                    DateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
-                    Date date = new Date();
-                    CalorieTracker.addEntries(new TrackerData(Integer.parseInt(calorieInput.getText().toString()), foodTypeInput.getText().toString(), Integer.parseInt(quantityInput.getText().toString()), measurementInput.getText().toString(), dateFormat.format(date), timeFormat.format(date)));
+
+                    CalorieTracker.addEntries(new TrackerData(
+                            Integer.parseInt(calorieInput.getText().toString()),
+                            foodTypeInput.getText().toString(),
+                            Integer.parseInt(quantityInput.getText().toString()),
+                            measurementInput.getText().toString(),
+                            dateInput.getText().toString(),
+                            timeInput.getText().toString()
+                    ));
 
                     Toast.makeText(AddTrackerData.this, "\"" + foodTypeInput.getText() + "\" food entry has been submitted.",
                             Toast.LENGTH_LONG).show();
