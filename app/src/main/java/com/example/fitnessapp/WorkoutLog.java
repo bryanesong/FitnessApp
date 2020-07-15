@@ -64,11 +64,22 @@ public class WorkoutLog extends AppCompatActivity {
 
                     @Override
                     protected void onPostExecute(Object o){
-                        JSONText.setText(o.toString());
+                        //JSONText.setText(o.toString());
                         //testing parsing JSON file.
                         try {
+
                             JSONArray obj = new JSONArray(o.toString());
-                            JSONText.setText(obj.getJSONObject(0).get("fdcId").toString());
+                            Log.d("test",obj.toString());
+                            USDAFoodParser parser = new USDAFoodParser(obj);
+
+                            JSONObject obj2 = new JSONObject(obj.getJSONObject(0).toString());
+                            JSONArray foodNutrientArray = new JSONArray(obj2.getJSONArray("foodNutrients").toString());
+                            JSONObject protein = new JSONObject(foodNutrientArray.getJSONObject(6).toString());//protein
+
+                            JSONText.setText(protein.get("amount").toString());
+
+
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
