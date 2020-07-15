@@ -24,6 +24,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.nio.charset.Charset;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
@@ -109,6 +111,12 @@ public class RegisterAccount extends AppCompatActivity {
 
                     Log.d("UUID",uniqueKey);
                     reff.child(MainActivity.currentUser.getUid()).child("Friends List").child("UUID").setValue(uniqueKey);
+                    FriendsListContainer placeholder = new FriendsListContainer();
+                    placeholder.addFriend("placeholder");
+                    //Map<String,Object> childUpdates = new HashMap<>();
+                    //childUpdates.put("/"+MainActivity.currentUser.getUid()+"/Friends List/List/"+placeholder);
+                    Log.d("friend list check",placeholder.toString());
+                    reff.child(MainActivity.currentUser.getUid()).child("Friends List").child("List").setValue(placeholder);
 
                     openMainActivity();
                 } else {
