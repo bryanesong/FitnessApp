@@ -52,22 +52,26 @@ public class AddTrackerData extends AppCompatActivity {
         addSubmitListener();
 
         //creates autocomplete textboxes
+        /*
         createAutoComplete(measurementTypeAuto, R.id.measurementInput, "measurement", measurementSuggestions);
         createAutoComplete(foodTypeAuto, R.id.foodInput, "food", foodTypeSuggestions);
-
+*/
     }
 
     private void addButton() {
-        submitDataButton = (Button)findViewById((R.id.addDataButton));
+        //submitDataButton = (Button)findViewById((R.id.addDataButton));
     }
 
     private void addText() {
+        /*
         foodTypeInput = (EditText)findViewById(R.id.foodInput);
         calorieInput = (EditText)findViewById(R.id.calorieInput);
         quantityInput = (EditText)findViewById(R.id.quantityInput);
         measurementInput = (EditText)findViewById(R.id.measurementInput);
         dateInput = (EditText)findViewById(R.id.dateInput);
         timeInput=(EditText)findViewById(R.id.timeInput);
+
+         */
     }
 
 

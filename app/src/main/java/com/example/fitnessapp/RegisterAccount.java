@@ -23,6 +23,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.nio.charset.Charset;
+import java.util.Random;
+import java.util.UUID;
+
 
 public class RegisterAccount extends AppCompatActivity {
     EditText emailInput, passwordInput, usernameInput;
@@ -45,7 +49,7 @@ public class RegisterAccount extends AppCompatActivity {
         usernameInput = (EditText)findViewById(R.id.usernameText);
 
         account = new Account();
-        reff = FirebaseDatabase.getInstance().getReference().child("Account");
+        reff = FirebaseDatabase.getInstance().getReference();
 
         reff.addValueEventListener(new ValueEventListener(){
             @Override
@@ -90,6 +94,22 @@ public class RegisterAccount extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     Log.d(TAG, "Create user with email: Success");
                     MainActivity.currentUser = MainActivity.mAuth.getCurrentUser();
+
+                    //assign user id account a friend code
+                    int leftLimit = 97; // letter 'a'
+                    int rightLimit = 122; // letter 'z'
+                    int targetStringLength = 10;
+                    Random random = new Random();
+                    StringBuilder buffer = new StringBuilder(targetStringLength);
+                    for (int i = 0; i < targetStringLength; i++) {
+                        int randomLimitedInt = leftLimit + (int)(random.nextFloat() * (rightLimit - leftLimit + 1));
+                        buffer.append((char) randomLimitedInt);
+                    }
+                    String uniqueKey = buffer.toString();
+
+                    Log.d("UUID",uniqueKey);
+                    reff.child(MainActivity.currentUser.getUid()).child("Friends List").child("UUID").setValue(uniqueKey);
+
                     openMainActivity();
                 } else {
                     //sign-in fails somehow
@@ -99,6 +119,7 @@ public class RegisterAccount extends AppCompatActivity {
                 }
             }
         });
+
     }
 
     public void openMainActivity(){//send user back to main screen
