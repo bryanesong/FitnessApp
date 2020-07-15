@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -29,7 +30,7 @@ public class AddTrackerData extends AppCompatActivity {
     ArrayList<String> measurementSuggestions = new ArrayList<String>(Arrays.asList("Cups","Gallons","Ounces","Pounds","Grams"));
     ArrayList<String> foodTypeSuggestions = new ArrayList<String>(Arrays.asList("Cheeseballs"));
     EditText foodTypeInput, calorieInput, quantityInput, measurementInput, dateInput, timeInput;
-    Button submitDataButton;
+    FloatingActionButton submitDataButton, cancelDataButton, searchDataButton;
     DatabaseReference reff;
     Account account;
     AutoCompleteTextView measurementTypeAuto, foodTypeAuto;
@@ -48,26 +49,35 @@ public class AddTrackerData extends AppCompatActivity {
         //create text boxes
         addText();
 
+        //set time and date
+        setTmeAndDate();
+
         //collects and submits text to database
         addSubmitListener();
 
+        //closes current activity
+        cancelDataListener();
+
         //creates autocomplete textboxes
-        createAutoComplete(measurementTypeAuto, R.id.measurementInput, "measurement", measurementSuggestions);
-        createAutoComplete(foodTypeAuto, R.id.foodInput, "food", foodTypeSuggestions);
+        createAutoComplete(measurementTypeAuto, R.id.changeEntryMeasurementTypeInput, "measurement", measurementSuggestions);
+        createAutoComplete(foodTypeAuto, R.id.changeEntryFoodTypeInput, "food", foodTypeSuggestions);
 
     }
 
     private void addButton() {
-        submitDataButton = (Button)findViewById((R.id.addDataButton));
+        submitDataButton = findViewById((R.id.addDataConfirmButton));
+        cancelDataButton = findViewById((R.id.addDataCancelButton));
     }
 
     private void addText() {
-        foodTypeInput = (EditText)findViewById(R.id.foodInput);
-        calorieInput = (EditText)findViewById(R.id.calorieInput);
-        quantityInput = (EditText)findViewById(R.id.quantityInput);
-        measurementInput = (EditText)findViewById(R.id.measurementInput);
-        dateInput = (EditText)findViewById(R.id.dateInput);
-        timeInput=(EditText)findViewById(R.id.timeInput);
+        calorieInput = (EditText)findViewById(R.id.changeEntryCalorieInput);
+        quantityInput = (EditText)findViewById(R.id.changeEntryQuantityInput);
+        dateInput = (EditText)findViewById(R.id.changeEntryDateInput);
+        timeInput=(EditText)findViewById(R.id.changeEntryTimeInput);
+
+        foodTypeInput = (AutoCompleteTextView)findViewById(R.id.changeEntryFoodTypeInput);
+        measurementInput = (AutoCompleteTextView)findViewById(R.id.changeEntryMeasurementTypeInput);
+
     }
 
 
@@ -76,11 +86,7 @@ public class AddTrackerData extends AppCompatActivity {
         calorieInput.setText("");
         quantityInput.setText("");
         measurementInput.setText("");
-        DateFormat timeFormat = new SimpleDateFormat("hh:mm a");
-        DateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
-        Date date = new Date();
-        dateInput.setText(dateFormat.format(date));;
-        timeInput.setText(timeFormat.format(date));;
+        setTmeAndDate();
     }
 
     public boolean onOptionsItemSelected(MenuItem item){
@@ -92,12 +98,17 @@ public class AddTrackerData extends AppCompatActivity {
 
     private void addSubmitListener() {
         submitDataButton.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v){
 
                 //if no text areas are blank, add current entry to Entries
-                if(!foodTypeInput.getText().toString().equals("") && !calorieInput.getText().toString().equals("") && !quantityInput.getText().toString().equals("") && !measurementInput.getText().toString().equals("") && !dateInput.getText().toString().equals("") && !timeInput.getText().toString().equals("")) {
+                if(!foodTypeInput.getText().toString().equals("")
+                        && !calorieInput.getText().toString().equals("")
+                        && !quantityInput.getText().toString().equals("")
+                        && !measurementInput.getText().toString().equals("")
+                        && !dateInput.getText().toString().equals("")
+                        && !timeInput.getText().toString().equals("")
+                ) {
 
                     //add entry
 
@@ -149,6 +160,24 @@ public class AddTrackerData extends AppCompatActivity {
 
         box.setThreshold(1);
         box.setAdapter(adapter);
+    }
+
+    private void cancelDataListener() {
+        cancelDataButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AddTrackerData.this, CalorieTracker.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void setTmeAndDate() {
+        DateFormat timeFormat = new SimpleDateFormat("hh:mm a");
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        Date date = new Date();
+        dateInput.setText(dateFormat.format(date));;
+        timeInput.setText(timeFormat.format(date));;
     }
 
 }
