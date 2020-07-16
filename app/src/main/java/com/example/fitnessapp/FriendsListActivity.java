@@ -159,7 +159,7 @@ public class FriendsListActivity extends AppCompatActivity {
         getFriendCodeButton.setVisibility(ViewGroup.INVISIBLE);
         backButtonForFriendCode.setVisibility(ViewGroup.VISIBLE);
 
-        reff = FirebaseDatabase.getInstance().getReference().child(MainActivity.mAuth.getUid()).child("Friends List Info");
+        reff = FirebaseDatabase.getInstance().getReference().child("Users").child(MainActivity.mAuth.getUid()).child("Friends List Info");
 
         reff.addValueEventListener(new ValueEventListener(){
             @Override
