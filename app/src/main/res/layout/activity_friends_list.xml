@@ -38,14 +38,41 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/addFriendButton"
-        android:text="Placeholder" />
+        android:text="Placeholder"
+        android:gravity="center_vertical|center_horizontal"/>
 
-    <LinearLayout
-        android:id="@+id/friendLinearLayout"
+    <ListView
+        android:id="@+id/friendListLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/addFriendButton"
-        android:orientation="vertical"></LinearLayout>
+        android:orientation="vertical"></ListView>
 
+    <EditText
+        android:id="@+id/addFriendCodeBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/addFriendButton"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:hint="Friend Code"
+        />
+
+    <Button
+        android:id="@+id/addFriendCodeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add friend"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/addFriendCodeBar"/>
+
+    <Button
+        android:id="@+id/backButtonForFriendCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/friendsList"/>
 
 </RelativeLayout>

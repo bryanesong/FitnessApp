@@ -111,6 +111,7 @@ public class RegisterAccount extends AppCompatActivity {
 
                     Log.d("UUID",uniqueKey);
                     reff.child(MainActivity.currentUser.getUid()).child("Friends List Info").child("UUID").setValue(uniqueKey);
+                    reff.child(MainActivity.currentUser.getUid()).child("Friends List Info").child("Username").setValue(account.getUsername());
                     FriendsListContainer placeholder = new FriendsListContainer();
                     //placeholder.addFriend("placeholder");
                     //Map<String,Object> childUpdates = new HashMap<>();

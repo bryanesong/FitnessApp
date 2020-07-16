@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 public class FriendsListContainer {
     private ArrayList<String> friendList;
+
+
+
+    private ArrayList<String> usernameList;
     private int friendCount;
 
     public FriendsListContainer(){
@@ -19,14 +23,16 @@ public class FriendsListContainer {
         return s;
     }
 
-    public void addFriend(String UID){
+    public void addFriend(String UID, String username){
         friendList.add(UID);
+        usernameList.add(username);
         friendCount++;
     }
 
-    public boolean removeFriend(String UID){
+    public boolean removeFriend(String UID, String username){
         for(int i = 0;i<friendList.size();i++){
             if(friendList.get(i).equals(UID)){
+                usernameList.remove(i);
                 friendList.remove(i);
                 friendCount--;
                 return true;
@@ -37,7 +43,7 @@ public class FriendsListContainer {
     }
 
     public boolean isEmpty(){
-        if(friendList == null){
+        if(friendList == null || friendCount == 0){
             return true;
         }
         return friendList.isEmpty();
@@ -57,5 +63,13 @@ public class FriendsListContainer {
 
     public void setFriendList(ArrayList<String> friendList) {
         this.friendList = friendList;
+    }
+
+    public ArrayList<String> getUsernameList() {
+        return usernameList;
+    }
+
+    public void setUsernameList(ArrayList<String> usernameList) {
+        this.usernameList = usernameList;
     }
 }
