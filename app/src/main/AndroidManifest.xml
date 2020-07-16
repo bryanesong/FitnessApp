@@ -12,6 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".SearchFoodDatabase"></activity>
+        <activity android:name=".FriendsListActivity"></activity>
         <activity android:name=".HomeScreen" />
         <activity android:name=".ChangeEntryData" />
         <activity android:name=".WorkoutLog" />
