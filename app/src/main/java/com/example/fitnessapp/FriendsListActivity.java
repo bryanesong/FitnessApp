@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -47,7 +48,7 @@ public class FriendsListActivity extends AppCompatActivity {
         friendAddCodeBar.setVisibility(ViewGroup.INVISIBLE);
         addFriendButtonWithCode.setVisibility(ViewGroup.INVISIBLE);
         backButtonForFriendCode.setVisibility(ViewGroup.INVISIBLE);
-        reff = FirebaseDatabase.getInstance().getReference().child(MainActivity.mAuth.getUid()).child("Friends List Info").child("List");
+        reff = FirebaseDatabase.getInstance().getReference().child("Users").child(MainActivity.mAuth.getUid()).child("Friends List Info").child("List");
 
         reff.addValueEventListener(new ValueEventListener(){
             @Override
@@ -125,6 +126,31 @@ public class FriendsListActivity extends AppCompatActivity {
         addFriendCodeButton.setVisibility(ViewGroup.INVISIBLE);
         getFriendCodeButton.setVisibility(ViewGroup.INVISIBLE);
         addFriendButtonWithCode.setVisibility(ViewGroup.VISIBLE);
+
+        addFriendButtonWithCode.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                boolean successful = false;
+                reff = FirebaseDatabase.getInstance().getReference();
+
+                if(successful){
+                    Toast.makeText(FriendsListActivity.this,"Friend has been added!",Toast.LENGTH_LONG);
+                    friendsListView.setVisibility(ViewGroup.INVISIBLE);
+                    friendsLayout.setVisibility(ViewGroup.VISIBLE);
+                    addFriendCodeButton.setVisibility(ViewGroup.VISIBLE);
+                    getFriendCodeButton.setVisibility(ViewGroup.VISIBLE);
+                    backButtonForFriendCode.setVisibility(ViewGroup.INVISIBLE);
+                    addFriendButtonWithCode.setVisibility(ViewGroup.INVISIBLE);
+                    friendAddCodeBar.setVisibility(ViewGroup.INVISIBLE);
+
+
+                }else{
+                    Toast.makeText(FriendsListActivity.this,"Friend code does not exist, please try again.",Toast.LENGTH_LONG);
+                }
+
+            }
+        });
+
     }
 
     public void getFriendCodeAction(){
