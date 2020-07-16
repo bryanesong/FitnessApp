@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -14,10 +16,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 public class FriendsListActivity extends AppCompatActivity {
     private DatabaseReference reff;
     private Button addFriendCodeButton,getFriendCodeButton;
     private TextView friendsListView;
+    private LinearLayout friendsLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,18 +31,32 @@ public class FriendsListActivity extends AppCompatActivity {
         addFriendCodeButton = findViewById(R.id.addFriendButton);
         getFriendCodeButton = findViewById(R.id.getFriendKeyButton);
         friendsListView = findViewById(R.id.friendsList);
+        friendsLayout = findViewById(R.id.friendLinearLayout);
 
-        reff = FirebaseDatabase.getInstance().getReference().child(MainActivity.mAuth.getUid()).child("FriendsList");
+        //initially set text to be invisible in case they do have friends
+        friendsListView.setVisibility(ViewGroup.INVISIBLE);
 
-        ValueEventListener postListen = new ValueEventListener(){
+        reff = FirebaseDatabase.getInstance().getReference().child(MainActivity.mAuth.getUid()).child("Friends List Info").child("List");
+
+        reff.addValueEventListener(new ValueEventListener(){
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 FriendsListContainer friendList = snapshot.getValue(FriendsListContainer.class);
-                //Log.d
-                if(friendList.isEmpty()){
+                //check if friends list is empty
+                if(false){//friendList.isEmpty()){
+                    friendsListView.setVisibility(ViewGroup.VISIBLE);
                     friendsListView.setText("You have no friends :(");
-                }else{
-                    friendsListView.setText("You have some friends!");
+                }else {
+
+                    //if friends list isnt empty then start listing friends
+                    ArrayList<String> temp = new ArrayList<>();
+                    temp.add("temp friend 1");
+                    temp.add("temp friend 2");
+                    temp.add("temp friend 3");
+                    temp.add("temp friend 4");
+                    temp.add("temp friend 5");
+                    temp.add("temp friend 6");
+
                 }
             }
 
@@ -44,7 +64,7 @@ public class FriendsListActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.w("FriendsListActivity","getting friendsListContainer: Failed.");
             }
-        };//used to read if the current user has a generated user id
+            });//used to read if the current user has a generated user id
 
 
     }

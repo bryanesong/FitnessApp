@@ -40,5 +40,12 @@
         android:layout_below="@id/addFriendButton"
         android:text="Placeholder" />
 
+    <LinearLayout
+        android:id="@+id/friendLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/addFriendButton"
+        android:orientation="vertical"></LinearLayout>
+
 
 </RelativeLayout>

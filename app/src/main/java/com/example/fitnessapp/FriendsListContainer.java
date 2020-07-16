@@ -37,6 +37,9 @@ public class FriendsListContainer {
     }
 
     public boolean isEmpty(){
+        if(friendList == null){
+            return true;
+        }
         return friendList.isEmpty();
     }
 
