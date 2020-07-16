@@ -32,8 +32,11 @@ public class FriendsListActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 FriendsListContainer friendList = snapshot.getValue(FriendsListContainer.class);
-                if(friendList == null){
+                //Log.d
+                if(friendList.isEmpty()){
                     friendsListView.setText("You have no friends :(");
+                }else{
+                    friendsListView.setText("You have some friends!");
                 }
             }
 
