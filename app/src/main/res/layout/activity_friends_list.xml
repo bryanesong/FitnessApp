@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context=".FriendsListActivity">
+
+
+    <TextView
+        android:id="@+id/friendsListText"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Friends List"
+        android:textSize="40sp"
+         />
+
+    <Button
+        android:id="@+id/addFriendButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Friend Code"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/friendsListText"/>
+
+    <Button
+        android:id="@+id/getFriendKeyButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get Friend Code"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/friendsListText"/>
+
+    <TextView
+        android:id="@+id/friendsList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/addFriendButton"
+        android:text="Placeholder"
+        android:gravity="center_vertical|center_horizontal"/>
+
+    <ListView
+        android:id="@+id/friendListLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/addFriendButton"
+        android:orientation="vertical"></ListView>
+
+    <EditText
+        android:id="@+id/addFriendCodeBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/addFriendButton"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:hint="Friend Code"
+        />
+
+    <Button
+        android:id="@+id/addFriendCodeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add friend"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/addFriendCodeBar"/>
+
+    <Button
+        android:id="@+id/backButtonForFriendCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/friendsList"/>
+
+</RelativeLayout>
