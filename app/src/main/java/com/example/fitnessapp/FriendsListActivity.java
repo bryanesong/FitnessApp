@@ -59,7 +59,6 @@ public class FriendsListActivity extends AppCompatActivity {
                     friendsListView.setVisibility(ViewGroup.VISIBLE);
                     friendsListView.setText("You have no friends :(");
                 }else {
-
                     //if friends list isnt empty then start listing friends
 
                     //temporary array used for testing
@@ -106,14 +105,12 @@ public class FriendsListActivity extends AppCompatActivity {
 
         backButtonForFriendCode.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v){
+            public void onClick(View v){// this button still needs to be worked on
                 friendsListView.setVisibility(ViewGroup.INVISIBLE);
                 friendsLayout.setVisibility(ViewGroup.VISIBLE);
                 addFriendCodeButton.setVisibility(ViewGroup.VISIBLE);
                 getFriendCodeButton.setVisibility(ViewGroup.VISIBLE);
                 backButtonForFriendCode.setVisibility(ViewGroup.INVISIBLE);
-                Bundle tempBundle = new Bundle();
-                onCreate(tempBundle);
             }
         });
 
