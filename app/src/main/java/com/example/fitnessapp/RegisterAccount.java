@@ -110,14 +110,14 @@ public class RegisterAccount extends AppCompatActivity {
                     String uniqueKey = buffer.toString();
 
                     Log.d("UUID",uniqueKey);
-                    reff.child(MainActivity.currentUser.getUid()).child("Friends List Info").child("UUID").setValue(uniqueKey);
-                    reff.child(MainActivity.currentUser.getUid()).child("Friends List Info").child("Username").setValue(account.getUsername());
+                    reff.child("Users").child(MainActivity.currentUser.getUid()).child("Friends List Info").child("UUID").setValue(uniqueKey);
+                    reff.child("Users").child(MainActivity.currentUser.getUid()).child("Friends List Info").child("Username").setValue(account.getUsername());
                     FriendsListContainer placeholder = new FriendsListContainer();
                     //placeholder.addFriend("placeholder");
                     //Map<String,Object> childUpdates = new HashMap<>();
                     //childUpdates.put("/"+MainActivity.currentUser.getUid()+"/Friends List/List/"+placeholder);
                     Log.d("friend list check",placeholder.toString());
-                    reff.child(MainActivity.currentUser.getUid()).child("Friends List Info").child("List").setValue(placeholder);
+                    reff.child("Users").child(MainActivity.currentUser.getUid()).child("Friends List Info").child("List").setValue(placeholder);
                     openMainActivity();
                 } else {
                     //sign-in fails somehow
