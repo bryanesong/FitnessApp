@@ -20,15 +20,9 @@ public class SearchFoodDatabase extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         USDAFoodParser parser = new USDAFoodParser();
-        try {
-            SFDfoodEntries = parser.searchFood("Cheddar Cheese");
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (TimeoutException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+        //SFDfoodEntries = parser.searchFood("Cheddar Cheese");
+
+
         Log.e("SearchFoodDatabase", "" + parser.getFoodList().size());
         setContentView(R.layout.activity_search_food_database);
         initializeRecyclerView();

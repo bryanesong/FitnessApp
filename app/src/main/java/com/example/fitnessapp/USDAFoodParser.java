@@ -33,8 +33,6 @@ public class USDAFoodParser {
         this.foodList = foodList;
     }
 
-    private boolean finished = false;
-
     public USDAFoodParser() {
 
     }
@@ -91,9 +89,8 @@ public class USDAFoodParser {
         return foodList;
     }
 
-    public ArrayList<FoodEntry> searchFood(final String nameOfFood) throws InterruptedException, TimeoutException, ExecutionException {
+    public ArrayList<FoodEntry> searchFood(final String nameOfFood) {
         final ArrayList<FoodEntry> foundEntries = new ArrayList<>();
-        finished = false;
         AsyncTask asyncTask = new AsyncTask(){
             @Override
             protected Object doInBackground(Object[] objects) {
@@ -124,8 +121,6 @@ public class USDAFoodParser {
                     Log.d("test",obj.toString());
                     foodList = JSONArrayParser(obj);
                     Log.e("USDAFoodParser1", "" + foodList.size());
-                    finished = true;
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -133,11 +128,9 @@ public class USDAFoodParser {
             }
         }.execute();
         Log.e("USDAFoodParser2", "" + foodList.size());
-        while(!finished) {
-
-        }
         return foodList;
     }
+
 
     public class FoodEntry{
         double protein;
