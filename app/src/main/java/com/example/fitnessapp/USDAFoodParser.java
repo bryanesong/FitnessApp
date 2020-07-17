@@ -3,15 +3,40 @@ package com.example.fitnessapp;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.squareup.okhttp.Call;
+import com.squareup.okhttp.Callback;
+
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -22,7 +47,7 @@ This class will basically take in a JSON file and will allow you to access diffe
  */
 public class USDAFoodParser {
     final static String apiKey = "OtpdWCaIaKlnq3DXBs5VcVorVDopFLNaVrGLWT6i";
-
+    String s = "";
     static ArrayList<FoodEntry> foodList = new ArrayList<>();
 
     public ArrayList<FoodEntry> getFoodList() {
@@ -91,53 +116,6 @@ public class USDAFoodParser {
         return foodList;
     }
 
-    public ArrayList<FoodEntry> searchFood(final String nameOfFood) throws InterruptedException, TimeoutException, ExecutionException {
-        final ArrayList<FoodEntry> foundEntries = new ArrayList<>();
-        finished = false;
-        AsyncTask asyncTask = new AsyncTask(){
-            @Override
-            protected Object doInBackground(Object[] objects) {
-                OkHttpClient client = new OkHttpClient();
-                Log.d("test","https://api.nal.usda.gov/fdc/v1/foods/list?api_key="+apiKey+"&query="+nameOfFood.toString().replace(" ","%20"));
-                Request request = new Request.Builder()
-                        .url("https://api.nal.usda.gov/fdc/v1/foods/list?api_key="+apiKey+"&query="+nameOfFood.toString().replace(" ","%20"))
-                        .build();
-
-                Response response = null;
-
-                try{
-                    response = client.newCall(request).execute();
-                    return response.body().string();
-                }catch(IOException e){
-                    e.printStackTrace();
-                }
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Object o){
-                //JSONText.setText(o.toString());
-                //testing parsing JSON file.
-                try {
-
-                    JSONArray obj = new JSONArray(o.toString());
-                    Log.d("test",obj.toString());
-                    foodList = JSONArrayParser(obj);
-                    Log.e("USDAFoodParser1", "" + foodList.size());
-                    finished = true;
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }.execute();
-        Log.e("USDAFoodParser2", "" + foodList.size());
-        while(!finished) {
-
-        }
-        return foodList;
-    }
 
     public class FoodEntry{
         double protein;
