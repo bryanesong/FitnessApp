@@ -4,14 +4,12 @@ import java.util.ArrayList;
 
 public class FriendsListContainer {
     private ArrayList<String> friendList;
-
-
-
     private ArrayList<String> usernameList;
     private int friendCount;
 
     public FriendsListContainer(){
         friendList = new ArrayList<>();
+        usernameList = new ArrayList<>();
         friendCount = 0;
     }
 
@@ -23,10 +21,14 @@ public class FriendsListContainer {
         return s;
     }
 
-    public void addFriend(String UID, String username){
+    public boolean addFriend(String UID, String username){
+        if(UID == null || username == null){
+            return false;
+        }
         friendList.add(UID);
         usernameList.add(username);
         friendCount++;
+        return true;
     }
 
     public boolean removeFriend(String UID, String username){
