@@ -129,6 +129,11 @@ public class FriendsListActivity extends AppCompatActivity {
                     Toast.makeText(FriendsListActivity.this,"Friend Code is empty, please type in friend code.",Toast.LENGTH_SHORT).show();
                     return;
                 }
+                if(friendAddCodeBar.getText().toString().equals(reference.getKey())){
+                    Toast.makeText(FriendsListActivity.this,"Cannot add yourself, please try again.",Toast.LENGTH_SHORT).show();
+                    friendAddCodeBar.getText().clear();
+                    return;
+                }
 
                 //search through database to check if friend code exists, if does, then add to user friendlist
                 reference.addValueEventListener(new ValueEventListener(){
@@ -161,25 +166,25 @@ public class FriendsListActivity extends AppCompatActivity {
                                     reference.child(MainActivity.currentUser.getUid()).child("Friends List Info").child("List").setValue(friendListTempCurrentUser);
                                     Toast.makeText(FriendsListActivity.this,"Friend has been added!",Toast.LENGTH_LONG).show();
                                 }
-                                if(foundFriendSuccess == true){
-                                    Log.d("user add friend","user friend has been found.");
-                                    friendsListView.setVisibility(ViewGroup.INVISIBLE);
-                                    friendsLayout.setVisibility(ViewGroup.VISIBLE);
-                                    addFriendCodeButton.setVisibility(ViewGroup.VISIBLE);
-                                    getFriendCodeButton.setVisibility(ViewGroup.VISIBLE);
-                                    backButtonForFriendCode.setVisibility(ViewGroup.INVISIBLE);
-                                    addFriendButtonWithCode.setVisibility(ViewGroup.INVISIBLE);
-                                    friendAddCodeBar.setVisibility(ViewGroup.INVISIBLE);
-                                }else{
-                                    Log.d("user add friend","user friend has NOT been found.");
-                                }
                                 friendAddCodeBar.getText().clear();
                                 break;
                             }
 
-
                         }
-                        Toast.makeText(FriendsListActivity.this,"Friend code does not exist, please try again.",Toast.LENGTH_LONG).show();
+                        if(foundFriendSuccess == true){
+                            Log.d("user add friend","user friend has been found.");
+                            friendsListView.setVisibility(ViewGroup.INVISIBLE);
+                            friendsLayout.setVisibility(ViewGroup.VISIBLE);
+                            addFriendCodeButton.setVisibility(ViewGroup.VISIBLE);
+                            getFriendCodeButton.setVisibility(ViewGroup.VISIBLE);
+                            backButtonForFriendCode.setVisibility(ViewGroup.INVISIBLE);
+                            addFriendButtonWithCode.setVisibility(ViewGroup.INVISIBLE);
+                            friendAddCodeBar.setVisibility(ViewGroup.INVISIBLE);
+                        }else{
+                            Log.d("user add friend","user friend has NOT been found.");
+                            Toast.makeText(FriendsListActivity.this,"Friend code does not exist, please try again.",Toast.LENGTH_LONG).show();
+                        }
+
                     }
 
                     @Override
@@ -187,8 +192,6 @@ public class FriendsListActivity extends AppCompatActivity {
                         Log.w("FriendsListActivity","getting friendslist UUID: Failed.");
                     }
                 });
-
-
             }
         });
 
