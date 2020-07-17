@@ -58,6 +58,9 @@ public class AddTrackerData extends AppCompatActivity {
         //closes current activity
         cancelDataListener();
 
+        //opens SearchFoodDatabase activity
+        searchDataListener();
+
         //creates autocomplete textboxes
         createAutoComplete(measurementTypeAuto, R.id.changeEntryMeasurementTypeInput, "measurement", measurementSuggestions);
         createAutoComplete(foodTypeAuto, R.id.changeEntryFoodTypeInput, "food", foodTypeSuggestions);
@@ -67,6 +70,7 @@ public class AddTrackerData extends AppCompatActivity {
     private void addButton() {
         submitDataButton = findViewById((R.id.addDataConfirmButton));
         cancelDataButton = findViewById((R.id.addDataCancelButton));
+        searchDataButton = findViewById((R.id.addDataSearchItemButton));
     }
 
     private void addText() {
@@ -167,6 +171,16 @@ public class AddTrackerData extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(AddTrackerData.this, CalorieTracker.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void searchDataListener() {
+        searchDataButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AddTrackerData.this, SearchFoodDatabase.class);
                 startActivity(intent);
             }
         });

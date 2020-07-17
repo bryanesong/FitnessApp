@@ -1,16 +1,29 @@
 package com.example.fitnessapp;
 
+import android.os.AsyncTask;
 import android.util.Log;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /*
 This class will basically take in a JSON file and will allow you to access different variables from the JSON file in a more readible and processible format
  */
 public class USDAFoodParser {
+    final static String apiKey = "OtpdWCaIaKlnq3DXBs5VcVorVDopFLNaVrGLWT6i";
+
+    static ArrayList<FoodEntry> foodList = new ArrayList<>();
 
     public ArrayList<FoodEntry> getFoodList() {
         return foodList;
@@ -20,16 +33,24 @@ public class USDAFoodParser {
         this.foodList = foodList;
     }
 
-    ArrayList<FoodEntry> foodList = new ArrayList<>();
+    private boolean finished = false;
 
+    public USDAFoodParser() {
+
+    }
     //overloaded constructor will take in an object assuming that it is a JSON object
     public USDAFoodParser(JSONArray o){
+        JSONArrayParser(o);
+    }
+
+    public ArrayList<FoodEntry> JSONArrayParser(JSONArray o) {
         JSONArray foodNutrientArray;
         JSONObject obj2,temp;
         Log.d("HAHAHAHAA",o.toString());
         try{
             Log.d("length",o.length()+"");
             for(int i =0;i<o.length();i++){
+
                 obj2 = new JSONObject(o.getJSONObject(i).toString());
                 foodNutrientArray = new JSONArray(obj2.getJSONArray("foodNutrients").toString());
 
@@ -67,7 +88,55 @@ public class USDAFoodParser {
             Log.e("USDAFoodParser","Probably not a JSONArray");
             Log.e("Exception Error",e.toString());
         }
+        return foodList;
+    }
 
+    public ArrayList<FoodEntry> searchFood(final String nameOfFood) throws InterruptedException, TimeoutException, ExecutionException {
+        final ArrayList<FoodEntry> foundEntries = new ArrayList<>();
+        finished = false;
+        AsyncTask asyncTask = new AsyncTask(){
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                OkHttpClient client = new OkHttpClient();
+                Log.d("test","https://api.nal.usda.gov/fdc/v1/foods/list?api_key="+apiKey+"&query="+nameOfFood.toString().replace(" ","%20"));
+                Request request = new Request.Builder()
+                        .url("https://api.nal.usda.gov/fdc/v1/foods/list?api_key="+apiKey+"&query="+nameOfFood.toString().replace(" ","%20"))
+                        .build();
+
+                Response response = null;
+
+                try{
+                    response = client.newCall(request).execute();
+                    return response.body().string();
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Object o){
+                //JSONText.setText(o.toString());
+                //testing parsing JSON file.
+                try {
+
+                    JSONArray obj = new JSONArray(o.toString());
+                    Log.d("test",obj.toString());
+                    foodList = JSONArrayParser(obj);
+                    Log.e("USDAFoodParser1", "" + foodList.size());
+                    finished = true;
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }.execute();
+        Log.e("USDAFoodParser2", "" + foodList.size());
+        while(!finished) {
+
+        }
+        return foodList;
     }
 
     public class FoodEntry{
@@ -145,5 +214,7 @@ public class USDAFoodParser {
         public void setFoodName(String foodName) {
             this.foodName = foodName;
         }
+
+
     }
 }
