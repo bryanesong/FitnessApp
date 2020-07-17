@@ -3,11 +3,29 @@ package com.example.fitnessapp;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.squareup.okhttp.Call;
+import com.squareup.okhttp.Callback;
+
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -17,12 +35,16 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+
 /*
 This class will basically take in a JSON file and will allow you to access different variables from the JSON file in a more readible and processible format
  */
 public class USDAFoodParser {
     final static String apiKey = "OtpdWCaIaKlnq3DXBs5VcVorVDopFLNaVrGLWT6i";
-
+    String s = "";
     static ArrayList<FoodEntry> foodList = new ArrayList<>();
 
     public ArrayList<FoodEntry> getFoodList() {
