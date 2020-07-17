@@ -16,7 +16,7 @@ public class FriendsListContainer {
     public String toString(){
         String s = "";
         for(int i = 0;i<friendList.size();i++){
-            s+=friendList.get(i)+" ";
+            s+=friendList.get(i)+"\n";
         }
         return s;
     }
@@ -41,6 +41,15 @@ public class FriendsListContainer {
             }
         }
         //friend UID doesnt exist on their friends list
+        return false;
+    }
+
+    public boolean containsFriendUserId(String UID){
+        for(int i = 0;i<friendList.size();i++){
+            if(friendList.get(i).equals(UID)){
+                return true;
+            }
+        }
         return false;
     }
 

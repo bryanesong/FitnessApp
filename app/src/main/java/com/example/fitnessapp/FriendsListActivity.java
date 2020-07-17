@@ -51,7 +51,7 @@ public class FriendsListActivity extends AppCompatActivity {
         friendAddCodeBar.setVisibility(ViewGroup.INVISIBLE);
         addFriendButtonWithCode.setVisibility(ViewGroup.INVISIBLE);
         backButtonForFriendCode.setVisibility(ViewGroup.INVISIBLE);
-        reff = FirebaseDatabase.getInstance().getReference().child("Users").child(MainActivity.mAuth.getUid()).child("Friends List Info").child("List");
+        reff = FirebaseDatabase.getInstance().getReference().child("Users");
 
         populateFriendsList(reff);
 
@@ -90,6 +90,7 @@ public class FriendsListActivity extends AppCompatActivity {
     }
 
     public void populateFriendsList(DatabaseReference reference){
+        reference = reference.child(MainActivity.currentUser.getUid()).child("Friends List Info").child("List");
         reference.addValueEventListener(new ValueEventListener(){
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -124,49 +125,60 @@ public class FriendsListActivity extends AppCompatActivity {
         addFriendButtonWithCode.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-
-                reff = FirebaseDatabase.getInstance().getReference().child("Users");
+                if(friendAddCodeBar.getText().toString().equals("")){
+                    Toast.makeText(FriendsListActivity.this,"Friend Code is empty, please type in friend code.",Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 //search through database to check if friend code exists, if does, then add to user friendlist
-                reff.addValueEventListener(new ValueEventListener(){
+                reference.addValueEventListener(new ValueEventListener(){
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         Iterator<DataSnapshot> users = snapshot.getChildren().iterator();
                         Toast.makeText(FriendsListActivity.this,"Total Users: "+snapshot.getChildrenCount(),Toast.LENGTH_LONG);
                         int count = 0;
                         while(users.hasNext()){
+                            //use for debugging---------------
                             Log.d("searching","count: "+count);
                             count++;
+                            //--------------------
                             DataSnapshot user = users.next();
+                            /*
                             Log.d("user's firebase key ",user.getKey().toString());
                             Log.d("Friends info compare","friend code bar: "+friendAddCodeBar.getText().toString());
                             Log.d("Friends info compare","firebase friend code: "+user.child("Friends List Info").child("UUID").getValue().toString());
+
+                             */
                             if(user.child("Friends List Info").child("UUID").getValue().toString().equals(friendAddCodeBar.getText().toString())){
                                 foundFriendSuccess = true;
                                 //once user has been found grab friendlistcontainer from current user and update and repush into firebase database
-                                FriendsListContainer friendListTemp = snapshot.child(user.getKey()).child("Friends List Info").child("List").getValue(FriendsListContainer.class);
-                                Log.d("user key",user.getKey());
-                                Log.d("user username",snapshot.child(user.getKey()).child("Friends List Info").child("Username").getValue().toString());
-                                friendListTemp.addFriend(user.getKey().toString(),snapshot.child(user.getKey()).child("Friends List Info").child("Username").getValue().toString());
-                                reference.setValue(friendListTemp);
-                                break;
+                                FriendsListContainer friendListTempCurrentUser = snapshot.child(MainActivity.currentUser.getUid()).child("Friends List Info").child("List").getValue(FriendsListContainer.class);
+                                if(friendListTempCurrentUser.containsFriendUserId(user.getKey())){
+                                    Log.d("USER_ADD_FRIEND","Friend is already part of user friend list.");
+                                    Log.d("USER_ADD_FRIEND","Friends:"+friendListTempCurrentUser.toString());
+                                    Toast.makeText(FriendsListActivity.this,"Friend is already part of your friends list.",Toast.LENGTH_LONG).show();
+                                }else{
+                                    friendListTempCurrentUser.addFriend(user.getKey(),snapshot.child(user.getKey()).child("Friends List Info").child("Username").getValue().toString());
+                                    reference.child(MainActivity.currentUser.getUid()).child("Friends List Info").child("List").setValue(friendListTempCurrentUser);
+                                    Toast.makeText(FriendsListActivity.this,"Friend has been added!",Toast.LENGTH_LONG).show();
+                                }
+                                if(foundFriendSuccess == true){
+                                    Log.d("user add friend","user friend has been found.");
+                                    friendsListView.setVisibility(ViewGroup.INVISIBLE);
+                                    friendsLayout.setVisibility(ViewGroup.VISIBLE);
+                                    addFriendCodeButton.setVisibility(ViewGroup.VISIBLE);
+                                    getFriendCodeButton.setVisibility(ViewGroup.VISIBLE);
+                                    backButtonForFriendCode.setVisibility(ViewGroup.INVISIBLE);
+                                    addFriendButtonWithCode.setVisibility(ViewGroup.INVISIBLE);
+                                    friendAddCodeBar.setVisibility(ViewGroup.INVISIBLE);
+                                }else{
+                                    Log.d("user add friend","user friend has NOT been found.");
+                                }
+                            }else{
+                                Toast.makeText(FriendsListActivity.this,"Friend code does not exist, please try again.",Toast.LENGTH_LONG).show();
                             }
-                        }
-
-                        if(foundFriendSuccess == true){
-                            Log.d("user add friend","user friend has been found.");
-                            Toast.makeText(FriendsListActivity.this,"Friend has been added!",Toast.LENGTH_LONG);
-                            friendsListView.setVisibility(ViewGroup.INVISIBLE);
-                            friendsLayout.setVisibility(ViewGroup.VISIBLE);
-                            addFriendCodeButton.setVisibility(ViewGroup.VISIBLE);
-                            getFriendCodeButton.setVisibility(ViewGroup.VISIBLE);
-                            backButtonForFriendCode.setVisibility(ViewGroup.INVISIBLE);
-                            addFriendButtonWithCode.setVisibility(ViewGroup.INVISIBLE);
-                            friendAddCodeBar.setVisibility(ViewGroup.INVISIBLE);
-
-                        }else{
-                            Log.d("user add friend","user friend has NOT been found.");
-                            Toast.makeText(FriendsListActivity.this,"Friend code does not exist, please try again.",Toast.LENGTH_LONG);
+                            friendAddCodeBar.getText().clear();
+                            break;
                         }
                     }
 
