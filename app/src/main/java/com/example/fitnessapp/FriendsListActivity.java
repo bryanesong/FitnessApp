@@ -158,13 +158,16 @@ public class FriendsListActivity extends AppCompatActivity {
                                 foundFriendSuccess = true;
                                 //once user has been found grab friendlistcontainer from current user and update and repush into firebase database
                                 FriendsListContainer friendListTempCurrentUser = snapshot.child(MainActivity.currentUser.getUid()).child("Friends List Info").child("List").getValue(FriendsListContainer.class);
+                                FriendsListContainer friendsListTempOtherUser = snapshot.child(user.getKey()).child("Friends List Info").child("List").getValue(FriendsListContainer.class);
                                 if(friendListTempCurrentUser.containsFriendUserId(user.getKey())){
                                     Log.d("USER_ADD_FRIEND","Friend is already part of user friend list.");
                                     Log.d("USER_ADD_FRIEND","Friends:"+friendListTempCurrentUser.toString());
                                     Toast.makeText(FriendsListActivity.this,"Friend is already part of your friends list.",Toast.LENGTH_LONG).show();
                                 }else{
-                                    friendListTempCurrentUser.addFriend(user.getKey(),snapshot.child(user.getKey()).child("Friends List Info").child("Username").getValue().toString());
-                                    reference.child(MainActivity.currentUser.getUid()).child("Friends List Info").child("List").setValue(friendListTempCurrentUser);
+                                    friendListTempCurrentUser.addFriend(user.getKey(),snapshot.child(user.getKey()).child("Friends List Info").child("Username").getValue().toString());//add friend to current user account
+                                    reference.child(MainActivity.currentUser.getUid()).child("Friends List Info").child("List").setValue(friendListTempCurrentUser);//push to firebase
+                                    friendsListTempOtherUser.addFriend(MainActivity.currentUser.getUid(),snapshot.child(MainActivity.currentUser.getUid()).child("Friends List Info").child("Username").getValue().toString());//add current user to other friends list
+                                    reference.child(user.getKey()).child("Friends List Info").child("List").setValue(friendsListTempOtherUser);//push to firebase
                                     Toast.makeText(FriendsListActivity.this,"Friend has been added!",Toast.LENGTH_LONG).show();
                                 }
                                 friendAddCodeBar.getText().clear();
