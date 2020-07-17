@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id= "@+id/SFD_RecyclerView_layout">
+
+    <TextView
+        android:padding="15dp"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Food Name"
+        android:textAppearance = "@style/TextAppearance.AppCompat.Medium"
+        android:id="@+id/SFDFoodName"
+        android:textColor="#000"
+        />
+
+    <TextView
+        android:paddingHorizontal="30dp"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/SFDFoodName"
+        android:text="Other Info BLAH BLAH BLAH BLAH BLAH BLAH"
+        android:textAppearance = "@style/TextAppearance.AppCompat.Small"
+        android:id="@+id/SFDOtherInfo"/>
+
+</RelativeLayout>

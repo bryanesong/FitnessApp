@@ -71,8 +71,12 @@ public class USDAFoodParser {
     }
 
     public class FoodEntry{
-        double protein,carbs,fats;
-        String foodName,brandName;
+        double protein;
+        double carbs;
+        double fats;
+        double calories;
+        String foodName;
+        String brandName;
 
         public FoodEntry(double protein, double carbs, double fats, String foodName, String brandName){
             this.protein = protein;
@@ -80,6 +84,8 @@ public class USDAFoodParser {
             this.fats = fats;
             this.foodName = foodName;
             this.brandName = brandName;
+            //"The calories in food come from carbohydrates, proteins, and fats. A gram of carbohydrate contains 4 calories. A gram of protein also contains 4 calories. A gram of fat, though, contains 9 calories"
+            this.calories = (protein * 4) + (carbs * 4) + (fats * 9);
         }
 
         @Override
@@ -92,7 +98,21 @@ public class USDAFoodParser {
             s+="fats: "+fats+"\n";
             return s;
         }
+        public double getCalories() {
+            return calories;
+        }
 
+        public void setCalories(double calories) {
+            this.calories = calories;
+        }
+
+        public String getBrandName() {
+            return brandName;
+        }
+
+        public void setBrandName(String brandName) {
+            this.brandName = brandName;
+        }
 
         public double getProtein() {
             return protein;
