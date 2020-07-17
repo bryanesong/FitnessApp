@@ -173,9 +173,10 @@ public class FriendsListActivity extends AppCompatActivity {
                                 }else{
                                     Log.d("user add friend","user friend has NOT been found.");
                                 }
+                                friendAddCodeBar.getText().clear();
                                 break;
                             }
-                            friendAddCodeBar.getText().clear();
+
 
                         }
                         Toast.makeText(FriendsListActivity.this,"Friend code does not exist, please try again.",Toast.LENGTH_LONG).show();
