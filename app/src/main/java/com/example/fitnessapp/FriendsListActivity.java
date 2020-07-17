@@ -143,12 +143,11 @@ public class FriendsListActivity extends AppCompatActivity {
                             count++;
                             //--------------------
                             DataSnapshot user = users.next();
-                            /*
+
                             Log.d("user's firebase key ",user.getKey().toString());
                             Log.d("Friends info compare","friend code bar: "+friendAddCodeBar.getText().toString());
                             Log.d("Friends info compare","firebase friend code: "+user.child("Friends List Info").child("UUID").getValue().toString());
 
-                             */
                             if(user.child("Friends List Info").child("UUID").getValue().toString().equals(friendAddCodeBar.getText().toString())){
                                 foundFriendSuccess = true;
                                 //once user has been found grab friendlistcontainer from current user and update and repush into firebase database
@@ -174,12 +173,12 @@ public class FriendsListActivity extends AppCompatActivity {
                                 }else{
                                     Log.d("user add friend","user friend has NOT been found.");
                                 }
-                            }else{
-                                Toast.makeText(FriendsListActivity.this,"Friend code does not exist, please try again.",Toast.LENGTH_LONG).show();
+                                break;
                             }
                             friendAddCodeBar.getText().clear();
-                            break;
+
                         }
+                        Toast.makeText(FriendsListActivity.this,"Friend code does not exist, please try again.",Toast.LENGTH_LONG).show();
                     }
 
                     @Override
