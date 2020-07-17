@@ -195,7 +195,9 @@ public class FriendsListActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 currentUID = snapshot.child("UUID").getValue().toString();
+                friendsListView.setTextSize(40);
                 friendsListView.setText("Your friend code is:\n"+currentUID+"");
+
                 Log.w("FriendsListActivity","Successfully retrieved current user UUID: "+currentUID);
             }
 
