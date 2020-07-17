@@ -79,11 +79,12 @@ public class FriendsListActivity extends AppCompatActivity {
         backButtonForFriendCode.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){// this button still needs to be worked on
-                friendsListView.setVisibility(ViewGroup.INVISIBLE);
                 friendsLayout.setVisibility(ViewGroup.VISIBLE);
                 addFriendCodeButton.setVisibility(ViewGroup.VISIBLE);
                 getFriendCodeButton.setVisibility(ViewGroup.VISIBLE);
                 backButtonForFriendCode.setVisibility(ViewGroup.INVISIBLE);
+                friendsListView.setVisibility(ViewGroup.INVISIBLE);
+                populateFriendsList(reff);
             }
         });
 
@@ -169,7 +170,6 @@ public class FriendsListActivity extends AppCompatActivity {
                                 friendAddCodeBar.getText().clear();
                                 break;
                             }
-
                         }
                         if(foundFriendSuccess == true){
                             Log.d("user add friend","user friend has been found.");
