@@ -45,7 +45,7 @@ This class will basically take in a JSON file and will allow you to access diffe
 public class USDAFoodParser {
     final static String apiKey = "OtpdWCaIaKlnq3DXBs5VcVorVDopFLNaVrGLWT6i";
     String s = "";
-    static ArrayList<FoodEntry> foodList = new ArrayList<>();
+    ArrayList<FoodEntry> foodList = new ArrayList<>();
 
     public ArrayList<FoodEntry> getFoodList() {
         return foodList;
@@ -74,29 +74,40 @@ public class USDAFoodParser {
                 obj2 = new JSONObject(o.getJSONObject(i).toString());
                 foodNutrientArray = new JSONArray(obj2.getJSONArray("foodNutrients").toString());
 
-                double protein = 0;
-                double carbs = 0;
-                double fats = 0;
+                int protein = 0;
+                int carbs = 0;
+                int fats = 0;
                 for(int j =0;j<foodNutrientArray.length();j++){
                     temp = new JSONObject(foodNutrientArray.get(j).toString());
                     if(temp.get("name").equals("Protein")){
-                        protein = temp.getDouble("amount");
+                        protein = (int)temp.getDouble("amount");
                     }
                     if(temp.get("name").equals("Carbohydrate, by difference")){
-                        carbs = temp.getDouble("amount");
+                        carbs = (int)temp.getDouble("amount");
                     }
                     if(temp.get("name").equals("Total lipid (fat)")){
-                        fats = temp.getDouble("amount");
+                        fats = (int)temp.getDouble("amount");
                     }
 
+                }
+                String description = "";
+                if(obj2.has("description")) {
+                    description = obj2.get("description").toString();
+                }
+
+                String brandOwner = "";
+                if(obj2.has("brandOwner")) {
+                    brandOwner = obj2.get("brandOwner").toString();
+                } else {
+                    brandOwner = "No brand owner.";
                 }
 
                 foodList.add(new FoodEntry(
                         protein,
                         carbs,
                         fats,
-                        obj2.get("description").toString(),
-                        obj2.get("brandOwner").toString()
+                        description,
+                        brandOwner
                 ));
             }
 
@@ -142,29 +153,29 @@ public class USDAFoodParser {
                     JSONArray obj = new JSONArray(o.toString());
                     Log.d("test",obj.toString());
                     foodList = JSONArrayParser(obj);
-                    Log.e("USDAFoodParser1", "" + foodList.size());
+                    Log.d("USDAFoodParser1", "" + foodList.size());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
             }
         }.execute();
-        Log.e("USDAFoodParser2", "" + foodList.size());
+        Log.d("USDAFoodParser2", "" + foodList.size());
         return foodList;
     }
 
 
     public class FoodEntry{
-        double protein;
-        double carbs;
-        double fats;
-        double calories;
+        int protein;
+        int carbs;
+        int fats;
+        int calories;
         String foodName;
         String brandName;
 
-        public FoodEntry(double protein, double carbs, double fats, String foodName, String brandName){
+        public FoodEntry(int protein, int carbs, int fats, String foodName, String brandName){
             this.protein = protein;
-            this.carbs = carbs;
+            this.carbs = (int)carbs;
             this.fats = fats;
             this.foodName = foodName;
             this.brandName = brandName;
@@ -182,11 +193,11 @@ public class USDAFoodParser {
             s+="fats: "+fats+"\n";
             return s;
         }
-        public double getCalories() {
+        public int getCalories() {
             return calories;
         }
 
-        public void setCalories(double calories) {
+        public void setCalories(int calories) {
             this.calories = calories;
         }
 
@@ -198,27 +209,27 @@ public class USDAFoodParser {
             this.brandName = brandName;
         }
 
-        public double getProtein() {
+        public int getProtein() {
             return protein;
         }
 
-        public void setProtein(double protein) {
+        public void setProtein(int protein) {
             this.protein = protein;
         }
 
-        public double getCarbs() {
+        public int getCarbs() {
             return carbs;
         }
 
-        public void setCarbs(double carbs) {
-            this.carbs = carbs;
+        public void setCarbs(int carbs) {
+            this.carbs = (int)carbs;
         }
 
-        public double getFats() {
+        public int getFats() {
             return fats;
         }
 
-        public void setFats(double fats) {
+        public void setFats(int fats) {
             this.fats = fats;
         }
 

@@ -4,10 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,6 +23,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
@@ -25,30 +34,69 @@ import okhttp3.Response;
 
 public class SearchFoodDatabase extends AppCompatActivity {
     final static String apiKey = "OtpdWCaIaKlnq3DXBs5VcVorVDopFLNaVrGLWT6i";
-    USDAFoodParser parser;
 
     private ArrayList<USDAFoodParser.FoodEntry> SFDfoodEntries= new ArrayList<>();
-    String s;
+    SearchFoodDatabaseViewAdapter adapter = new SearchFoodDatabaseViewAdapter(SFDfoodEntries, this);
+
+    private Button inputButton;
+    TextView inputFood, dialogServingText, dialogOtherInfoText;
+    EditText dialogServingInput;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_search_food_database);
+
+        createInputButton();
+
+        createTextView();
+
+        createInputButtonListener();
+
+        initializeRecyclerView();
+
+        openDialog();
 
 
-        //SFDfoodEntries = parser.random("Cheddar Cheese");
-        placeholder("Cheddar Cheese");
     }
 
+    private void createInputButton() {
+        inputButton = (Button)findViewById(R.id.SFDsearchButton);
+    }
+
+
+
+    private void createTextView() {
+        inputFood = (TextView)findViewById(R.id.SFDFoodInput);
+
+    }
+
+    private void createInputButtonListener() {
+        inputButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("SearchFoodDatabase","Button clicked");
+                if(!inputFood.getText().toString().equals("")) {
+                    searchFood(inputFood.getText().toString());
+                    inputFood.setText("");
+                } else {
+                    Toast.makeText(SearchFoodDatabase.this, "No food entered",
+                            Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+    }
 
 
     private void initializeRecyclerView() {
 
         RecyclerView recyclerView = findViewById(R.id.SFDrecyclerView);
-        SearchFoodDatabaseViewAdapter adapter = new SearchFoodDatabaseViewAdapter(SFDfoodEntries, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    public void placeholder(final String foodName){
+    public void searchFood(final String foodName){
         AsyncTask asyncTask = new AsyncTask(){
             @Override
             protected Object doInBackground(Object[] objects) {
@@ -74,7 +122,7 @@ public class SearchFoodDatabase extends AppCompatActivity {
                 //JSONText.setText(o.toString());
                 //testing parsing JSON file.
                 try {
-
+                    USDAFoodParser parser;
                     JSONArray obj = new JSONArray(o.toString());
                     Log.d("test",obj.toString());
                     parser = new USDAFoodParser(obj);
@@ -89,7 +137,16 @@ public class SearchFoodDatabase extends AppCompatActivity {
     public void foodHasBeenParsed(USDAFoodParser parserLocal){
 
         Log.e("SearchFoodDatabase", "" + parserLocal.getFoodList().size());
-        setContentView(R.layout.activity_search_food_database);
-        initializeRecyclerView();
+        SFDfoodEntries.clear();
+        for(int i = 0; i < parserLocal.getFoodList().size(); i++) {
+            SFDfoodEntries.add(parserLocal.getFoodList().get(i));
+        }
+        Log.d("SearchFoodDatabase", "adapterUpdated");
+        adapter.notifyDataSetChanged();
+    }
+
+    public void openDialog() {
+        SearchFoodDatabaseDialog dialog = new SearchFoodDatabaseDialog();
+        dialog.show(getSupportFragmentManager(), "example dialog");
     }
 }

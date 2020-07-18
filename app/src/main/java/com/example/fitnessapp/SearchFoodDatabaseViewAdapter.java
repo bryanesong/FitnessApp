@@ -34,11 +34,12 @@ public class SearchFoodDatabaseViewAdapter extends RecyclerView.Adapter<SearchFo
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         holder.FoodName.setText(foodsInDatabase.get(position).getFoodName());
         USDAFoodParser.FoodEntry curEntry = foodsInDatabase.get(position);
-        holder.OtherInfo.setText("Brand: " + curEntry.getBrandName() + " Calories: " + curEntry.getCalories() + " Protein: " + curEntry.getProtein() + " Fats: " + curEntry.getFats() + " Carbs: " + curEntry.getCarbs());
+        holder.OtherInfo.setText("Brand: " + curEntry.getBrandName() + " \nCalories: " + curEntry.getCalories() + "   Protein: " + curEntry.getProtein() + "g   Fats: " + curEntry.getFats() + "g   Carbs: " + curEntry.getCarbs() + "g");
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(SFDContext, "Clicked on item " + (position + 1), Toast.LENGTH_SHORT).show();
+
             }
         });
     }
@@ -58,4 +59,5 @@ public class SearchFoodDatabaseViewAdapter extends RecyclerView.Adapter<SearchFo
             parentLayout = itemView.findViewById(R.id.SFD_RecyclerView_layout);
         }
     }
+
 }

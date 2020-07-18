@@ -7,16 +7,16 @@
     tools:context=".SearchFoodDatabase">
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/SFDFoodInput"
         android:layout_marginTop="15dp"
         android:layout_marginLeft="15dp"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@id/SFDsearchButton"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
+        android:hint="Food Name"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="15dp"
         android:layout_toStartOf="@id/SFDsearchButton" />
@@ -24,7 +24,7 @@
     <Button
         android:id="@+id/SFDsearchButton"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_marginEnd="15dp"
@@ -32,7 +32,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
         android:layout_marginRight="15dp"
-        android:text="Button"
+        android:text="Search"
         android:layout_alignParentEnd="true" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -40,7 +40,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/SFDsearchButton"
-        android:layout_marginTop="15dp"
         android:id="@+id/SFDrecyclerView"
         />
 
