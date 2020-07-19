@@ -20,15 +20,17 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
-public class AddTrackerData extends AppCompatActivity {
+public class AddTrackerData extends AppCompatActivity implements Serializable {
     ArrayList<String> measurementSuggestions = new ArrayList<String>(Arrays.asList("Cups","Gallons","Ounces","Pounds","Grams"));
     ArrayList<String> foodTypeSuggestions = new ArrayList<String>(Arrays.asList("Cheeseballs"));
+    ArrayList<TrackerData> entries = new ArrayList<>();
     EditText foodTypeInput, calorieInput, quantityInput, measurementInput, dateInput, timeInput;
     FloatingActionButton submitDataButton, cancelDataButton, searchDataButton;
     DatabaseReference reff;
@@ -42,6 +44,10 @@ public class AddTrackerData extends AppCompatActivity {
         //create back arrow
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        Bundle args = getIntent().getBundleExtra("BUNDLE");
+        entries = (ArrayList<TrackerData>)args.getSerializable("Food Entries");
+        Log.d("AddTrackerData", "" + entries.size());
 
         //create buttons
         addButton();
@@ -116,7 +122,7 @@ public class AddTrackerData extends AppCompatActivity {
 
                     //add entry
 
-                    CalorieTracker.addEntries(new TrackerData(
+                    entries.add(new TrackerData(
                             Integer.parseInt(calorieInput.getText().toString()),
                             foodTypeInput.getText().toString(),
                             Integer.parseInt(quantityInput.getText().toString()),
@@ -129,9 +135,7 @@ public class AddTrackerData extends AppCompatActivity {
                             Toast.LENGTH_LONG).show();
 
                     //update online database
-                    final DatabaseReference reff;
-                    reff = FirebaseDatabase.getInstance().getReference();
-                    reff.child("Users").child(MainActivity.currentUser.getUid()).child("Calorie Tracker Data").setValue(new TrackerDataContainer(CalorieTracker.entries));
+                    pushDataToDatabase();
 
                     clearInputText();
 
@@ -143,10 +147,16 @@ public class AddTrackerData extends AppCompatActivity {
         });
     }
 
+    private void pushDataToDatabase() {
+        final DatabaseReference reff;
+        reff = FirebaseDatabase.getInstance().getReference();
+        reff.child("Users").child(MainActivity.currentUser.getUid()).child("Calorie Tracker Data").setValue(new TrackerDataContainer(entries));
+    }
+
     private void createAutoComplete(AutoCompleteTextView box, int ID, String entryTrait, ArrayList<String> suggestionList) {
         box = findViewById(ID);
 
-        for(TrackerData i : CalorieTracker.entries) {
+        for(TrackerData i : entries) {
             if(entryTrait.equals("measurement")) {
                 if (!suggestionList.contains(i.getMeasurement())) {
                     suggestionList.add(i.getMeasurement());
@@ -181,6 +191,9 @@ public class AddTrackerData extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(AddTrackerData.this, SearchFoodDatabase.class);
+                Bundle args = new Bundle();
+                args.putSerializable("Food Entries", (Serializable)entries);
+                intent.putExtra("BUNDLE", args);
                 startActivity(intent);
             }
         });

@@ -26,6 +26,7 @@ import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.core.view.Change;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -139,7 +140,10 @@ public class CalorieTracker extends AppCompatActivity {
 
     private void openAddTrackerData() {
         Intent intent = new Intent(CalorieTracker.this, AddTrackerData.class);
-        startActivityForResult(intent, 0);
+        Bundle args = new Bundle();
+        args.putSerializable("Food Entries", (Serializable)entries);
+        intent.putExtra("BUNDLE", args);
+        startActivity(intent);
     }
 
     public static void addEntries(TrackerData newEntry) {

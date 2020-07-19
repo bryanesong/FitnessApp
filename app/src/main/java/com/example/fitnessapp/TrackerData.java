@@ -1,6 +1,8 @@
 package com.example.fitnessapp;
 
-public class TrackerData {
+import java.io.Serializable;
+
+public class TrackerData implements Serializable {
 
     private int calories;
     private String foodType;

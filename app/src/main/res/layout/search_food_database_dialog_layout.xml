@@ -20,6 +20,8 @@
         android:layout_below="@id/SFDDialogBrand"
         android:layout_marginLeft="10dp"
         android:text="3"
+        android:inputType="number"
+        android:digits="0123456789"
         android:id="@+id/SFDDialogServingInput"/>
     <TextView
         android:gravity="center_vertical"
