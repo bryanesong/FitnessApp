@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class TrackerDataContainer {
 
-    public ArrayList<TrackerData> entries = new ArrayList<TrackerData>();
+    private ArrayList<TrackerData> entries = new ArrayList<TrackerData>();
 
     public ArrayList<TrackerData> getEntries() {
         return entries;

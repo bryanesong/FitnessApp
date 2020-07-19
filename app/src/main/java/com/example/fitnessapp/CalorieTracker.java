@@ -26,6 +26,7 @@ import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.core.view.Change;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -139,7 +140,10 @@ public class CalorieTracker extends AppCompatActivity {
 
     private void openAddTrackerData() {
         Intent intent = new Intent(CalorieTracker.this, AddTrackerData.class);
-        startActivityForResult(intent, 0);
+        Bundle args = new Bundle();
+        args.putSerializable("Food Entries", (Serializable)entries);
+        intent.putExtra("BUNDLE", args);
+        startActivity(intent);
     }
 
     public static void addEntries(TrackerData newEntry) {
@@ -169,12 +173,11 @@ public class CalorieTracker extends AppCompatActivity {
             reff.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.child(MainActivity.currentUser.getUid()).child("entries").exists()) {
+                    if (dataSnapshot.child("Users").child(MainActivity.currentUser.getUid()).child("Calorie Tracker Data").child("entries").exists()) {
                         Log.d(TAG, "entries found");
                         //convert database object to ArrayList<TrackerData>
-                        GenericTypeIndicator<ArrayList<TrackerData>> t = new GenericTypeIndicator<ArrayList<TrackerData>>() {
-                        };
-                        entries = dataSnapshot.child(MainActivity.currentUser.getUid()).child("entries").getValue(t);
+                        TrackerDataContainer friendList = dataSnapshot.child("Users").child(MainActivity.currentUser.getUid()).child("Calorie Tracker Data").getValue(TrackerDataContainer.class);
+                        entries = friendList.getEntries();
                     } else {
                         Log.d(TAG, "class TrackerDataContainer not found");
 
@@ -235,7 +238,7 @@ public class CalorieTracker extends AppCompatActivity {
 
     private void pushEntriesToDatabase() {
         //pushes entries to database
-        reff.child(MainActivity.currentUser.getUid()).setValue(new TrackerDataContainer(CalorieTracker.entries));
+        reff.child("Users").child(MainActivity.currentUser.getUid()).child("Calorie Tracker Data").setValue(new TrackerDataContainer(CalorieTracker.entries));
     }
 
     private void hideFABS() {

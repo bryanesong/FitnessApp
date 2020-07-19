@@ -7,31 +7,40 @@
     tools:context=".SearchFoodDatabase">
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
-        android:layout_width="wrap_content"
+        android:id="@+id/SFDFoodInput"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="22dp"
+        android:layout_toLeftOf="@id/SFDsearchButton"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
+        android:hint="Search for a product here"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="25dp" />
+        android:layout_marginStart="15dp"
+        android:layout_toStartOf="@id/SFDsearchButton" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/SFDsearchButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="70dp"
-        android:layout_marginLeft="70dp"
-        android:layout_marginTop="26dp"
-        android:layout_toEndOf="@+id/editTextTextPersonName"
-        android:layout_toRightOf="@+id/editTextTextPersonName"
-        android:text="Button"
-        tools:layout_editor_absoluteX="291dp"
-        tools:layout_editor_absoluteY="21dp" />
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        android:text="Search"
+        android:layout_alignParentEnd="true" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:padding="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/SFDsearchButton"
+        android:id="@+id/SFDrecyclerView"
+        />
 
 </RelativeLayout>

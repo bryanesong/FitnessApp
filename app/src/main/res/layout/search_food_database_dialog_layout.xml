@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp">
+    <TextView
+        android:layout_margin ="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="McDonalds"
+        android:textAppearance = "@style/TextAppearance.AppCompat.Large"
+        android:id="@+id/SFDDialogBrand"
+        android:textColor="#000"
+        />
+
+    <EditText
+        android:gravity="center_horizontal"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/SFDDialogBrand"
+        android:layout_marginLeft="10dp"
+        android:text="3"
+        android:inputType="number"
+        android:digits="0123456789"
+        android:id="@+id/SFDDialogServingInput"/>
+    <TextView
+        android:gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/SFDDialogServingInput"
+        android:text="Servings"
+        android:layout_below="@id/SFDDialogBrand"
+        android:textAppearance = "@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#000"
+        android:id="@+id/SFDDialogServingText"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/SFDDialogServingInput"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Calories: 15  Protein: 15g  Fats: 15g   Carbs: 15g"
+        android:textAppearance = "@style/TextAppearance.AppCompat.Medium"
+        android:id="@+id/SFDDialogOtherInfo"/>
+
+</RelativeLayout>
