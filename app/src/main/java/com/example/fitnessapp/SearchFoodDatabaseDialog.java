@@ -92,7 +92,11 @@ public class SearchFoodDatabaseDialog extends AppCompatDialogFragment {
         dialogOtherInfoText = (TextView)view.findViewById(R.id.SFDDialogOtherInfo);
         dialogBrandText = (TextView)view.findViewById(R.id.SFDDialogBrand);
 
-        dialogBrandText.setText(curEntry.getBrandName());
+        if(!curEntry.getFoodName().equals("No brand owner.")) {
+            dialogBrandText.setText(curEntry.getBrandName());
+        } else {
+            dialogBrandText.setText(curEntry.getFoodName());
+        }
 
     }
 

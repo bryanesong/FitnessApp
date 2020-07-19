@@ -77,6 +77,25 @@
         app:backgroundTint="#BA1818"
         app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/searchItemButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/addTrackerData"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="@dimen/fab_margin"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_marginTop="@dimen/fab_margin"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginBottom="@dimen/fab_margin"
+        android:clickable="true"
+        android:focusable="true"
+        app:backgroundTint="#6F54B5"
+        app:srcCompat="@android:drawable/ic_menu_search"
+        tools:ignore="VectorDrawableCompat" />
+
     <TextView
         android:id="@+id/noEntryTextView"
         android:layout_width="match_parent"

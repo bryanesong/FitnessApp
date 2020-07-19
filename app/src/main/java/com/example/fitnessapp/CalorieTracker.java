@@ -36,7 +36,7 @@ public class CalorieTracker extends AppCompatActivity {
     protected static String currentLoginSession = "";
     protected static ArrayList<TrackerData> entries = new ArrayList<TrackerData>();
     final DatabaseReference reff = FirebaseDatabase.getInstance().getReference();
-    FloatingActionButton addTrackerData, removeEntry, editEntry, cancelSelected;
+    FloatingActionButton addTrackerData, removeEntry, editEntry, cancelSelected, searchDataButton;
     TextView noEntryMessage;
     ListView trackerListView;
 
@@ -134,6 +134,7 @@ public class CalorieTracker extends AppCompatActivity {
                     }
                 });
 
+
             }
         });
     }
@@ -213,6 +214,17 @@ public class CalorieTracker extends AppCompatActivity {
                 openAddTrackerData();
             }
         });
+        searchDataButton = findViewById(R.id.searchItemButton);
+        searchDataButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CalorieTracker.this, SearchFoodDatabase.class);
+                Bundle args = new Bundle();
+                args.putSerializable("Food Entries", (Serializable)entries);
+                intent.putExtra("BUNDLE", args);
+                startActivity(intent);
+            }
+        });
 
 
         removeEntry = findViewById(R.id.removeEntry);
@@ -246,6 +258,7 @@ public class CalorieTracker extends AppCompatActivity {
         removeEntry.setVisibility(View.GONE);
         cancelSelected.setVisibility(View.GONE);
         addTrackerData.setVisibility(View.VISIBLE);
+        searchDataButton.setVisibility(View.VISIBLE);
     }
 
     private void showFABS() {
@@ -253,6 +266,7 @@ public class CalorieTracker extends AppCompatActivity {
         removeEntry.setVisibility(View.VISIBLE);
         cancelSelected.setVisibility(View.VISIBLE);
         addTrackerData.setVisibility(View.GONE);
+        searchDataButton.setVisibility(View.GONE);
     }
 
 

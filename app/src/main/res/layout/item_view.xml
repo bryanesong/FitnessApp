@@ -5,6 +5,8 @@
 
     <TextView
         android:id="@+id/calorieText"
+        android:layout_alignBottom="@id/otherText"
+        android:layout_alignParentTop="true"
         android:layout_width="120dp"
         android:layout_height="60dp"
         android:layout_marginStart="0dp"

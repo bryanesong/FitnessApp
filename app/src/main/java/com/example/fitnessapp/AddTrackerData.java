@@ -32,7 +32,7 @@ public class AddTrackerData extends AppCompatActivity implements Serializable {
     ArrayList<String> foodTypeSuggestions = new ArrayList<String>(Arrays.asList("Cheeseballs"));
     ArrayList<TrackerData> entries = new ArrayList<>();
     EditText foodTypeInput, calorieInput, quantityInput, measurementInput, dateInput, timeInput;
-    FloatingActionButton submitDataButton, cancelDataButton, searchDataButton;
+    FloatingActionButton submitDataButton, cancelDataButton;
     DatabaseReference reff;
     Account account;
     AutoCompleteTextView measurementTypeAuto, foodTypeAuto;
@@ -64,8 +64,6 @@ public class AddTrackerData extends AppCompatActivity implements Serializable {
         //closes current activity
         cancelDataListener();
 
-        //opens SearchFoodDatabase activity
-        searchDataListener();
 
         //creates autocomplete textboxes
         createAutoComplete(measurementTypeAuto, R.id.changeEntryMeasurementTypeInput, "measurement", measurementSuggestions);
@@ -76,7 +74,6 @@ public class AddTrackerData extends AppCompatActivity implements Serializable {
     private void addButton() {
         submitDataButton = findViewById((R.id.addDataConfirmButton));
         cancelDataButton = findViewById((R.id.addDataCancelButton));
-        searchDataButton = findViewById((R.id.addDataSearchItemButton));
     }
 
     private void addText() {
@@ -181,19 +178,6 @@ public class AddTrackerData extends AppCompatActivity implements Serializable {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(AddTrackerData.this, CalorieTracker.class);
-                startActivity(intent);
-            }
-        });
-    }
-
-    private void searchDataListener() {
-        searchDataButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(AddTrackerData.this, SearchFoodDatabase.class);
-                Bundle args = new Bundle();
-                args.putSerializable("Food Entries", (Serializable)entries);
-                intent.putExtra("BUNDLE", args);
                 startActivity(intent);
             }
         });
