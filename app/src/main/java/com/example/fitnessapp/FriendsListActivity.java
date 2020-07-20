@@ -37,7 +37,7 @@ public class FriendsListActivity extends AppCompatActivity implements FriendsLis
     private EditText friendAddCodeBar;
     private String currentUID = "";
     private boolean foundFriendSuccess;
-    private FriendsListAdapter friendsListAdapter;
+    private FriendsListAdapter mAdapter;
     private FloatingActionButton closeMenu, chatFriend, removeFriend;
     private int selectedFriend;
     private FriendsListContainer friends = new FriendsListContainer();
@@ -131,7 +131,7 @@ public class FriendsListActivity extends AppCompatActivity implements FriendsLis
                         Log.d("FriendsListActivty", "current user: "+MainActivity.currentUser.getUid()+"removed: " + friends.getUsernameList().get(selectedFriend));
                         friends.removeFriend(friends.getFriendList().get(selectedFriend), friends.getUsernameList().get(selectedFriend));
                         friendsListReff.setValue(friends);
-                        friendsListAdapter.notifyDataSetChanged();
+                        mAdapter.notifyDataSetChanged();
                         hideFloatingActionButtons();
                     }
 
@@ -179,7 +179,7 @@ public class FriendsListActivity extends AppCompatActivity implements FriendsLis
                     layoutManager = new LinearLayoutManager(FriendsListActivity.this);
                     friendRecycleList.setLayoutManager(layoutManager);
 
-                    FriendsListAdapter mAdapter = new FriendsListAdapter(FriendsListActivity.this, FriendsListActivity.this, friendList.getUsernameList());
+                   mAdapter = new FriendsListAdapter(FriendsListActivity.this, FriendsListActivity.this, friendList.getUsernameList());
                     friendRecycleList.setAdapter(mAdapter);
                 }
             }
