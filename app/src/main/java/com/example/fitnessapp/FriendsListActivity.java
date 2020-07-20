@@ -128,6 +128,11 @@ public class FriendsListActivity extends AppCompatActivity implements FriendsLis
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         friends = snapshot.getValue(FriendsListContainer.class);
+                        Log.d("FriendsListActivty", "current user: "+MainActivity.currentUser.getUid()+"removed: " + friends.getUsernameList().get(selectedFriend));
+                        friends.removeFriend(friends.getFriendList().get(selectedFriend), friends.getUsernameList().get(selectedFriend));
+                        friendsListReff.setValue(friends);
+                        friendsListAdapter.notifyDataSetChanged();
+                        hideFloatingActionButtons();
                     }
 
                     @Override
@@ -135,11 +140,7 @@ public class FriendsListActivity extends AppCompatActivity implements FriendsLis
 
                     }
                 });
-                Log.d("FriendsListActivty", "removed: " + friends.getUsernameList().get(selectedFriend));
-                friends.removeFriend(friends.getFriendList().get(selectedFriend), friends.getUsernameList().get(selectedFriend));
-                friendsListReff.setValue(friends);
-                friendsListAdapter.notifyDataSetChanged();
-                hideFloatingActionButtons();
+
 
             }
         });
