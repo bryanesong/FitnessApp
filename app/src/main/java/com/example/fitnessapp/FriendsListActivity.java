@@ -154,7 +154,7 @@ public class FriendsListActivity extends AppCompatActivity implements FriendsLis
 
                             mAdapter.notifyItemRemoved(selectedFriend);
                             hideFloatingActionButtons();
-                            //populateFriendsList(reff);
+                            populateFriendsList(reff);
                         }else{
                             Toast.makeText(FriendsListActivity.this,"No friends in list to remove.",Toast.LENGTH_SHORT);
                         }
