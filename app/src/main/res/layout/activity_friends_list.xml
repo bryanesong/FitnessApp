@@ -41,12 +41,14 @@
         android:text="Placeholder"
         android:gravity="center_vertical|center_horizontal"/>
 
-    <ListView
-        android:id="@+id/friendListLayout"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/friendRecycleList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/addFriendButton"
-        android:orientation="vertical"></ListView>
+        android:orientation="vertical"
+        />
+
 
     <EditText
         android:id="@+id/addFriendCodeBar"
