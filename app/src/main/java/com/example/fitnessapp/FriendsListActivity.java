@@ -128,12 +128,45 @@ public class FriendsListActivity extends AppCompatActivity implements FriendsLis
         removeFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                friendsListReff = FirebaseDatabase.getInstance().getReference().child("Users").child(MainActivity.currentUser.getUid()).child("Friends List Info").child("List");
+                friendsListReff = FirebaseDatabase.getInstance().getReference();
                 Log.d("FriendsListActivity", "current user: " + MainActivity.currentUser.getUid() + "removed: " + friends.getUsernameList().get(selectedFriend));
-                friends.removeFriend(friends.getFriendList().get(selectedFriend), friends.getUsernameList().get(selectedFriend));
-                mAdapter.notifyItemRemoved(selectedFriend);
-                friendsListReff.setValue(friends);
-                hideFloatingActionButtons();
+
+
+                friendsListReff.addValueEventListener(new ValueEventListener(){
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        friends = snapshot.child("Users").child(MainActivity.currentUser.getUid()).child("Friends List Info").child("List").getValue(FriendsListContainer.class);
+                        Log.d("FriendsListActivty", "current user: "+MainActivity.currentUser.getUid()+"usernameList size: " + friends.getUsernameList().size());
+                        if(friends.getFriendCount() != 0){
+                            String friendUserID = friends.getFriendList().get(selectedFriend);
+                            friends.removeFriend(friends.getFriendList().get(selectedFriend), friends.getUsernameList().get(selectedFriend));
+                            friendsListReff.child("Users").child(MainActivity.currentUser.getUid()).child("Friends List Info").child("List").setValue(friends);//update friends list to current user
+                            Log.d("FriendsListActivty", "removed yourself from: "+friendUserID+" friend list.");
+
+                            String currentUsername =  snapshot.child("Users").child(MainActivity.currentUser.getUid()).child("Friends List Info").child("Username").getValue().toString();
+                            Log.d("friendUserID","id: "+friendUserID);
+                            Log.d("currentUsername","name:"+currentUsername);
+                            friends = snapshot.child("Users").child(friendUserID).child("Friends List Info").child("List").getValue(FriendsListContainer.class);
+                            friends.removeFriend(MainActivity.currentUser.getUid(), currentUsername);
+                            friendsListReff.child("Users").child(friendUserID).child("Friends List Info").child("List").setValue(friends);//update friends list to friend user
+
+
+                            mAdapter.notifyItemRemoved(selectedFriend);
+                            hideFloatingActionButtons();
+                            populateFriendsList(reff);
+                            hideFloatingActionButtons();
+                        }else{
+                            Toast.makeText(FriendsListActivity.this,"No friends in list to remove.",Toast.LENGTH_SHORT);
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.e("removeFriends","Issue related to remove friend addEventValueListener.");
+                    }
+                });
+
 
 
             }
