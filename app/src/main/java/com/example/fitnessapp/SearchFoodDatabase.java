@@ -51,8 +51,6 @@ public class SearchFoodDatabase extends AppCompatActivity implements SearchFoodD
 
     private Button inputButton;
 
-    private int clickedViewPosition = 0;
-
     TextView inputFood;
 
     @Override
@@ -126,7 +124,6 @@ public class SearchFoodDatabase extends AppCompatActivity implements SearchFoodD
     @Override
     public void onItemClick(int position) {
         //SFDfoodEntries.get(position);
-        clickedViewPosition = position;
         openDialog(position);
     }
 

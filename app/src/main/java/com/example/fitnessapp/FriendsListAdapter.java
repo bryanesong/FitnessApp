@@ -1,9 +1,11 @@
 package com.example.fitnessapp;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,32 +13,42 @@ import java.util.ArrayList;
 
 public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.MyViewHolder> {
     private String[] mDataset;
+    private friendClicked mFriendClick;
+    private Context FLA;
+    private ArrayList<String> friends;
+
+    //confirm class implements interface
+    // Provide a suitable constructor (depends on the kind of dataset)
+    public FriendsListAdapter(Context FLA, friendClicked mFriendClick, ArrayList<String> friends) {
+        this.FLA = FLA;
+        this.mFriendClick = mFriendClick;
+        this.friends = friends;
+    }
+
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         // each data item is just a string in this case
         public TextView textView;
-        public MyViewHolder(TextView v) {
+
+        private friendClicked friendClick;
+
+        public MyViewHolder(TextView v, friendClicked friendClick) {
             super(v);
+            this.friendClick = friendClick;
             textView = v;
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            friendClick.clicked(getAdapterPosition());
         }
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
-    public FriendsListAdapter(ArrayList<String> friends) {
-        String[] myDataset = new String[friends.size()];
-        if(friends != null){
-            for(int i = 0;i<myDataset.length;i++){
-                myDataset[i] = friends.get(i);
-            }
-        }else{
-            myDataset[0] = "";
-        }
 
-        mDataset = myDataset;
-    }
 
     // Create new views (invoked by the layout manager)
     @Override
@@ -45,7 +57,7 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
         // create a new view
         TextView v = (TextView) LayoutInflater.from(parent.getContext())
                 .inflate(android.R.layout.simple_list_item_1, parent, false);
-        MyViewHolder vh = new MyViewHolder(v);
+        MyViewHolder vh = new MyViewHolder(v, mFriendClick);
         return vh;
     }
 
@@ -54,21 +66,18 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
     public void onBindViewHolder(MyViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.textView.setText(mDataset[position]);
-
-        holder.itemView.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-
-            }
-        });
+        holder.textView.setText(friends.get(position));
 
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataset.length;
+        return friends.size();
+    }
+
+    public interface friendClicked {
+        void clicked(int position);
     }
 
 }

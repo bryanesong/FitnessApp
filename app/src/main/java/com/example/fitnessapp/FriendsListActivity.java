@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,8 +28,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class FriendsListActivity extends AppCompatActivity {
+public class FriendsListActivity extends AppCompatActivity implements FriendsListAdapter.friendClicked {
     private DatabaseReference reff;
+    private DatabaseReference friendsListReff;
     private Button addFriendCodeButton,getFriendCodeButton,addFriendButtonWithCode,backButtonForFriendCode;
     private TextView friendsListView;
     private RecyclerView friendRecycleList;
@@ -35,8 +38,10 @@ public class FriendsListActivity extends AppCompatActivity {
     private String currentUID = "";
     private boolean foundFriendSuccess;
     private FriendsListAdapter friendsListAdapter;
+    private FloatingActionButton closeMenu, chatFriend, removeFriend;
+    private int selectedFriend;
+    private FriendsListContainer friends = new FriendsListContainer();
 
-    private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     //ArrayList<String> entries = new ArrayList<>();
 
@@ -44,6 +49,11 @@ public class FriendsListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends_list);
+
+        createFloatingActionButtons();
+
+        hideFloatingActionButtons();
+
         addFriendCodeButton = findViewById(R.id.addFriendButton);
         getFriendCodeButton = findViewById(R.id.getFriendKeyButton);
         friendsListView = findViewById(R.id.friendsList);
@@ -96,6 +106,61 @@ public class FriendsListActivity extends AppCompatActivity {
 
     }
 
+    private void createFloatingActionButtons() {
+        closeMenu = findViewById(R.id.FLcancelMenuButton);
+        chatFriend = findViewById(R.id.FLchatFriendButton);
+        removeFriend = findViewById(R.id.FLremoveFriendButton);
+
+
+        //hides buttons
+        closeMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hideFloatingActionButtons();
+            }
+        });
+
+        removeFriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                friendsListReff = FirebaseDatabase.getInstance().getReference().child("Users").child(MainActivity.currentUser.getUid()).child("Friends List Info").child("List");
+                friendsListReff.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        friends = snapshot.getValue(FriendsListContainer.class);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+                Log.d("FriendsListActivty", "removed: " + friends.getUsernameList().get(selectedFriend));
+                friends.removeFriend(friends.getFriendList().get(selectedFriend), friends.getUsernameList().get(selectedFriend));
+                friendsListReff.setValue(friends);
+                friendsListAdapter.notifyDataSetChanged();
+                hideFloatingActionButtons();
+
+            }
+        });
+
+    }
+
+    private void showFloatingActionButtons() {
+        //called when user clicks on a friend
+        closeMenu.setVisibility(View.VISIBLE);
+        chatFriend.setVisibility(View.VISIBLE);
+        removeFriend.setVisibility(View.VISIBLE);
+    }
+
+    private void hideFloatingActionButtons() {
+        //called when activity is first created, and when user clicks on close menu button
+        closeMenu.setVisibility(View.GONE);
+        chatFriend.setVisibility(View.GONE);
+        removeFriend.setVisibility(View.GONE);
+    }
+
+
     public void populateFriendsList(DatabaseReference reference){
         reference = reference.child(MainActivity.currentUser.getUid()).child("Friends List Info").child("List");
         reference.addValueEventListener(new ValueEventListener(){
@@ -113,8 +178,8 @@ public class FriendsListActivity extends AppCompatActivity {
                     layoutManager = new LinearLayoutManager(FriendsListActivity.this);
                     friendRecycleList.setLayoutManager(layoutManager);
 
-                    friendsListAdapter = new FriendsListAdapter(friendList.getUsernameList());
-                    friendRecycleList.setAdapter(friendsListAdapter);
+                    FriendsListAdapter mAdapter = new FriendsListAdapter(FriendsListActivity.this, FriendsListActivity.this, friendList.getUsernameList());
+                    friendRecycleList.setAdapter(mAdapter);
                 }
             }
 
@@ -244,5 +309,13 @@ public class FriendsListActivity extends AppCompatActivity {
     public void addFriendWithCodeAction(){
         String currentFriendCode = friendAddCodeBar.getText().toString();
 
+    }
+
+    @Override
+    public void clicked(int position) {
+        //when item clicked
+        Log.d("FriendsListActivity", "Clicked on item " + (position + 1));
+        selectedFriend = position;
+        showFloatingActionButtons();
     }
 }
