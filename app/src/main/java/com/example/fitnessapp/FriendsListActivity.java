@@ -135,26 +135,26 @@ public class FriendsListActivity extends AppCompatActivity implements FriendsLis
                 friendsListReff.addValueEventListener(new ValueEventListener(){
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        friends = snapshot.child("Users").child(MainActivity.currentUser.getUid()).child("Friends List Info").child("List").getValue(FriendsListContainer.class);
-                        Log.d("FriendsListActivty", "current user: "+MainActivity.currentUser.getUid()+"usernameList size: " + friends.getUsernameList().size());
-                        if(friends.getFriendCount() != 0){
-                            String friendUserID = friends.getFriendList().get(selectedFriend);
-                            friends.removeFriend(friends.getFriendList().get(selectedFriend), friends.getUsernameList().get(selectedFriend));
-                            friendsListReff.child("Users").child(MainActivity.currentUser.getUid()).child("Friends List Info").child("List").setValue(friends);//update friends list to current user
+                        FriendsListContainer friends2 = new FriendsListContainer();
+                        friends2 = snapshot.child("Users").child(MainActivity.currentUser.getUid()).child("Friends List Info").child("List").getValue(FriendsListContainer.class);
+                        Log.d("FriendsListActivty", "current user: "+MainActivity.currentUser.getUid()+"usernameList size: " + friends2.getUsernameList().size());
+                        if(friends2.getFriendCount() != 0){
+                            String friendUserID = friends2.getFriendList().get(selectedFriend);
+                            friends2.removeFriend(friends2.getFriendList().get(selectedFriend), friends2.getUsernameList().get(selectedFriend));
+                            friendsListReff.child("Users").child(MainActivity.currentUser.getUid()).child("Friends List Info").child("List").setValue(friends2);//update friends list to current user
                             Log.d("FriendsListActivty", "removed yourself from: "+friendUserID+" friend list.");
 
                             String currentUsername =  snapshot.child("Users").child(MainActivity.currentUser.getUid()).child("Friends List Info").child("Username").getValue().toString();
                             Log.d("friendUserID","id: "+friendUserID);
                             Log.d("currentUsername","name:"+currentUsername);
-                            friends = snapshot.child("Users").child(friendUserID).child("Friends List Info").child("List").getValue(FriendsListContainer.class);
-                            friends.removeFriend(MainActivity.currentUser.getUid(), currentUsername);
-                            friendsListReff.child("Users").child(friendUserID).child("Friends List Info").child("List").setValue(friends);//update friends list to friend user
+                            friends2 = snapshot.child("Users").child(friendUserID).child("Friends List Info").child("List").getValue(FriendsListContainer.class);
+                            friends2.removeFriend(MainActivity.currentUser.getUid(), currentUsername);
+                            friendsListReff.child("Users").child(friendUserID).child("Friends List Info").child("List").setValue(friends2);//update friends list to friend user
 
 
                             mAdapter.notifyItemRemoved(selectedFriend);
                             hideFloatingActionButtons();
-                            populateFriendsList(reff);
-                            hideFloatingActionButtons();
+                            //populateFriendsList(reff);
                         }else{
                             Toast.makeText(FriendsListActivity.this,"No friends in list to remove.",Toast.LENGTH_SHORT);
                         }
@@ -166,9 +166,9 @@ public class FriendsListActivity extends AppCompatActivity implements FriendsLis
                         Log.e("removeFriends","Issue related to remove friend addEventValueListener.");
                     }
                 });
-
-
-
+                friends.removeFriend(friends.getFriendList().get(selectedFriend), friends.getUsernameList().get(selectedFriend));
+                mAdapter.notifyItemRemoved(selectedFriend);
+                hideFloatingActionButtons();
             }
         });
     }
