@@ -2,6 +2,8 @@ package com.example.fitnessapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -28,10 +30,14 @@ public class FriendsListActivity extends AppCompatActivity {
     private DatabaseReference reff;
     private Button addFriendCodeButton,getFriendCodeButton,addFriendButtonWithCode,backButtonForFriendCode;
     private TextView friendsListView;
-    private ListView friendsLayout;
+    private RecyclerView friendRecycleList;
     private EditText friendAddCodeBar;
     private String currentUID = "";
     private boolean foundFriendSuccess;
+    private FriendsListAdapter friendsListAdapter;
+
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
     //ArrayList<String> entries = new ArrayList<>();
 
     @Override
@@ -41,7 +47,7 @@ public class FriendsListActivity extends AppCompatActivity {
         addFriendCodeButton = findViewById(R.id.addFriendButton);
         getFriendCodeButton = findViewById(R.id.getFriendKeyButton);
         friendsListView = findViewById(R.id.friendsList);
-        friendsLayout = findViewById(R.id.friendListLayout);
+        friendRecycleList = findViewById(R.id.friendRecycleList);
         friendAddCodeBar = findViewById(R.id.addFriendCodeBar);
         addFriendButtonWithCode = findViewById(R.id.addFriendCodeButton);
         backButtonForFriendCode = findViewById(R.id.backButtonForFriendCode);
@@ -79,7 +85,7 @@ public class FriendsListActivity extends AppCompatActivity {
         backButtonForFriendCode.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){// this button still needs to be worked on
-                friendsLayout.setVisibility(ViewGroup.VISIBLE);
+                friendRecycleList.setVisibility(ViewGroup.VISIBLE);
                 addFriendCodeButton.setVisibility(ViewGroup.VISIBLE);
                 getFriendCodeButton.setVisibility(ViewGroup.VISIBLE);
                 backButtonForFriendCode.setVisibility(ViewGroup.INVISIBLE);
@@ -97,14 +103,18 @@ public class FriendsListActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 FriendsListContainer friendList = snapshot.getValue(FriendsListContainer.class);
                 //check if friends list is empty
-                if(friendList.isEmpty()){
+                if(friendList.getFriendCount() == 0){
                     friendsListView.setVisibility(ViewGroup.VISIBLE);
                     friendsListView.setText("You have no friends :(");
                 }else {
                     //if friends list isnt empty then start listing friends
                     //will fill up the listView with friends
-                    ArrayAdapter arrayAdapter = new ArrayAdapter(FriendsListActivity.this,android.R.layout.simple_list_item_1,friendList.getUsernameList());
-                    friendsLayout.setAdapter(arrayAdapter);
+
+                    layoutManager = new LinearLayoutManager(FriendsListActivity.this);
+                    friendRecycleList.setLayoutManager(layoutManager);
+
+                    friendsListAdapter = new FriendsListAdapter(friendList.getUsernameList());
+                    friendRecycleList.setAdapter(friendsListAdapter);
                 }
             }
 
@@ -117,7 +127,7 @@ public class FriendsListActivity extends AppCompatActivity {
 
     public void addFriendAction(final DatabaseReference reference){
         friendsListView.setVisibility(ViewGroup.INVISIBLE);
-        friendsLayout.setVisibility(ViewGroup.INVISIBLE);
+        friendRecycleList.setVisibility(ViewGroup.INVISIBLE);
         friendAddCodeBar.setVisibility(ViewGroup.VISIBLE);
         addFriendCodeButton.setVisibility(ViewGroup.INVISIBLE);
         getFriendCodeButton.setVisibility(ViewGroup.INVISIBLE);
@@ -177,7 +187,7 @@ public class FriendsListActivity extends AppCompatActivity {
                         if(foundFriendSuccess == true){
                             Log.d("user add friend","user friend has been found.");
                             friendsListView.setVisibility(ViewGroup.INVISIBLE);
-                            friendsLayout.setVisibility(ViewGroup.VISIBLE);
+                            friendRecycleList.setVisibility(ViewGroup.VISIBLE);
                             addFriendCodeButton.setVisibility(ViewGroup.VISIBLE);
                             getFriendCodeButton.setVisibility(ViewGroup.VISIBLE);
                             backButtonForFriendCode.setVisibility(ViewGroup.INVISIBLE);
@@ -202,7 +212,7 @@ public class FriendsListActivity extends AppCompatActivity {
     }
 
     public void getFriendCodeAction(){
-        friendsLayout.setVisibility(ViewGroup.INVISIBLE);
+        friendRecycleList.setVisibility(ViewGroup.INVISIBLE);
         addFriendCodeButton.setVisibility(ViewGroup.INVISIBLE);
         getFriendCodeButton.setVisibility(ViewGroup.INVISIBLE);
         backButtonForFriendCode.setVisibility(ViewGroup.VISIBLE);
