@@ -106,9 +106,9 @@ public class SearchFoodDatabaseDialog extends AppCompatDialogFragment {
             String otherInfoText = "Calories: " + servings*curEntry.getCalories() + "   Protein: " + servings*curEntry.getProtein() + "g   Fats: " + servings*curEntry.getFats() + "g   Carbs: " + servings*curEntry.getCarbs() + "g";
             dialogOtherInfoText.setText(otherInfoText);
             if(servings == 1 || servings == 0) {
-                dialogServingText.setText("Serving");
+                dialogServingText.setText("Serving (100 grams each)");
             } else {
-                dialogServingText.setText("Servings");
+                dialogServingText.setText("Servings (100 grams each)");
             }
 
         }

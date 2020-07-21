@@ -129,7 +129,7 @@ public class SearchFoodDatabase extends AppCompatActivity implements SearchFoodD
 
     public void openDialog(int position) {
         SearchFoodDatabaseDialog dialog = new SearchFoodDatabaseDialog(this, SFDfoodEntries.get(position));
-        dialog.show(getSupportFragmentManager(), "example dialog");
+        dialog.show(getSupportFragmentManager(), "dialog");
     }
 
 

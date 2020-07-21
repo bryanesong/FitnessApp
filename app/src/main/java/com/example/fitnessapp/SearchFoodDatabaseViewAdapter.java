@@ -63,7 +63,6 @@ public class SearchFoodDatabaseViewAdapter extends RecyclerView.Adapter<SearchFo
 
         @Override
         public void onClick(View view) {
-            Toast.makeText(SFDContext, "Clicked on item " + (getAdapterPosition() + 1), Toast.LENGTH_SHORT).show();
             listItemClickListener.onItemClick(getAdapterPosition());
         }
     }

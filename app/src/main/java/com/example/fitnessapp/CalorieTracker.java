@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -37,7 +38,7 @@ public class CalorieTracker extends AppCompatActivity {
     protected static ArrayList<TrackerData> entries = new ArrayList<TrackerData>();
     final DatabaseReference reff = FirebaseDatabase.getInstance().getReference();
     FloatingActionButton addTrackerData, removeEntry, editEntry, cancelSelected, searchDataButton;
-    TextView noEntryMessage;
+    TextView noEntryMessage, totalCalories;
     ListView trackerListView;
 
     @Override
@@ -51,6 +52,9 @@ public class CalorieTracker extends AppCompatActivity {
 
         //create textView for no entries
         createNoEntryText();
+
+        //create textView for total calories
+        createTotalCalorieText();
 
         //reset entires if new user is logged in
         checkForNewUser();
@@ -69,6 +73,7 @@ public class CalorieTracker extends AppCompatActivity {
 
     public void populateListView() {
         updateNoEntryText();
+        setTotalCalories();
         ArrayAdapter<TrackerData> adapter = new MyListAdapter();
         ListView list = (ListView) findViewById(R.id.itemList);
         list.setAdapter(adapter);
@@ -274,11 +279,24 @@ public class CalorieTracker extends AppCompatActivity {
         noEntryMessage = findViewById(R.id.noEntryTextView);
     }
 
+    private void createTotalCalorieText() {
+        totalCalories = findViewById(R.id.totalCalorieTextView);
+        totalCalories.setBackgroundColor(Color.LTGRAY);
+    }
+
     private void updateNoEntryText() {
         if(entries.isEmpty()) {
             noEntryMessage.setText("No entries found :(");
         } else {
             noEntryMessage.setText("");
         }
+    }
+
+    private void setTotalCalories() {
+        int numOfCalories = 0;
+        for(TrackerData t : entries) {
+            numOfCalories += t.getCalories();
+        }
+        totalCalories.setText("Total Calories: " + numOfCalories);
     }
 }
