@@ -1,6 +1,7 @@
 package com.example.fitnessapp;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -52,6 +54,10 @@ public class FriendsListActivity extends AppCompatActivity implements FriendsLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends_list);
 
+        //create back arrow
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         createFloatingActionButtons();
 
         hideFloatingActionButtons();
@@ -76,6 +82,7 @@ public class FriendsListActivity extends AppCompatActivity implements FriendsLis
         addFriendCodeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                hideFloatingActionButtons();
                 addFriendAction(reff);
             }
         });
@@ -83,6 +90,7 @@ public class FriendsListActivity extends AppCompatActivity implements FriendsLis
         getFriendCodeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                hideFloatingActionButtons();
                 getFriendCodeAction();
             }
         });
@@ -96,7 +104,7 @@ public class FriendsListActivity extends AppCompatActivity implements FriendsLis
 
         backButtonForFriendCode.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {// this button still needs to be worked on
+            public void onClick(View v) {
                 friendRecycleList.setVisibility(ViewGroup.VISIBLE);
                 addFriendCodeButton.setVisibility(ViewGroup.VISIBLE);
                 getFriendCodeButton.setVisibility(ViewGroup.VISIBLE);
@@ -108,6 +116,13 @@ public class FriendsListActivity extends AppCompatActivity implements FriendsLis
         removeFriendOnClickListener();
         chatFriendOnClickListener();
 
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        //return to previous activity
+        Intent myIntent = new Intent(getApplicationContext(), HomeScreen.class);
+        startActivityForResult(myIntent, 123);
+        return true;
     }
 
     private void createFloatingActionButtons() {
@@ -130,6 +145,7 @@ public class FriendsListActivity extends AppCompatActivity implements FriendsLis
         chatFriend.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                hideFloatingActionButtons();
                 Intent intent = new Intent(FriendsListActivity.this, ChatLobby.class);
                 Log.d("currentSelectedUserId","id: "+currentSelectedUserId);
                 Log.d("currentSelectedUserName","name: "+currentSelectedUserName);
@@ -150,6 +166,7 @@ public class FriendsListActivity extends AppCompatActivity implements FriendsLis
         removeFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                hideFloatingActionButtons();
                 friendsListReff = FirebaseDatabase.getInstance().getReference();
                 Log.d("FriendsListActivity", "current user: " + MainActivity.currentUser.getUid() + "removed: " + friends.getUsernameList().get(selectedFriend));
 

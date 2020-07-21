@@ -19,6 +19,7 @@
         <activity android:name=".WorkoutLog" />
         <activity android:name=".AddTrackerData" />
         <activity android:name=".CalorieTracker" />
+        <activity android:name=".FriendsListActivity" />
         <activity android:name=".RegisterAccount" />
         <activity android:name=".MainActivity">
             <intent-filter>
