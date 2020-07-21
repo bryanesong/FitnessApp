@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -41,6 +42,7 @@ public class FriendsListActivity extends AppCompatActivity implements FriendsLis
     private FloatingActionButton closeMenu, chatFriend, removeFriend;
     private int selectedFriend;
     private FriendsListContainer friends = new FriendsListContainer();
+    private String currentSelectedUserId,currentSelectedUserName;
 
     private RecyclerView.LayoutManager layoutManager;
     //ArrayList<String> entries = new ArrayList<>();
@@ -105,6 +107,7 @@ public class FriendsListActivity extends AppCompatActivity implements FriendsLis
         });
 
         removeFriendOnClickListener();
+        chatFriendOnClickListener();
 
     }
 
@@ -122,6 +125,26 @@ public class FriendsListActivity extends AppCompatActivity implements FriendsLis
             }
         });
 
+    }
+
+    private void chatFriendOnClickListener(){
+        chatFriend.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FriendsListActivity.this, ChatLobby.class);
+                Log.d("currentSelectedUserId","id: "+currentSelectedUserId);
+                Log.d("currentSelectedUserName","name: "+currentSelectedUserName);
+                if(currentSelectedUserId.equals("")){
+                    Toast.makeText(FriendsListActivity.this,"You have no selected a friend to chat with.",Toast.LENGTH_SHORT);
+                }else{
+                    intent.putExtra("USER_ID",currentSelectedUserId);
+                    intent.putExtra("USER_NAME",currentSelectedUserName);
+                    startActivity(intent);
+                }
+
+
+            }
+        });
     }
 
     private void removeFriendOnClickListener() {
@@ -289,9 +312,7 @@ public class FriendsListActivity extends AppCompatActivity implements FriendsLis
                             Log.d("user add friend", "user friend has NOT been found.");
                             Toast.makeText(FriendsListActivity.this, "Friend code does not exist, please try again.", Toast.LENGTH_LONG).show();
                         }
-
                     }
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
                         Log.w("FriendsListActivity", "getting friendslist UUID: Failed.");
@@ -341,6 +362,22 @@ public class FriendsListActivity extends AppCompatActivity implements FriendsLis
     public void clicked(int position) {
         //when item clicked
         Log.d("FriendsListActivity", "Clicked on item " + (position + 1));
+        Log.d("mchat","CLEARED!!");
+        if(ChatLobby.mChat != null){
+            ChatLobby.mChat.clear();
+        }
+        currentSelectedUserId = friends.getUIDFromIndex(selectedFriend);
+        currentSelectedUserName = friends.getUsernameFromIndex(selectedFriend);
+        selectedFriend = position;
+        showFloatingActionButtons();
+
+        Log.d("FriendsListActivity", "Clicked on item " + (position + 1));
+        Log.d("mchat","CLEARED!!");
+        if(ChatLobby.mChat != null){
+            ChatLobby.mChat.clear();
+        }
+        currentSelectedUserId = friends.getUIDFromIndex(selectedFriend);
+        currentSelectedUserName = friends.getUsernameFromIndex(selectedFriend);
         selectedFriend = position;
         showFloatingActionButtons();
     }
