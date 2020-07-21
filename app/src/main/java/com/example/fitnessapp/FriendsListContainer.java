@@ -31,6 +31,14 @@ public class FriendsListContainer {
         return true;
     }
 
+    public String getUIDFromIndex(int index){
+        return friendList.get(index);
+    }
+
+    public String getUsernameFromIndex(int index){
+        return usernameList.get(index);
+    }
+
     public boolean removeFriend(String UID, String username){
         for(int i = 0;i<friendList.size();i++){
             if(friendList.get(i).equals(UID)){
