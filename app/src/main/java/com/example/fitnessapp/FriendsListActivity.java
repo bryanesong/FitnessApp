@@ -102,7 +102,6 @@ public class FriendsListActivity extends AppCompatActivity implements FriendsLis
                 getFriendCodeButton.setVisibility(ViewGroup.VISIBLE);
                 backButtonForFriendCode.setVisibility(ViewGroup.INVISIBLE);
                 friendsListView.setVisibility(ViewGroup.INVISIBLE);
-                populateFriendsList(reff);
             }
         });
 
@@ -218,7 +217,7 @@ public class FriendsListActivity extends AppCompatActivity implements FriendsLis
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 friends = snapshot.getValue(FriendsListContainer.class);
                 //check if friends list is empty
-                if (friends.getFriendCount() == 0) {
+                if (friends == null || friends.getFriendCount() == 0 ) {
                     friendsListView.setVisibility(ViewGroup.VISIBLE);
                     friendsListView.setText("You have no friends :(");
                 } else {
