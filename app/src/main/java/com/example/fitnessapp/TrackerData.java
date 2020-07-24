@@ -1,25 +1,42 @@
 package com.example.fitnessapp;
 
-import java.io.Serializable;
+import android.util.Log;
 
-public class TrackerData implements Serializable {
+import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class TrackerData implements Serializable, Comparable<TrackerData>{
 
     private int calories;
     private String foodType;
     private int quantity;
     private String measurement;
-
     private String date;
-
     private String time;
-    public TrackerData(int calories, String foodType, int quantity, String measurement, String date, String time) {
+
+    private boolean isDateData;
+    private String dateText;
+
+
+    public TrackerData(boolean isDateData, String dateText) {
+        this.isDateData = isDateData;
+        this.dateText = dateText;
+    }
+
+    public TrackerData(int calories, String foodType, int quantity, String measurement, String date, String time, boolean isDateData) {
         this.calories = calories;
         this.foodType = foodType;
         this.quantity = quantity;
         this.measurement = measurement;
         this.date = date;
         this.time = time;
+        this.isDateData = isDateData;
     }
+
+
 
     public TrackerData() {
 
@@ -49,6 +66,26 @@ public class TrackerData implements Serializable {
         this.measurement = measurement;
     }
 
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public void setDateData(boolean dateData) {
+        this.isDateData = isDateData;
+    }
+
+    public void setDateText(String dateText) {
+        this.dateText = dateText;
+    }
+
+
+
+    public boolean isDateData() {
+        return isDateData;
+    }
+    public String getDateText() {
+        return dateText;
+    }
     public int getCalories() {
         return calories;
     }
@@ -69,7 +106,18 @@ public class TrackerData implements Serializable {
         return time;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    @Override
+    public int compareTo(TrackerData trackerData) {
+        DateFormat simp = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
+        Date mDate = new Date();
+        Date oDate =  new Date();
+
+        try {
+             mDate = simp.parse(getDate() + " " + getTime());
+             oDate = simp.parse(trackerData.getDate() + " " + trackerData.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return oDate.compareTo(mDate);
     }
 }

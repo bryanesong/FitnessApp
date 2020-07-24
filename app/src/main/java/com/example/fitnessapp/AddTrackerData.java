@@ -125,7 +125,8 @@ public class AddTrackerData extends AppCompatActivity implements Serializable {
                             Integer.parseInt(quantityInput.getText().toString()),
                             measurementInput.getText().toString(),
                             dateInput.getText().toString(),
-                            timeInput.getText().toString()
+                            timeInput.getText().toString(),
+                            false
                     ));
 
                     Toast.makeText(AddTrackerData.this, "\"" + foodTypeInput.getText() + "\" food entry has been submitted.",

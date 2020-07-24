@@ -14,10 +14,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+
 public class ChangeEntryData extends AppCompatActivity {
     FloatingActionButton confirmButton ,cancelButton;
     EditText foodTypeInput, calorieInput, quantityInput, measurementInput, dateInput, timeInput;
     int position;
+    ArrayList<TrackerData> entries = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +29,10 @@ public class ChangeEntryData extends AppCompatActivity {
         //create back arrow
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        //retrieve entries from CalorieTracker
+        Bundle args = getIntent().getBundleExtra("BUNDLE");
+        entries = (ArrayList<TrackerData>)args.getSerializable("Food Entries");
 
         position = Integer.parseInt(getIntent().getStringExtra("position"));
         //create buttons
@@ -62,12 +69,12 @@ public class ChangeEntryData extends AppCompatActivity {
         measurementInput = (EditText)findViewById(R.id.changeEntryMeasurementTypeInput);
         dateInput = (EditText)findViewById(R.id.changeEntryDateInput);
         timeInput = (EditText)findViewById(R.id.changeEntryTimeInput);
-        foodTypeInput.setText(CalorieTracker.entries.get(position).getFoodType());
-        calorieInput.setText(""+ CalorieTracker.entries.get(position).getCalories());
-        quantityInput.setText(""+ CalorieTracker.entries.get(position).getQuantity());
-        measurementInput.setText(CalorieTracker.entries.get(position).getMeasurement());
-        dateInput.setText(CalorieTracker.entries.get(position).getDate());
-        timeInput.setText(CalorieTracker.entries.get(position).getTime());
+        foodTypeInput.setText(entries.get(position).getFoodType());
+        calorieInput.setText(""+ entries.get(position).getCalories());
+        quantityInput.setText(""+ entries.get(position).getQuantity());
+        measurementInput.setText(entries.get(position).getMeasurement());
+        dateInput.setText(entries.get(position).getDate());
+        timeInput.setText(entries.get(position).getTime());
     }
 
     private void createButtonListeners() {
@@ -78,7 +85,7 @@ public class ChangeEntryData extends AppCompatActivity {
                 if(!foodTypeInput.getText().toString().equals("") && !calorieInput.getText().toString().equals("") && !quantityInput.getText().toString().equals("") && !measurementInput.getText().toString().equals("") && !dateInput.getText().toString().equals("") && !timeInput.getText().toString().equals("")) {
 
                     //add entry
-                    CalorieTracker.entries.set(position, (new TrackerData(Integer.parseInt(calorieInput.getText().toString()), foodTypeInput.getText().toString(), Integer.parseInt(quantityInput.getText().toString()), measurementInput.getText().toString(), dateInput.getText().toString(), timeInput.getText().toString())));
+                    entries.set(position, (new TrackerData(Integer.parseInt(calorieInput.getText().toString()), foodTypeInput.getText().toString(), Integer.parseInt(quantityInput.getText().toString()), measurementInput.getText().toString(), dateInput.getText().toString(), timeInput.getText().toString(), false)));
 
                     Toast.makeText(ChangeEntryData.this, "\"" + foodTypeInput.getText() + "\" food entry has been editted.",
                             Toast.LENGTH_LONG).show();
@@ -86,7 +93,7 @@ public class ChangeEntryData extends AppCompatActivity {
                     //update online database
                     final DatabaseReference reff;
                     reff = FirebaseDatabase.getInstance().getReference();
-                    reff.child(MainActivity.currentUser.getUid()).setValue(new TrackerDataContainer(CalorieTracker.entries));
+                    reff.child(MainActivity.currentUser.getUid()).setValue(new TrackerDataContainer(entries));
 
                 } else {
                     Toast.makeText(ChangeEntryData.this, "Not all blanks are filled!",
