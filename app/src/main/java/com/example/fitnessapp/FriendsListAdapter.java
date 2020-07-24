@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.MyViewHolder> {
-    private String[] mDataset;
     private friendClicked mFriendClick;
     private Context FLA;
     private ArrayList<String> friends;

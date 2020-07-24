@@ -29,8 +29,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public MessageAdapter(Context mContext, ArrayList<Chat> mChat){
         this.mChat = mChat;
         this.mContext = mContext;
-        this.imageurl = imageurl;
-
     }
 
     @NonNull
