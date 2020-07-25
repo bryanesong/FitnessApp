@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/grid_image"
-        android:layout_width="50dp"
-        android:layout_height="50dp">
+        android:layout_width="100dp"
+        android:layout_height="100dp">
     </ImageView>
 
     <TextView
@@ -16,7 +16,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:textSize="9sp" >
+        android:textSize="20sp"
+        android:text="Temp"
+        android:layout_centerVertical="true"
+        >
     </TextView>
 
 </LinearLayout>

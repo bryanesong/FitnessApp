@@ -52,7 +52,6 @@ public class InventoryInfoContainer {
 
     public class ShopItem{
 
-
         private String name;
         private String description;
         private ItemType type;

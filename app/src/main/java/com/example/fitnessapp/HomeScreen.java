@@ -11,7 +11,7 @@ import android.widget.ImageView;
 
 public class HomeScreen extends AppCompatActivity {
 
-    private Button logoutButton,workoutLogButton,calorieTrackerButton,friendsListButton,shopButton;
+    private Button logoutButton,workoutLogButton,calorieTrackerButton,friendsListButton,shopButton,inventoryButton;
     AnimationDrawable spriteAnimation;
 
     @Override
@@ -24,6 +24,14 @@ public class HomeScreen extends AppCompatActivity {
         calorieTrackerButton = (Button)findViewById(R.id.trackerButton);
         friendsListButton = (Button)findViewById(R.id.friendsListButton);
         shopButton = (Button)findViewById(R.id.shopButton);
+        inventoryButton = (Button)findViewById(R.id.inventoryButton);
+
+        inventoryButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                openInventory();
+            }
+        });
 
         logoutButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -95,6 +103,11 @@ public class HomeScreen extends AppCompatActivity {
 
     public void openShopActivity(){
         Intent intent = new Intent(this,ShopActivity.class);
+        startActivity(intent);
+    }
+
+    public void openInventory(){
+        Intent intent = new Intent(this,InventoryActivity.class);
         startActivity(intent);
     }
 
