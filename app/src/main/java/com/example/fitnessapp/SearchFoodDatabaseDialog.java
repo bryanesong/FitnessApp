@@ -21,13 +21,13 @@ import org.w3c.dom.Text;
 
 public class SearchFoodDatabaseDialog extends AppCompatDialogFragment {
     private EditText servingInput;
-    clickListener mCLickListener;
+    clickListener mClickListener;
     USDAFoodParser.FoodEntry curEntry;
     TextView dialogServingText, dialogOtherInfoText, dialogBrandText;
     View view;
 
     public SearchFoodDatabaseDialog(clickListener mClickListener, USDAFoodParser.FoodEntry curEntry) {
-        this.mCLickListener = mClickListener;
+        this.mClickListener = mClickListener;
         this.curEntry = curEntry;
     }
     @NonNull
@@ -51,13 +51,13 @@ public class SearchFoodDatabaseDialog extends AppCompatDialogFragment {
                 .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        mCLickListener.cancelItem();
+                        mClickListener.cancelItem();
                     }
                 })
                 .setPositiveButton("ADD", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        mCLickListener.addItem(servingInput.getText().toString(), curEntry);
+                        mClickListener.addItem(servingInput.getText().toString(), curEntry);
                     }
                 });
 

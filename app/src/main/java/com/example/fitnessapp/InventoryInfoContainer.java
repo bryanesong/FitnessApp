@@ -1,5 +1,7 @@
 package com.example.fitnessapp;
 
+import android.widget.ImageView;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -49,18 +51,24 @@ public class InventoryInfoContainer {
     }
 
     public class ShopItem{
+
+
         private String name;
+        private String description;
         private ItemType type;
         private int price;
+        private int imageResource;
 
         public ShopItem(){
             name = "placeholder";
             type = ItemType.NONE;
         }
 
-        public ShopItem(String name,int typeNum,int price){
+        public ShopItem(String name, int typeNum, int price, String description, int imageResource) {
             this.name = name;
             this.price = price;
+            this.description = description;
+            this.imageResource = imageResource;
             switch(typeNum){
                 case 1:
                     type = ItemType.HAT;
@@ -88,6 +96,37 @@ public class InventoryInfoContainer {
             return "Name: "+name+" Type: "+type+" Price: "+price;
         }
 
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public int getPrice() {
+            return price;
+        }
+
+        public void setPrice(int price) {
+            this.price = price;
+        }
+
+        public int getImageResource() {
+            return imageResource;
+        }
+
+        public void setImageResource(int imageResource) {
+            this.imageResource = imageResource;
+        }
     }
 
 
