@@ -21,7 +21,7 @@ public class ShopActivity extends AppCompatActivity implements ShopAdapter.Slist
     RecyclerView shopItemsRecyclerView;
     ShopAdapter shopAdapter;
     LinearLayoutManager linearLayoutManager;
-    ArrayList<String> items = new ArrayList<>();
+    ArrayList<InventoryInfoContainer.ShopItem> items = new ArrayList<>();
     final DatabaseReference reff = FirebaseDatabase.getInstance().getReference();
     final String TAG = "ShopActivity";
 
