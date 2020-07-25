@@ -17,11 +17,11 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 public class ShopBuyDialog extends AppCompatDialogFragment {
     private TextView itemText, itemDescription;
     private ImageView itemImage;
-    private InventoryInfoContainer.ShopItem curItem;
+    private ShopItem curItem;
     private ShopBuyDialog.clickListener mClickListener;
     private View view;
 
-    public ShopBuyDialog(ShopBuyDialog.clickListener mClickListener, InventoryInfoContainer.ShopItem curItem) {
+    public ShopBuyDialog(ShopBuyDialog.clickListener mClickListener, ShopItem curItem) {
         this.mClickListener = mClickListener;
         this.curItem = curItem;
     }
@@ -72,6 +72,6 @@ public class ShopBuyDialog extends AppCompatDialogFragment {
 
     public interface clickListener{
         void cancelItem();
-        void buyItem(InventoryInfoContainer.ShopItem curItem);
+        void buyItem(ShopItem curItem);
     }
 }

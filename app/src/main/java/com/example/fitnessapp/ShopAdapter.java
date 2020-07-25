@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> {
-    private ArrayList<InventoryInfoContainer.ShopItem> shopItems;
+    private ArrayList<ShopItem> shopItems;
     private Context mContext;
     private SlistItemClickListener mListItemClickListener;
     // Provide a reference to the views for each data item
@@ -23,7 +23,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> {
     // you provide access to all the views for a data item in a view holder
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public ShopAdapter(Context mContext, ArrayList<InventoryInfoContainer.ShopItem> shopItems, SlistItemClickListener listItemClickListener){
+    public ShopAdapter(Context mContext, ArrayList<ShopItem> shopItems, SlistItemClickListener listItemClickListener){
         this.shopItems = shopItems;
         this.mContext = mContext;
         this.mListItemClickListener = listItemClickListener;
@@ -96,6 +96,6 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> {
     }
 
     public interface SlistItemClickListener {
-        void onItemClick(InventoryInfoContainer.ShopItem curItem);
+        void onItemClick(ShopItem curItem);
     }
 }

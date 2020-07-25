@@ -21,7 +21,7 @@ public class ShopActivity extends AppCompatActivity implements ShopAdapter.Slist
     RecyclerView shopItemsRecyclerView;
     ShopAdapter shopAdapter;
     LinearLayoutManager linearLayoutManager;
-    ArrayList<InventoryInfoContainer.ShopItem> items = new ArrayList<>();
+    ArrayList<ShopItem> items = new ArrayList<>();
     final DatabaseReference reff = FirebaseDatabase.getInstance().getReference();
     final String TAG = "ShopActivity";
 
@@ -54,18 +54,15 @@ public class ShopActivity extends AppCompatActivity implements ShopAdapter.Slist
     }
 
     private void addFakeItems() {
-        InventoryInfoContainer container = new InventoryInfoContainer(new ArrayList<InventoryInfoContainer.ShopItem>());
-        container.addShopItem("water melon hat", 1, 100, WATERMELON_HAT_DESCRIPTION, R.drawable.watermelon_hat);
-        container.addShopItem("forbidden fruits", 3, 100, FORBIDDEN_FRUITS_DESCRIPTION, R.drawable.forbidden_fruits);
-        container.addShopItem("rgb keyboard", 3, 100, RGB_KEYBOARD_DESCRIPTION, R.drawable.rbg_keyboard);
-        container.addShopItem("'gaymers rise up' t-shirt", 2, 100, GAYMER_RISE_UP_TSHIRT_DESCRIPTION, R.drawable.gaymers_rise_up);
-        container.addShopItem("'I'm not a simp' tank top", 2 ,100, IM_NOT_A_SIMP_TANK_TOP_DESCRIPTION, R.drawable.simp_tank_top);
-        container.addShopItem("Ultimate Abs Vibrator", 2, 100, ULTIMATE_ABS_VIBRATOR_DESCRIPTION, R.drawable.ab_vibrator);
-        container.addShopItem("Gamer Girl Bath Water", 6, 100, GAMER_GIRL_BATH_WATER_DESCRIPTION, R.drawable.gamer_juice);
-        container.addShopItem("Simp License", 6, 100, SIMP_LICENSE_DESCRIPTION, R.drawable.simp_card);
-
-        ArrayList<InventoryInfoContainer.ShopItem> shopItemsFake = container.getItems();
-
+        ArrayList<ShopItem> shopItemsFake = new ArrayList<>();
+        shopItemsFake.add(new ShopItem("water melon hat", 1, 100, WATERMELON_HAT_DESCRIPTION, R.drawable.watermelon_hat));
+        shopItemsFake.add(new ShopItem("forbidden fruits", 3, 100, FORBIDDEN_FRUITS_DESCRIPTION, R.drawable.forbidden_fruits));
+        shopItemsFake.add(new ShopItem("rgb keyboard", 3, 100, RGB_KEYBOARD_DESCRIPTION, R.drawable.rbg_keyboard));
+        shopItemsFake.add(new ShopItem("'gaymers rise up' t-shirt", 2, 100, GAYMER_RISE_UP_TSHIRT_DESCRIPTION, R.drawable.gaymers_rise_up));
+        shopItemsFake.add(new ShopItem("'I'm not a simp' tank top", 2 ,100, IM_NOT_A_SIMP_TANK_TOP_DESCRIPTION, R.drawable.simp_tank_top));
+        shopItemsFake.add(new ShopItem("Ultimate Abs Vibrator", 2, 100, ULTIMATE_ABS_VIBRATOR_DESCRIPTION, R.drawable.ab_vibrator));
+        shopItemsFake.add(new ShopItem("Gamer Girl Bath Water", 6, 100, GAMER_GIRL_BATH_WATER_DESCRIPTION, R.drawable.gamer_juice));
+        shopItemsFake.add(new ShopItem("Simp License", 6, 100, SIMP_LICENSE_DESCRIPTION, R.drawable.simp_card));
         shopAdapter = new ShopAdapter(ShopActivity.this, shopItemsFake, this);
         shopAdapter.notifyDataSetChanged();
         shopItemsRecyclerView.setAdapter(shopAdapter);
@@ -86,6 +83,7 @@ public class ShopActivity extends AppCompatActivity implements ShopAdapter.Slist
                     Log.d(TAG, "class InventoryInfoContainer not found");
 
                 }
+                Log.d(TAG, "" + items.get(0).getName());
 
                 //draw list on screen
                 if (items != null) {
@@ -104,7 +102,7 @@ public class ShopActivity extends AppCompatActivity implements ShopAdapter.Slist
     }
 
     @Override
-    public void onItemClick(InventoryInfoContainer.ShopItem curItem) {
+    public void onItemClick(ShopItem curItem) {
         //open dialog when item is clicked
         ShopBuyDialog dialog = new ShopBuyDialog(this, curItem);
         dialog.show(getSupportFragmentManager(), "dialog");
@@ -116,7 +114,7 @@ public class ShopActivity extends AppCompatActivity implements ShopAdapter.Slist
     }
 
     @Override
-    public void buyItem(InventoryInfoContainer.ShopItem curItem) {
+    public void buyItem(ShopItem curItem) {
         Log.d(TAG, "bought");
         items.add(curItem);
         reff.child("Users").child(MainActivity.currentUser.getUid()).child("Inventory Info").child("items").setValue(items);
