@@ -18,14 +18,17 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> {
     private ArrayList<ShopItem> shopItems;
     private Context mContext;
     private SlistItemClickListener mListItemClickListener;
+    private ArrayList<ShopItem> boughtItems;
+    final String TAG = "ShopAdapter";
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public ShopAdapter(Context mContext, ArrayList<ShopItem> shopItems, SlistItemClickListener listItemClickListener){
+    public ShopAdapter(Context mContext, ArrayList<ShopItem> shopItems, ArrayList<ShopItem> boughtItems, SlistItemClickListener listItemClickListener){
         this.shopItems = shopItems;
         this.mContext = mContext;
+        this.boughtItems = boughtItems;
         this.mListItemClickListener = listItemClickListener;
     }
 
@@ -65,31 +68,38 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
-        Log.d("Shop items",shopItems.size()+"");
-        Log.d("shop desc", ""+(holder.shopItemDescription == null));
-        holder.shopItemDescription.setText(shopItems.get(position).getName());
-        //set picture to shop item image
-        if(shopItems.get(position).getName().equals("water melon hat")){
-            holder.shopItemImage.setImageResource(R.drawable.watermelon_hat);
-        }else if(shopItems.get(position).getName().equals("forbidden fruits")){
-            holder.shopItemImage.setImageResource(R.drawable.forbidden_fruits);
-        }else if(shopItems.get(position).getName().equals("rgb keyboard")){
-            holder.shopItemImage.setImageResource(R.drawable.rbg_keyboard);
-        }else if(shopItems.get(position).getName().equals("'gaymers rise up' t-shirt")){
-            holder.shopItemImage.setImageResource(R.drawable.gaymers_rise_up);
-        }else if(shopItems.get(position).getName().equals("'I'm not a simp' tank top")){
-            holder.shopItemImage.setImageResource(R.drawable.simp_tank_top);
-        }else if(shopItems.get(position).getName().equals("Ultimate Abs Vibrator")){
-            holder.shopItemImage.setImageResource(R.drawable.ab_vibrator);
-        }else if(shopItems.get(position).getName().equals("Gamer Girl Bath Water")){
-            holder.shopItemImage.setImageResource(R.drawable.gamer_juice);
-        }else if(shopItems.get(position).getName().equals("Simp License")){
-            holder.shopItemImage.setImageResource(R.drawable.simp_card);
+
+        //test if item is already bought
+        if (boughtItems != null && itemAlreadyBought(position)) {
+            String descriptionText = shopItems.get(position).getName() + " (bought)";
+            holder.shopItemDescription.setText(descriptionText);
+        } else {
+            holder.shopItemDescription.setText(shopItems.get(position).getName());
         }
+
+        //set picture to shop item image
+        holder.shopItemImage.setImageResource(shopItems.get(position).getImageResource());
 
     }
 
     // Return the size of your dataset (invoked by the layout manager)
+
+    private boolean itemAlreadyBought(int position) {
+        boolean sameItemFound = false;
+        if(boughtItems != null) {
+            for (ShopItem item : boughtItems) {
+                if (shopItems.get(position).getName().equals(item.getName())) {
+                    sameItemFound = true;
+                }
+            }
+
+            //set name
+
+        }
+        return sameItemFound;
+    }
+
+
     @Override
     public int getItemCount() {
         return shopItems.size();
@@ -98,4 +108,5 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> {
     public interface SlistItemClickListener {
         void onItemClick(ShopItem curItem);
     }
+
 }
