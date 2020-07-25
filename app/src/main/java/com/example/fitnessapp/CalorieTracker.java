@@ -23,9 +23,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 
 public class CalorieTracker extends AppCompatActivity implements CalorieTrackerViewAdapter.CTlistItemClickListener {
     private boolean firstStart = true;
@@ -63,6 +66,9 @@ public class CalorieTracker extends AppCompatActivity implements CalorieTrackerV
 
         //populate view
         populateListView();
+
+        //update entries
+        updateNoEntryTextAndCalories();
 
     }
 
@@ -277,11 +283,21 @@ public class CalorieTracker extends AppCompatActivity implements CalorieTrackerV
     }
 
     private void orderEntries() {
+        //sort entries by date
         Log.d(TAG, "Updated list");
         Log.d(TAG, "size: " + entries.size());
         Collections.sort(entries);
         pushEntriesToDatabase();
 
     }
+
+    private void createDayLabels() {
+        ArrayList<TrackerData> tempArr = new ArrayList<>(entries);
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        Date date = new Date();
+
+
+    }
+
 
 }
