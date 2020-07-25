@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> {
-    private ArrayList<String> shopItems;
+    private ArrayList<InventoryInfoContainer.ShopItem> shopItems;
     private Context mContext;
     private SlistItemClickListener mListItemClickListener;
     // Provide a reference to the views for each data item
@@ -23,7 +23,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> {
     // you provide access to all the views for a data item in a view holder
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public ShopAdapter(Context mContext, ArrayList<String> shopItems, SlistItemClickListener listItemClickListener){
+    public ShopAdapter(Context mContext, ArrayList<InventoryInfoContainer.ShopItem> shopItems, SlistItemClickListener listItemClickListener){
         this.shopItems = shopItems;
         this.mContext = mContext;
         this.mListItemClickListener = listItemClickListener;
@@ -46,7 +46,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> {
 
         @Override
         public void onClick(View view) {
-            listItemClickListener.onItemClick(getAdapterPosition());
+            listItemClickListener.onItemClick(shopItems.get(getAdapterPosition()));
         }
     }
 
@@ -67,23 +67,23 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> {
 
         Log.d("Shop items",shopItems.size()+"");
         Log.d("shop desc", ""+(holder.shopItemDescription == null));
-        holder.shopItemDescription.setText(shopItems.get(position));
+        holder.shopItemDescription.setText(shopItems.get(position).getName());
         //set picture to shop item image
-        if(shopItems.get(position).equals("water melon hat")){
+        if(shopItems.get(position).getName().equals("water melon hat")){
             holder.shopItemImage.setImageResource(R.drawable.watermelon_hat);
-        }else if(shopItems.get(position).equals("forbidden fruits")){
+        }else if(shopItems.get(position).getName().equals("forbidden fruits")){
             holder.shopItemImage.setImageResource(R.drawable.forbidden_fruits);
-        }else if(shopItems.get(position).equals("rgb keyboard")){
+        }else if(shopItems.get(position).getName().equals("rgb keyboard")){
             holder.shopItemImage.setImageResource(R.drawable.rbg_keyboard);
-        }else if(shopItems.get(position).equals("'gaymer rise up' t-shirt")){
+        }else if(shopItems.get(position).getName().equals("'gaymers rise up' t-shirt")){
             holder.shopItemImage.setImageResource(R.drawable.gaymers_rise_up);
-        }else if(shopItems.get(position).equals("'I'm not a simp' tank top")){
+        }else if(shopItems.get(position).getName().equals("'I'm not a simp' tank top")){
             holder.shopItemImage.setImageResource(R.drawable.simp_tank_top);
-        }else if(shopItems.get(position).equals("Ultimate Abs Vibrator")){
+        }else if(shopItems.get(position).getName().equals("Ultimate Abs Vibrator")){
             holder.shopItemImage.setImageResource(R.drawable.ab_vibrator);
-        }else if(shopItems.get(position).equals("Gamer Girl Bath Water")){
+        }else if(shopItems.get(position).getName().equals("Gamer Girl Bath Water")){
             holder.shopItemImage.setImageResource(R.drawable.gamer_juice);
-        }else if(shopItems.get(position).equals("Simp License")){
+        }else if(shopItems.get(position).getName().equals("Simp License")){
             holder.shopItemImage.setImageResource(R.drawable.simp_card);
         }
 
@@ -96,6 +96,6 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> {
     }
 
     public interface SlistItemClickListener {
-        void onItemClick(int position);
+        void onItemClick(InventoryInfoContainer.ShopItem curItem);
     }
 }

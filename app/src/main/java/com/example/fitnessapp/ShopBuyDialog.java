@@ -3,6 +3,8 @@ package com.example.fitnessapp;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -56,6 +58,7 @@ public class ShopBuyDialog extends AppCompatDialogFragment {
     private void createTextViews() {
         itemText = (TextView)view.findViewById(R.id.SBitemText);
         itemText.setText(curItem.getName());
+        itemText.setBackgroundColor(Color.parseColor("#9cd9d4"));
 
         itemDescription = (TextView)view.findViewById(R.id.SBitemDescription);
         itemDescription.setText(curItem.getDescription());

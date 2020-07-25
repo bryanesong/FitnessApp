@@ -7,13 +7,15 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 public class InventoryInfoContainer {
-    private int coins;
     private ArrayList<ShopItem> items = new ArrayList<>();
 
 
-    public InventoryInfoContainer(int coins, ArrayList<ShopItem> items) {
-        this.coins = coins;
+    public InventoryInfoContainer(ArrayList<ShopItem> items) {
         this.items = items;
+    }
+
+    public void addShopItem(String name, int typeNum, int price, String description, int imageResource) {
+        items.add(new ShopItem(name, typeNum, price, description, imageResource));
     }
 
     @NotNull
@@ -23,14 +25,6 @@ public class InventoryInfoContainer {
             s+= thing.toString() +" ";
         }
         return s;
-    }
-
-    public int getCoins() {
-        return coins;
-    }
-
-    public void setCoins(int coins) {
-        this.coins = coins;
     }
 
     public ArrayList<ShopItem> getItems() {
