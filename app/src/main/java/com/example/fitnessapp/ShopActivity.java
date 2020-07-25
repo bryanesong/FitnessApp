@@ -31,7 +31,7 @@ public class ShopActivity extends AppCompatActivity implements ShopAdapter.Slist
     final String GAYMER_RISE_UP_TSHIRT_DESCRIPTION ="";
     final String IM_NOT_A_SIMP_TANK_TOP_DESCRIPTION = "";
     final String ULTIMATE_ABS_VIBRATOR_DESCRIPTION = "";
-    final String GAMER_GIRL_BATH_WATER_DESCRIPTION = "";
+    final String GAMER_GIRL_BATH_WATER_DESCRIPTION = "Is gamer girl bath water wet?";
     final String SIMP_LICENSE_DESCRIPTION = "This is one of the most treasured items one could possibly hope to get their grubby hands on. 'I've finally done it!' - David Yip after 21 years of simping. ";
 
     @Override
@@ -39,11 +39,11 @@ public class ShopActivity extends AppCompatActivity implements ShopAdapter.Slist
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop);
 
+        retrieveInventory();
+
         createRecyclerView();
 
-        addFakeItems();
 
-        retrieveInventory();
 
     }
 
@@ -55,15 +55,15 @@ public class ShopActivity extends AppCompatActivity implements ShopAdapter.Slist
 
     private void addFakeItems() {
         ArrayList<ShopItem> shopItemsFake = new ArrayList<>();
-        shopItemsFake.add(new ShopItem("water melon hat", 1, 100, WATERMELON_HAT_DESCRIPTION, R.drawable.watermelon_hat));
-        shopItemsFake.add(new ShopItem("forbidden fruits", 3, 100, FORBIDDEN_FRUITS_DESCRIPTION, R.drawable.forbidden_fruits));
-        shopItemsFake.add(new ShopItem("rgb keyboard", 3, 100, RGB_KEYBOARD_DESCRIPTION, R.drawable.rbg_keyboard));
-        shopItemsFake.add(new ShopItem("'gaymers rise up' t-shirt", 2, 100, GAYMER_RISE_UP_TSHIRT_DESCRIPTION, R.drawable.gaymers_rise_up));
-        shopItemsFake.add(new ShopItem("'I'm not a simp' tank top", 2 ,100, IM_NOT_A_SIMP_TANK_TOP_DESCRIPTION, R.drawable.simp_tank_top));
+        shopItemsFake.add(new ShopItem("Water Melon Hat", 1, 100, WATERMELON_HAT_DESCRIPTION, R.drawable.watermelon_hat));
+        shopItemsFake.add(new ShopItem("Forbidden Fruits", 3, 100, FORBIDDEN_FRUITS_DESCRIPTION, R.drawable.forbidden_fruits));
+        shopItemsFake.add(new ShopItem("RGB Keyboard", 3, 100, RGB_KEYBOARD_DESCRIPTION, R.drawable.rbg_keyboard));
+        shopItemsFake.add(new ShopItem("'Gaymers Rise Up' T-Shirt", 2, 100, GAYMER_RISE_UP_TSHIRT_DESCRIPTION, R.drawable.gaymers_rise_up));
+        shopItemsFake.add(new ShopItem("'I'm Not A Simp' Tank Top", 2 ,100, IM_NOT_A_SIMP_TANK_TOP_DESCRIPTION, R.drawable.simp_tank_top));
         shopItemsFake.add(new ShopItem("Ultimate Abs Vibrator", 2, 100, ULTIMATE_ABS_VIBRATOR_DESCRIPTION, R.drawable.ab_vibrator));
-        shopItemsFake.add(new ShopItem("Gamer Girl Bath Water", 6, 100, GAMER_GIRL_BATH_WATER_DESCRIPTION, R.drawable.gamer_juice));
-        shopItemsFake.add(new ShopItem("Simp License", 6, 100, SIMP_LICENSE_DESCRIPTION, R.drawable.simp_card));
-        shopAdapter = new ShopAdapter(ShopActivity.this, shopItemsFake, this);
+        shopItemsFake.add(new ShopItem("Gamer Girl Bath Water", 3, 100, GAMER_GIRL_BATH_WATER_DESCRIPTION, R.drawable.gamer_juice));
+        shopItemsFake.add(new ShopItem("Simp License", 3, 100, SIMP_LICENSE_DESCRIPTION, R.drawable.simp_card));
+        shopAdapter = new ShopAdapter(ShopActivity.this, shopItemsFake, items, this);
         shopAdapter.notifyDataSetChanged();
         shopItemsRecyclerView.setAdapter(shopAdapter);
     }
@@ -83,15 +83,15 @@ public class ShopActivity extends AppCompatActivity implements ShopAdapter.Slist
                     Log.d(TAG, "class InventoryInfoContainer not found");
 
                 }
-                Log.d(TAG, "" + items.get(0).getName());
 
                 //draw list on screen
                 if (items != null) {
                     Log.d(TAG, "Populate list");
-                    //updateEverything();
+
                 } else {
                     Log.d(TAG, "inventory is null");
                 }
+                addFakeItems();
             }
 
             @Override
@@ -116,7 +116,20 @@ public class ShopActivity extends AppCompatActivity implements ShopAdapter.Slist
     @Override
     public void buyItem(ShopItem curItem) {
         Log.d(TAG, "bought");
-        items.add(curItem);
-        reff.child("Users").child(MainActivity.currentUser.getUid()).child("Inventory Info").child("items").setValue(items);
+        boolean sameItemFound = false;
+        for(ShopItem item : items) {
+            if(curItem.getName().equals(item.getName())) {
+                sameItemFound = true;
+            }
+        }
+        if(!sameItemFound) {
+            items.add(curItem);
+            reff.child("Users").child(MainActivity.currentUser.getUid()).child("Inventory Info").child("items").setValue(items);
+            Toast.makeText(this, "" + curItem.getName() + " bought!",
+                    Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "Item already bought!",
+                    Toast.LENGTH_LONG).show();
+        }
     }
 }
