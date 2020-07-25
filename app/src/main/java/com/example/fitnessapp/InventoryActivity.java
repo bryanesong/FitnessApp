@@ -46,6 +46,7 @@ public class InventoryActivity extends AppCompatActivity {
         itemOnPlayer_Shoes = findViewById(R.id.itemOnPlayer_Shoes);
     }
 
+    //fill up inventory with items bought by user grabbing information from database
     public void populateCurrentAccessories(DatabaseReference reference){
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -85,6 +86,10 @@ public class InventoryActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull final DataSnapshot snapshot) {
                 InventoryInfoContainer inventory = snapshot.child("Users").child(MainActivity.currentUser.getUid()).child("Inventory Info").getValue(InventoryInfoContainer.class);
+                //if inventory is empty then do nothing to populate the gridview
+                if(inventory == null){
+                    return;
+                }
                 items = inventory.getItems();
                 int numItems = inventory.getItems().size();
                 String[] itemName = new String[numItems];
