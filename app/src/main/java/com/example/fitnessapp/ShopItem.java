@@ -6,6 +6,8 @@ public class ShopItem{
 
     private String name = "";
     private String description = "";
+
+
     private ItemType type = null;
     private int price = 0;
     private int imageResource = 0;
@@ -87,6 +89,14 @@ public class ShopItem{
 
     public void setImageResource(int imageResource) {
         this.imageResource = imageResource;
+    }
+
+    public ItemType getType() {
+        return type;
+    }
+
+    public void setType(ItemType type) {
+        this.type = type;
     }
 }
 

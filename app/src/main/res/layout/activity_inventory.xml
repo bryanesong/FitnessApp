@@ -23,45 +23,48 @@
 
     <ImageView
         android:id="@+id/itemOnPlayer_Hat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_alignLeft="@id/placeholderView"
-
-        android:background="@android:drawable/ic_menu_gallery" />
+        android:background="@drawable/ic_baseline_fireplace_24"
+        />
     <ImageView
         android:id="@+id/itemOnPlayer_Shirt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/placeholderView"
-        android:background="@android:drawable/ic_menu_gallery"
-        android:layout_below="@+id/itemOnPlayer_Hat" />
-    <ImageView
-        android:id="@+id/itemOnPlayer_Pants"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/placeholderView"
-        android:background="@android:drawable/ic_menu_gallery"
-        android:layout_below="@+id/itemOnPlayer_Shirt" />
-    <ImageView
-        android:id="@+id/itemOnPlayer_RightItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/placeholderView"
-        android:background="@android:drawable/ic_menu_gallery"
-        android:layout_below="@+id/itemOnPlayer_Pants" />
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_toRightOf="@+id/itemOnPlayer_Hat"
+        android:background="@drawable/ic_baseline_fireplace_24"
+ />
     <ImageView
         android:id="@+id/itemOnPlayer_LeftItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_alignLeft="@id/placeholderView"
-        android:background="@android:drawable/ic_menu_gallery"
-        android:layout_below="@+id/itemOnPlayer_RightItem" />
+        android:background="@drawable/ic_baseline_fireplace_24"
+        android:layout_below="@+id/itemOnPlayer_Hat" />
+
+    <ImageView
+        android:id="@+id/itemOnPlayer_RightItem"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_toRightOf="@+id/itemOnPlayer_LeftItem"
+        android:background="@drawable/ic_baseline_fireplace_24"
+        android:layout_below="@+id/itemOnPlayer_Hat" />
+
+
+    <ImageView
+        android:id="@+id/itemOnPlayer_Pants"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignLeft="@id/placeholderView"
+        android:background="@drawable/ic_baseline_fireplace_24"
+        android:layout_below="@+id/itemOnPlayer_LeftItem" />
     <ImageView
         android:id="@+id/itemOnPlayer_Shoes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/placeholderView"
-        android:background="@android:drawable/ic_menu_gallery"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/ic_baseline_fireplace_24"
+        android:layout_toRightOf="@+id/itemOnPlayer_Pants"
         android:layout_below="@+id/itemOnPlayer_LeftItem" />
 
     <GridView

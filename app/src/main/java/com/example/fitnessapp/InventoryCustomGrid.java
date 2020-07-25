@@ -41,9 +41,7 @@ public class InventoryCustomGrid extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
         // TODO Auto-generated method stub
         View grid;
-        LayoutInflater inflater = (LayoutInflater) mContext
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
+        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (convertView == null) {
 
             grid = new View(mContext);

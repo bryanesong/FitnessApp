@@ -83,7 +83,6 @@ public class ShopActivity extends AppCompatActivity implements ShopAdapter.Slist
                     Log.d(TAG, "class InventoryInfoContainer not found");
 
                 }
-                Log.d(TAG, "" + items.get(0).getName());
 
                 //draw list on screen
                 if (items != null) {
