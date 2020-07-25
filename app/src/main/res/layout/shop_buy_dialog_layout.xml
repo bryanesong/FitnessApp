@@ -34,7 +34,7 @@
         android:layout_margin="10dp"
         android:id="@+id/SBitemDescription"
         android:gravity="center_vertical"
-        android:text="This is one of the most treasured items one could possibly hope to get their grabby hands on. 'I've finally done it!' - David Yip after 21 years of simping. " />
+        android:text="This is one of the most treasured items one could possibly hope to get their grubby hands on. 'I've finally done it!' - David Yip after 21 years of simping. " />
 
 
 </RelativeLayout>
