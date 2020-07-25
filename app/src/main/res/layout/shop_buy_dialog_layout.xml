@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="200dp">
+    <TextView
+        android:layout_margin ="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Item Name"
+        android:textAppearance = "@style/TextAppearance.AppCompat.Large"
+        android:id="@+id/SBitemText"
+        android:textColor="#000"
+        />
+
+    <ImageView
+        android:id="@+id/SBitemImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/SBitemText"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        app:srcCompat="@drawable/simp_card" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_toRightOf="@id/SBitemImage"
+        android:layout_below="@id/SBitemText"
+        android:layout_margin="10dp"
+        android:id="@+id/SBitemDescription"
+        android:gravity="center_vertical"
+        android:text="This is one of the most treasured items one could possibly hope to get their grabby hands on. 'I've finally done it!' - David Yip after 21 years of simping. " />
+
+
+</RelativeLayout>
