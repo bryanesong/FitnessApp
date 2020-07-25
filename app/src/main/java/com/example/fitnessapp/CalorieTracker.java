@@ -58,6 +58,9 @@ public class CalorieTracker extends AppCompatActivity implements CalorieTrackerV
         //reset entires if new user is logged in
         checkForNewUser();
 
+        //update entries
+        updateNoEntryTextAndCalories();
+
         //pulls entries if needed and draws listView
         pullEntriesIfNeeded();
 
@@ -67,8 +70,6 @@ public class CalorieTracker extends AppCompatActivity implements CalorieTrackerV
         //populate view
         populateListView();
 
-        //update entries
-        updateNoEntryTextAndCalories();
 
     }
 

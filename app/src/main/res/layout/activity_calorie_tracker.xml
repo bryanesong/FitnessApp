@@ -107,6 +107,7 @@
 
     <TextView
         android:id="@+id/noEntryTextView"
+        android:layout_below="@id/totalCalorieTextView"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="15dp"
