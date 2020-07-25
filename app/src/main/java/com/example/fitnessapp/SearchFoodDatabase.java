@@ -156,7 +156,7 @@ public class SearchFoodDatabase extends AppCompatActivity implements SearchFoodD
         DateFormat timeFormat = new SimpleDateFormat("hh:mm a");
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
         Date date = new Date();
-        TrackerData entry = new TrackerData(curEntry.getCalories(), curEntry.getFoodName(), 100*servingSize, "Grams", dateFormat.format(date), timeFormat.format(date));
+        TrackerData entry = new TrackerData(curEntry.getCalories(), curEntry.getFoodName(), 100*servingSize, "Grams", dateFormat.format(date), timeFormat.format(date), false);
         entries.add(entry);
 
         final DatabaseReference reff;

@@ -3,6 +3,8 @@ package com.example.fitnessapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,11 +12,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,23 +20,22 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.core.view.Change;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
+import java.util.Collections;
 
-public class CalorieTracker extends AppCompatActivity {
+public class CalorieTracker extends AppCompatActivity implements CalorieTrackerViewAdapter.CTlistItemClickListener {
     private boolean firstStart = true;
     final static String TAG = "CalorieTracker";
     protected static String currentLoginSession = "";
-    protected static ArrayList<TrackerData> entries = new ArrayList<TrackerData>();
+    protected ArrayList<TrackerData> entries = new ArrayList<TrackerData>();
     final DatabaseReference reff = FirebaseDatabase.getInstance().getReference();
     FloatingActionButton addTrackerData, removeEntry, editEntry, cancelSelected, searchDataButton;
     TextView noEntryMessage, totalCalories;
-    ListView trackerListView;
+    CalorieTrackerViewAdapter adapter = new CalorieTrackerViewAdapter(this, entries, this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,83 +61,56 @@ public class CalorieTracker extends AppCompatActivity {
         //create floating button to add entries
         createTrackerDataButtons();
 
-        //create item click listener
-        registerClickCallback();
-
+        //populate view
+        populateListView();
 
     }
 
     public void populateListView() {
+
+        RecyclerView recyclerView = findViewById(R.id.CTrecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+
+    }
+
+    private void updateNoEntryTextAndCalories() {
         updateNoEntryText();
         setTotalCalories();
-        ArrayAdapter<TrackerData> adapter = new MyListAdapter();
-        ListView list = (ListView) findViewById(R.id.itemList);
-        list.setAdapter(adapter);
     }
 
-    private class MyListAdapter extends ArrayAdapter<TrackerData> {
-        public MyListAdapter() {
-            super(CalorieTracker.this, R.layout.item_view, entries);
-        }
 
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View itemView = convertView;
-            if (itemView == null) {
-                itemView = getLayoutInflater().inflate((R.layout.item_view), parent, false);
-            }
+    @Override
+    public void onItemClick(final int position) {
+        showFABS();
 
-            //find current entry
-            TrackerData currentEntry = entries.get(position);
-            Log.d("Yeet", "" + currentEntry.getQuantity());
-
-            TextView setCalorieText = (TextView) itemView.findViewById(R.id.calorieText);
-            setCalorieText.setText("" + currentEntry.getCalories() + " cal");
-
-            TextView setFoodText = (TextView) itemView.findViewById(R.id.foodTypeText);
-            setFoodText.setText(currentEntry.getFoodType());
-
-            TextView setOtherInfoText = (TextView) itemView.findViewById(R.id.otherText);
-            setOtherInfoText.setText("" + currentEntry.getQuantity() + " " + currentEntry.getMeasurement());
-            return itemView;
-        }
-
-    }
-
-    private void registerClickCallback() {
-        ListView list = (ListView) findViewById(R.id.itemList);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        //if remove entry is selected, remove entry
+        removeEntry.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                final int position = i;
-                showFABS();
-
-                //if remove entry is selected, remove entry
-                removeEntry.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Toast.makeText(CalorieTracker.this, "\"" + entries.get(position).getFoodType() + "\"  has been removed.",
-                                Toast.LENGTH_SHORT).show();
-                        entries.remove(position);
-                        hideFABS();
-                        pushEntriesToDatabase();
-                        populateListView();
-
-
-                    }
-                });
-
-                editEntry.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(CalorieTracker.this, ChangeEntryData.class);
-                        intent.putExtra("position", ""+ position);
-                        startActivity(intent);
-                    }
-                });
+            public void onClick(View view) {
+                Toast.makeText(CalorieTracker.this, "\"" + entries.get(position).getFoodType() + "\"  has been removed.",
+                        Toast.LENGTH_SHORT).show();
+                entries.remove(position);
+                hideFABS();
+                pushEntriesToDatabase();
+                updateEverything();
 
 
             }
         });
+
+        editEntry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CalorieTracker.this, ChangeEntryData.class);
+                intent.putExtra("position", ""+ position);
+                Bundle args = new Bundle();
+                args.putSerializable("Food Entries", (Serializable)entries);
+                intent.putExtra("BUNDLE", args);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void openAddTrackerData() {
@@ -152,13 +121,9 @@ public class CalorieTracker extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public static void addEntries(TrackerData newEntry) {
-        entries.add(newEntry);
-    }
-
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent myIntent = new Intent(getApplicationContext(), HomeScreen.class);
-        startActivityForResult(myIntent, 0);
+        startActivityForResult(myIntent, 123);
         return true;
     }
 
@@ -184,6 +149,8 @@ public class CalorieTracker extends AppCompatActivity {
                         //convert database object to ArrayList<TrackerData>
                         TrackerDataContainer friendList = dataSnapshot.child("Users").child(MainActivity.currentUser.getUid()).child("Calorie Tracker Data").getValue(TrackerDataContainer.class);
                         entries = friendList.getEntries();
+
+
                     } else {
                         Log.d(TAG, "class TrackerDataContainer not found");
 
@@ -191,11 +158,11 @@ public class CalorieTracker extends AppCompatActivity {
 
                     //draw list on screen
                     if (entries != null) {
-                        populateListView();
+                        Log.d(TAG, "Populate list");
+                        updateEverything();
                     } else {
                         Log.d("CalorieTracker", "entries is null");
                     }
-
                 }
 
                 @Override
@@ -207,7 +174,8 @@ public class CalorieTracker extends AppCompatActivity {
 
         } else {
             //else, redraw list
-            populateListView();
+           updateEverything();
+
         }
     }
 
@@ -255,7 +223,7 @@ public class CalorieTracker extends AppCompatActivity {
 
     private void pushEntriesToDatabase() {
         //pushes entries to database
-        reff.child("Users").child(MainActivity.currentUser.getUid()).child("Calorie Tracker Data").setValue(new TrackerDataContainer(CalorieTracker.entries));
+        reff.child("Users").child(MainActivity.currentUser.getUid()).child("Calorie Tracker Data").setValue(new TrackerDataContainer(entries));
     }
 
     private void hideFABS() {
@@ -299,4 +267,21 @@ public class CalorieTracker extends AppCompatActivity {
         }
         totalCalories.setText("Total Calories: " + numOfCalories);
     }
+
+    private void updateEverything() {
+        updateNoEntryTextAndCalories();
+        orderEntries();
+        ArrayList<TrackerData> tempEntries = new ArrayList(entries);
+        adapter.loadEntriesList(entries);
+
+    }
+
+    private void orderEntries() {
+        Log.d(TAG, "Updated list");
+        Log.d(TAG, "size: " + entries.size());
+        Collections.sort(entries);
+        pushEntriesToDatabase();
+
+    }
+
 }
