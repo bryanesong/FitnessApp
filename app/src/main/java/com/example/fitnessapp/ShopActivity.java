@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -91,7 +92,11 @@ public class ShopActivity extends AppCompatActivity implements ShopAdapter.Slist
                 } else {
                     Log.d(TAG, "inventory is null");
                 }
+                //save position of view
+                Parcelable recyclerViewState;
+                recyclerViewState = shopItemsRecyclerView.getLayoutManager().onSaveInstanceState();
                 addFakeItems();
+                shopItemsRecyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);
             }
 
             @Override
