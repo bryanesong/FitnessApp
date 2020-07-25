@@ -82,7 +82,7 @@ public class InventoryActivity extends AppCompatActivity {
     //this method will reach out and grab all iventory that the player has currently equipped
     private void retrieveAndUpdateInventory(DatabaseReference reference){
         populateCurrentAccessories(reference);
-        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull final DataSnapshot snapshot) {
                 InventoryInfoContainer inventory = snapshot.child("Users").child(MainActivity.currentUser.getUid()).child("Inventory Info").getValue(InventoryInfoContainer.class);
