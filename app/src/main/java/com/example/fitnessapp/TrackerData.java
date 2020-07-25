@@ -70,7 +70,7 @@ public class TrackerData implements Serializable, Comparable<TrackerData>{
         this.time = time;
     }
 
-    public void setDateData(boolean dateData) {
+    public void setDateData(boolean isDateData) {
         this.isDateData = isDateData;
     }
 

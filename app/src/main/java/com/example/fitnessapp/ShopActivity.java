@@ -1,13 +1,16 @@
 package com.example.fitnessapp;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -42,6 +45,10 @@ public class ShopActivity extends AppCompatActivity implements ShopAdapter.Slist
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop);
+
+        //create back arrow
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         retrieveInventory();
 
@@ -137,10 +144,16 @@ public class ShopActivity extends AppCompatActivity implements ShopAdapter.Slist
             items.add(curItem);
             reff.child("Users").child(MainActivity.currentUser.getUid()).child("Inventory Info").child("items").setValue(items);
             Toast.makeText(this, "" + curItem.getName() + " bought!",
-                    Toast.LENGTH_LONG).show();
+                    Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Item already bought!",
-                    Toast.LENGTH_LONG).show();
+                    Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent myIntent = new Intent(getApplicationContext(), HomeScreen.class);
+        startActivityForResult(myIntent, 123);
+        return true;
     }
 }

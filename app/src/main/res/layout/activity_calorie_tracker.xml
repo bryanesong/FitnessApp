@@ -10,9 +10,9 @@
         android:id="@+id/totalCalorieTextView"
         android:paddingHorizontal="10dp"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="50dp"
         android:gravity="center_vertical"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="20sp"
         android:textColor="#000"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

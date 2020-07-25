@@ -96,15 +96,19 @@ public class CalorieTrackerViewAdapter extends RecyclerView.Adapter<CalorieTrack
 
         @Override
         public void onClick(View view) {
-            listItemClickListener.onItemClick(getAdapterPosition());
+            int realIndex = getAdapterPosition();
+            for(int i = 0; i < getAdapterPosition(); i++) {
+                if(entries.get(i).isDateData()) {
+                    realIndex--;
+                }
+            }
+            listItemClickListener.onItemClick(realIndex);
         }
     }
 
     @Override
     public int getItemViewType(int position) {
-        Log.d("CTViewAdapter", "" + entries.get(position).isDateData());
         if(entries.get(position).isDateData()) {
-
             return DATE_ENTRY;
         } else {
             return REGULAR_ENTRY;

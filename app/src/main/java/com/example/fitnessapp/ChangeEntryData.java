@@ -93,7 +93,7 @@ public class ChangeEntryData extends AppCompatActivity {
                     //update online database
                     final DatabaseReference reff;
                     reff = FirebaseDatabase.getInstance().getReference();
-                    reff.child(MainActivity.currentUser.getUid()).setValue(new TrackerDataContainer(entries));
+                    reff.child("Users").child(MainActivity.currentUser.getUid()).child("Calorie Tracker Data").setValue(new TrackerDataContainer(entries));
 
                 } else {
                     Toast.makeText(ChangeEntryData.this, "Not all blanks are filled!",

@@ -1,10 +1,13 @@
 package com.example.fitnessapp;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -30,6 +33,10 @@ public class InventoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
         initializeImageViews();//initalize all image views
+
+        //create back arrow
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         //get firebase database reference
         reff = FirebaseDatabase.getInstance().getReference();
@@ -150,5 +157,11 @@ public class InventoryActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent myIntent = new Intent(getApplicationContext(), HomeScreen.class);
+        startActivityForResult(myIntent, 123);
+        return true;
     }
 }

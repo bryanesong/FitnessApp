@@ -24,9 +24,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.Serializable;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 
@@ -74,7 +76,6 @@ public class CalorieTracker extends AppCompatActivity implements CalorieTrackerV
     }
 
     public void populateListView() {
-
         RecyclerView recyclerView = findViewById(R.id.CTrecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
@@ -278,8 +279,7 @@ public class CalorieTracker extends AppCompatActivity implements CalorieTrackerV
     private void updateEverything() {
         updateNoEntryTextAndCalories();
         orderEntries();
-        ArrayList<TrackerData> tempEntries = new ArrayList(entries);
-        adapter.loadEntriesList(entries);
+        adapter.loadEntriesList(createDayLabels());
 
     }
 
@@ -292,11 +292,42 @@ public class CalorieTracker extends AppCompatActivity implements CalorieTrackerV
 
     }
 
-    private void createDayLabels() {
+    private ArrayList<TrackerData> createDayLabels() {
         ArrayList<TrackerData> tempArr = new ArrayList<>(entries);
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
         Date date = new Date();
 
+        Calendar c = Calendar.getInstance();
+
+        String[] daysOfWeek = {"", "Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
+
+        String prevDateOfDay = "";
+
+        for(int i = 0; i < tempArr.size(); i++) {
+            Log.d(TAG, tempArr.get(i).getDate() + " equals: " + (dateFormat.format(date)));
+            Log.d(TAG, "current index: " + i);
+            if(i==0 && !tempArr.get(i).isDateData() && tempArr.get(i).getDate().equals(dateFormat.format(date))) {
+                tempArr.add(0, new TrackerData(true, "Today"));
+                prevDateOfDay = dateFormat.format(date);
+                i++;
+            } else {
+                if(!tempArr.get(i).isDateData() && !prevDateOfDay.equals(tempArr.get(i).getDate())) {
+
+                    try {
+                        c.setTime(dateFormat.parse(tempArr.get(i).getDate()));
+
+                    }catch(Exception e) {
+                        Log.d(TAG, e.toString());
+                    }
+                    prevDateOfDay = tempArr.get(i).getDate();
+                    tempArr.add(i, new TrackerData(true, daysOfWeek[c.get(Calendar.DAY_OF_WEEK)] + " (" + prevDateOfDay + ")"));
+                    Log.d(TAG, "day title added");
+
+                }
+            }
+        }
+        Log.d(TAG, "Size of returned arr: " + tempArr.size());
+        return tempArr;
 
     }
 
