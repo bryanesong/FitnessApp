@@ -17,26 +17,36 @@ import java.util.ArrayList;
 public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> {
     private ArrayList<String> shopItems;
     private Context mContext;
+    private SlistItemClickListener mListItemClickListener;
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public ShopAdapter(Context mContext, ArrayList<String> shopItems){
+    public ShopAdapter(Context mContext, ArrayList<String> shopItems, SlistItemClickListener listItemClickListener){
         this.shopItems = shopItems;
         this.mContext = mContext;
+        this.mListItemClickListener = listItemClickListener;
     }
 
-    public  class ViewHolder extends RecyclerView.ViewHolder{
+    public  class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView shopItemDescription;
         public ImageView shopItemImage;
+        SlistItemClickListener listItemClickListener;
         public TextView txt_seen;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(View itemView, SlistItemClickListener listItemClickListener) {
             super(itemView);
             shopItemDescription = itemView.findViewById(R.id.shopItemNameText);
             shopItemImage = itemView.findViewById(R.id.shopItemImage);
+            this.listItemClickListener = listItemClickListener;
+            itemView.setOnClickListener(this);
             //txt_seen = itemView.findViewById(R.id.txt_seen); //try to implement a seen function later
+        }
+
+        @Override
+        public void onClick(View view) {
+            listItemClickListener.onItemClick(getAdapterPosition());
         }
     }
 
@@ -46,7 +56,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> {
     public ShopAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View view = LayoutInflater.from(mContext).inflate(R.layout.shop_item, parent, false);
-        return new ShopAdapter.ViewHolder(view);
+        return new ShopAdapter.ViewHolder(view, mListItemClickListener);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
@@ -83,5 +93,9 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> {
     @Override
     public int getItemCount() {
         return shopItems.size();
+    }
+
+    public interface SlistItemClickListener {
+        void onItemClick(int position);
     }
 }

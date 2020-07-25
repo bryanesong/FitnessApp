@@ -147,8 +147,8 @@ public class CalorieTracker extends AppCompatActivity implements CalorieTrackerV
                     if (dataSnapshot.child("Users").child(MainActivity.currentUser.getUid()).child("Calorie Tracker Data").child("entries").exists()) {
                         Log.d(TAG, "entries found");
                         //convert database object to ArrayList<TrackerData>
-                        TrackerDataContainer friendList = dataSnapshot.child("Users").child(MainActivity.currentUser.getUid()).child("Calorie Tracker Data").getValue(TrackerDataContainer.class);
-                        entries = friendList.getEntries();
+                        TrackerDataContainer foodList = dataSnapshot.child("Users").child(MainActivity.currentUser.getUid()).child("Calorie Tracker Data").getValue(TrackerDataContainer.class);
+                        entries = foodList.getEntries();
 
 
                     } else {
