@@ -64,5 +64,21 @@
         android:background="@android:drawable/ic_menu_gallery"
         android:layout_below="@+id/itemOnPlayer_LeftItem" />
 
+    <GridView
+        android:numColumns="auto_fit"
+        android:gravity="center"
+        android:columnWidth="200dp"
+        android:stretchMode="columnWidth"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/grid"
+        android:layout_below="@+id/placeholderView"
+        >
+
+
+
+    </GridView>
+
+
 
 </RelativeLayout>
