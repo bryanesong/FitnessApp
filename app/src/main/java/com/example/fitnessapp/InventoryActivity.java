@@ -46,16 +46,49 @@ public class InventoryActivity extends AppCompatActivity {
         itemOnPlayer_Shoes = findViewById(R.id.itemOnPlayer_Shoes);
     }
 
-    //this method will reach out and grab all iventory that the player has currently equipped
-    private void retrieveAndUpdateInventory(DatabaseReference reference){
+    public void populateCurrentAccessories(DatabaseReference reference){
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                if(snapshot.child("Users").child(MainActivity.currentUser.getUid()).child("Inventory Info").child("Current Equipped").child("Hat").getValue() != null){
+                    itemOnPlayer_Hat.setBackgroundResource(Integer.parseInt(snapshot.child("Users").child(MainActivity.currentUser.getUid()).child("Inventory Info").child("Current Equipped").child("Hat").getValue().toString()));
+                }
+                if(snapshot.child("Users").child(MainActivity.currentUser.getUid()).child("Inventory Info").child("Current Equipped").child("Shirt").getValue() != null){
+                    itemOnPlayer_Shirt.setBackgroundResource(Integer.parseInt(snapshot.child("Users").child(MainActivity.currentUser.getUid()).child("Inventory Info").child("Current Equipped").child("Shirt").getValue().toString()));
+                }
+                if(snapshot.child("Users").child(MainActivity.currentUser.getUid()).child("Inventory Info").child("Current Equipped").child("Left Arm").getValue() != null){
+                    itemOnPlayer_LeftItem.setBackgroundResource(Integer.parseInt(snapshot.child("Users").child(MainActivity.currentUser.getUid()).child("Inventory Info").child("Current Equipped").child("Left Arm").getValue().toString()));
+                }
+                if(snapshot.child("Users").child(MainActivity.currentUser.getUid()).child("Inventory Info").child("Current Equipped").child("Right Arm").getValue() != null){
+                    itemOnPlayer_RightItem.setBackgroundResource(Integer.parseInt(snapshot.child("Users").child(MainActivity.currentUser.getUid()).child("Inventory Info").child("Current Equipped").child("Right Arm").getValue().toString()));
+                }
+                if(snapshot.child("Users").child(MainActivity.currentUser.getUid()).child("Inventory Info").child("Current Equipped").child("Pants").getValue() != null){
+                    itemOnPlayer_Pants.setBackgroundResource(Integer.parseInt(snapshot.child("Users").child(MainActivity.currentUser.getUid()).child("Inventory Info").child("Current Equipped").child("Pants").getValue().toString()));
+                }
+                if(snapshot.child("Users").child(MainActivity.currentUser.getUid()).child("Inventory Info").child("Current Equipped").child("Shoes").getValue() != null){
+                    itemOnPlayer_Shoes.setBackgroundResource(Integer.parseInt(snapshot.child("Users").child(MainActivity.currentUser.getUid()).child("Inventory Info").child("Current Equipped").child("Shoes").getValue().toString()));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    //this method will reach out and grab all iventory that the player has currently equipped
+    private void retrieveAndUpdateInventory(DatabaseReference reference){
+        populateCurrentAccessories(reference);
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull final DataSnapshot snapshot) {
                 InventoryInfoContainer inventory = snapshot.child("Users").child(MainActivity.currentUser.getUid()).child("Inventory Info").getValue(InventoryInfoContainer.class);
                 items = inventory.getItems();
                 int numItems = inventory.getItems().size();
-                String[] itemName = new String[5];
-                final int[] imageId = new int[5];
+                String[] itemName = new String[numItems];
+                final int[] imageId = new int[numItems];
                 for(int i = 0;i<numItems;i++){
                     itemName[i] = inventory.getItems().get(i).getName();
                     imageId[i] = inventory.getItems().get(i).getImageResource();
@@ -74,22 +107,29 @@ public class InventoryActivity extends AppCompatActivity {
                         switch(items.get(position).getType()){
                             case HAT:
                                 itemOnPlayer_Hat.setBackgroundResource(items.get(position).getImageResource());
+                                reff.child("Users").child(MainActivity.currentUser.getUid()).child("Inventory Info").child("Current Equipped").child("Hat").setValue(items.get(position).getImageResource());
                                 break;
                             case SHIRT:
                                 itemOnPlayer_Shirt.setBackgroundResource(items.get(position).getImageResource());
+                                reff.child("Users").child(MainActivity.currentUser.getUid()).child("Inventory Info").child("Current Equipped").child("Shirt").setValue(items.get(position).getImageResource());
                                 break;
                             case ARMS:
-                                if(Integer.parseInt(itemOnPlayer_LeftItem.getBackground().toString()) == R.drawable.ic_baseline_fireplace_24){
+                                Log.d("left arm status",snapshot.child("Users").child(MainActivity.currentUser.getUid()).child("Inventory Info").child("Current Equipped").child("Left Arm").getValue()+"");
+                                if(snapshot.child("Users").child(MainActivity.currentUser.getUid()).child("Inventory Info").child("Current Equipped").child("Left Arm").getValue() == null){
                                     itemOnPlayer_LeftItem.setBackgroundResource(items.get(position).getImageResource());
+                                    reff.child("Users").child(MainActivity.currentUser.getUid()).child("Inventory Info").child("Current Equipped").child("Left Arm").setValue(items.get(position).getImageResource());
                                 }else{
                                     itemOnPlayer_RightItem.setBackgroundResource(items.get(position).getImageResource());
+                                    reff.child("Users").child(MainActivity.currentUser.getUid()).child("Inventory Info").child("Current Equipped").child("Right Arm").setValue(items.get(position).getImageResource());
                                 }
                                 break;
                             case PANTS:
                                 itemOnPlayer_Pants.setBackgroundResource(items.get(position).getImageResource());
+                                reff.child("Users").child(MainActivity.currentUser.getUid()).child("Inventory Info").child("Current Equipped").child("Pants").setValue(items.get(position).getImageResource());
                                 break;
                             case SHOES:
                                 itemOnPlayer_Shoes.setBackgroundResource(items.get(position).getImageResource());
+                                reff.child("Users").child(MainActivity.currentUser.getUid()).child("Inventory Info").child("Current Equipped").child("Shoes").setValue(items.get(position).getImageResource());
                                 break;
                             default:
                                 Toast.makeText(InventoryActivity.this, "You Clicked at " +imageId[+ position]+" INVALID!", Toast.LENGTH_SHORT).show();
