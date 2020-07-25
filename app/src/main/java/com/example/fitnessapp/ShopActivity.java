@@ -34,6 +34,9 @@ public class ShopActivity extends AppCompatActivity implements ShopAdapter.Slist
     final String ULTIMATE_ABS_VIBRATOR_DESCRIPTION = "";
     final String GAMER_GIRL_BATH_WATER_DESCRIPTION = "Is gamer girl bath water wet?";
     final String SIMP_LICENSE_DESCRIPTION = "This is one of the most treasured items one could possibly hope to get their grubby hands on. 'I've finally done it!' - David Yip after 21 years of simping. ";
+    final String DINO_PANTS_DESCRIPTION = "";
+    final String BANANA_SLIPPERS_DESCRIPTION = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +67,9 @@ public class ShopActivity extends AppCompatActivity implements ShopAdapter.Slist
         shopItemsFake.add(new ShopItem("Ultimate Abs Vibrator", 2, 100, ULTIMATE_ABS_VIBRATOR_DESCRIPTION, R.drawable.ab_vibrator));
         shopItemsFake.add(new ShopItem("Gamer Girl Bath Water", 3, 100, GAMER_GIRL_BATH_WATER_DESCRIPTION, R.drawable.gamer_juice));
         shopItemsFake.add(new ShopItem("Simp License", 3, 100, SIMP_LICENSE_DESCRIPTION, R.drawable.simp_card));
+        shopItemsFake.add(new ShopItem("Dino Pants", 4, 100, DINO_PANTS_DESCRIPTION, R.drawable.dino_pants));
+        shopItemsFake.add(new ShopItem("Banana Slippers", 5, 100, BANANA_SLIPPERS_DESCRIPTION, R.drawable.banana_slippers));
+
         shopAdapter = new ShopAdapter(ShopActivity.this, shopItemsFake, items, this);
         shopAdapter.notifyDataSetChanged();
         shopItemsRecyclerView.setAdapter(shopAdapter);
