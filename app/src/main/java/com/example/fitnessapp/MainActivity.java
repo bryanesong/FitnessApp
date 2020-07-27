@@ -32,6 +32,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.q42.android.scrollingimageview.ScrollingImageView;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         //create animation
         final ImageView backgroundOne = (ImageView) findViewById(R.id.background_one);
         final ImageView backgroundTwo = (ImageView) findViewById(R.id.background_two);
-        final ValueAnimator animator = ValueAnimator.ofFloat(0.0f, 1.0f);
+        final ValueAnimator animator = ValueAnimator.ofFloat(0.0f, -1.0f);
         animator.setRepeatCount(ValueAnimator.INFINITE);
         animator.setInterpolator(new LinearInterpolator());
         animator.setDuration(10000L);
@@ -65,10 +66,11 @@ public class MainActivity extends AppCompatActivity {
                 final float width = backgroundOne.getWidth();
                 final float translationX = width * progress;
                 backgroundOne.setTranslationX(translationX);
-                backgroundTwo.setTranslationX(translationX - width);
+                backgroundTwo.setTranslationX(translationX + width);
             }
         });
         animator.start();
+
 
 
         registerButton =(Button) findViewById(R.id.registerButton);
